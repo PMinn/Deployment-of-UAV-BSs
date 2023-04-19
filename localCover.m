@@ -27,8 +27,6 @@ function [u, Pprio] = localCover(r_UABBS, u, Pprio, Psec)
                 break
             end
             if distances(i)  <= r_UABBS
-                disp('distances(i)')
-                disp(distances(i))
                 Pprio(size(Pprio, 1)+1,:) = Psec(i,:);
                 Psec(i,:) = [];
                 distances(i,:) = [];

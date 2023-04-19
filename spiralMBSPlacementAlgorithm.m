@@ -11,14 +11,14 @@ function [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(locationOfUEs, r
     % 1
     while ~isempty(uncoveredUEsSet)
         % 2
-        [uncoveredBoundaryUEsSet] = findBoundaryUEsSet(uncoveredUEsSet)
+        [uncoveredBoundaryUEsSet] = findBoundaryUEsSet(uncoveredUEsSet);
         uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
         if m == 1
             centerUE = uncoveredBoundaryUEsSet(1,:);
         end
 
         % 3
-        [firstLocalCoverU, firstLocalCoverPprio] = localCover(r_UABBS, centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'));
+        [firstLocalCoverU, firstLocalCoverPprio] = localCover(r_UABBS, centerUE, centerUE, setdiff(uncoveredBoundaryUEsSet, centerUE, 'rows'));
         newBoundaryUEsSet = firstLocalCoverPprio;
 
         % 4

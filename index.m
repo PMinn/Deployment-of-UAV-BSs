@@ -3,7 +3,7 @@ function index()
     % 參數
     outputDir = "./out";
     ue_size = 200;
-    r_UABBS = 30;
+    r_UABBS = 50;
     % 變數
 
     checkOutputDir(outputDir);
@@ -16,7 +16,7 @@ function index()
     
     boundaryUEsSet = boundary(xArrayFromlocationOfUEs, yArrayFromlocationOfUEs, 0.1); % 邊界上的UE集合
 
-    [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UABBS)
+    [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UABBS);
 
     % 繪圖
     hold on;
