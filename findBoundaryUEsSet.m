@@ -3,15 +3,9 @@ function [boundaryUEsSet, UEsSetStartAngle] = findBoundaryUEsSet(UEsSet, UEsSetS
         boundaryUEsSet = UEsSet;
         return
     end
-    xArrayFromUEsSet = UEsSet(:,1); % UE的x座標陣列
-    yArrayFromUEsSet = UEsSet(:,2); % UE的y座標陣列
-    boundaryUEsSet = boundary(xArrayFromUEsSet,yArrayFromUEsSet,0); % 邊界上的UE集合
-    polyin = polyshape({xArrayFromUEsSet(boundaryUEsSet)}, {yArrayFromUEsSet(boundaryUEsSet)});
-    polyout = sortboundaries(polyin,'numsides','descend'); % 逆時針
-    [polyoutX, polyoutY] =  boundary(polyout,1);
-    boundaryUEsSet = [polyoutX polyoutY];
+    boundaryUEsSet = convhull(UEsSet);
+    boundaryUEsSet = UEsSet(boundaryUEsSet,:);
     boundaryUEsSet(1,:) = [];
-    % boundaryUEsSet = UEsSet(boundaryUEsSet,:);
     center = [mean(boundaryUEsSet(:, 1)), mean(boundaryUEsSet(:, 2))];
     vectorInCenter = boundaryUEsSet - repelem(center,size(boundaryUEsSet, 1),1);
     angles = zeros(size(boundaryUEsSet, 1), 1);

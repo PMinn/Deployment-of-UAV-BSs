@@ -3,7 +3,7 @@ function index()
     % 參數
     outputDir = "./out";
     ue_size = 100;
-    r_UABBS = 50;
+    r_UAVBS = 50;
     % 變數
 
     checkOutputDir(outputDir);
@@ -14,9 +14,9 @@ function index()
     xArrayFromlocationOfUEs = locationOfUEs(:,1); % UE的x座標陣列
     yArrayFromlocationOfUEs = locationOfUEs(:,2); % UE的y座標陣列
     
-    boundaryUEsSet = boundary(xArrayFromlocationOfUEs, yArrayFromlocationOfUEs, 0.1); % 邊界上的UE集合
+    boundaryUEsSet = convhull(locationOfUEs); % 凸包上的UE集合
 
-    [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UABBS);
+    [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
 
     % 繪圖
     hold on;
@@ -35,7 +35,7 @@ function index()
     for i=1:size(UAVBSsSet,1)
         x = UAVBSsSet(i,1);
         y = UAVBSsSet(i,2);
-        rectangle('Position',[x-r_UABBS,y-r_UABBS,2*r_UABBS,2*r_UABBS],'Curvature',[1,1],'EdgeColor','m');
+        rectangle('Position',[x-r_UAVBS,y-r_UAVBS,2*r_UAVBS,2*r_UAVBS],'Curvature',[1,1],'EdgeColor','m');
         text(x,y,'UAVBS '+string(i)+' \rightarrow ','HorizontalAlignment','right');
     end
     axis equal;
