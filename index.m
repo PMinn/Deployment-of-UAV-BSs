@@ -2,7 +2,7 @@
 function index()
     % 參數
     outputDir = "./out";
-    ue_size = 200;
+    ue_size = 100;
     r_UABBS = 50;
     % 變數
 
@@ -24,9 +24,9 @@ function index()
     for i=1:size(UAVBSsRange,2)
         % scatter(UAVBSsRange{i}(:,1), UAVBSsRange{i}(:,2), 20, "filled", "^"); % UAVBS涵蓋的UEs的點
         % UEs所屬的UAVBS
-        % for j=1:size(UAVBSsRange{1,i},1)
-        %     text(UAVBSsRange{1,i}(j,1), UAVBSsRange{1,i}(j,2),'\leftarrow ' + string(i));
-        % end
+        for j=1:size(UAVBSsRange{1,i},1)
+            text(UAVBSsRange{1,i}(j,1), UAVBSsRange{1,i}(j,2),'\leftarrow ' + string(i));
+        end
     end
     plot(xArrayFromlocationOfUEs(boundaryUEsSet), yArrayFromlocationOfUEs(boundaryUEsSet), "--"); % 邊界線
     
