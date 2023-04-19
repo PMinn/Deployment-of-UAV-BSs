@@ -21,12 +21,16 @@ function [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(locationOfUEs, r
         % 3
         [firstLocalCoverU, firstLocalCoverPprio] = localCover(r_UAVBS, centerUE, centerUE, setdiff(uncoveredBoundaryUEsSet, centerUE, 'rows'));
         newBoundaryUEsSet = firstLocalCoverPprio;
+        disp('firstLocalCoverPprio')
+        disp(firstLocalCoverPprio)
 
         % 4
         [secondLocalCoverU, secondLocalCoverPprio] = localCover(r_UAVBS, firstLocalCoverU, newBoundaryUEsSet, uncoveredInnerUEsSet);
         newPositionOfUAVBS = secondLocalCoverU;
         newUEsSet = secondLocalCoverPprio;
-
+        disp('secondLocalCoverPprio')
+        disp(secondLocalCoverPprio)
+        
         % 5
         UAVBSsSet(size(UAVBSsSet,1)+1,:) = newPositionOfUAVBS;
         UAVBSsRange{size(UAVBSsRange,2)+1} = newUEsSet;

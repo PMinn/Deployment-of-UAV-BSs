@@ -3,10 +3,20 @@ function [boundaryUEsSet, UEsSetStartAngle] = findBoundaryUEsSet(UEsSet, UEsSetS
         boundaryUEsSet = UEsSet;
         return
     end
-    boundaryUEsSet = convhull(UEsSet);
+
+    % 凸包
+    % boundaryUEsSet = convhull(UEsSet);
+    % boundaryUEsSet = UEsSet(boundaryUEsSet,:);
+    % boundaryUEsSet(1,:) = [];
+
+    % 邊緣
+    xArrayFromUEsSet = UEsSet(:,1); % UE的x座標陣列
+    yArrayFromUEsSet = UEsSet(:,2); % UE的y座標陣列
+    boundaryUEsSet = boundary(xArrayFromUEsSet,yArrayFromUEsSet,0); % 邊界上的UE集合
     boundaryUEsSet = UEsSet(boundaryUEsSet,:);
     boundaryUEsSet(1,:) = [];
-    center = [mean(boundaryUEsSet(:, 1)), mean(boundaryUEsSet(:, 2))];
+
+    center = [mean(UEsSet(:, 1)), mean(UEsSet(:, 2))];
     vectorInCenter = boundaryUEsSet - repelem(center,size(boundaryUEsSet, 1),1);
     angles = zeros(size(boundaryUEsSet, 1), 1);
     for i=1:size(boundaryUEsSet, 1)
