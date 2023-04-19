@@ -1,7 +1,8 @@
-function [UAVBSsSet] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UABBS)
+function [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UABBS)
     % Initialization
     uncoveredUEsSet = locationOfUEs;
     UAVBSsSet = [];
+    UAVBSsRange = {};
     m = 1;
 
     centerUE = [];
@@ -17,16 +18,17 @@ function [UAVBSsSet] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UABBS)
         end
 
         % 3
-        [u, Pprio] = localCover(r_UABBS, centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'));
-        newBoundaryUEsSet = Pprio;
+        [firstLocalCoverU, firstLocalCoverPprio] = localCover(r_UABBS, centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'));
+        newBoundaryUEsSet = firstLocalCoverPprio;
 
         % 4
-        [u, Pprio] = localCover(r_UABBS, u, newBoundaryUEsSet, uncoveredInnerUEsSet);
-        newPositionOfUAVBS = u;
-        newUEsSet = Pprio;
+        [secondLocalCoverU, secondLocalCoverPprio] = localCover(r_UABBS, firstLocalCoverU, newBoundaryUEsSet, uncoveredInnerUEsSet);
+        newPositionOfUAVBS = secondLocalCoverU;
+        newUEsSet = secondLocalCoverPprio;
 
         % 5
         UAVBSsSet(size(UAVBSsSet,1)+1,:) = newPositionOfUAVBS;
+        UAVBSsRange{size(UAVBSsRange,2)+1} = newUEsSet;
         uncoveredUEsSet = setdiff(uncoveredUEsSet, newUEsSet, 'rows');
         m = m+1;
 
@@ -34,8 +36,6 @@ function [UAVBSsSet] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UABBS)
         tempUEsSet = setdiff(uncoveredBoundaryUEsSet, newBoundaryUEsSet, 'rows');
         if ~isempty(tempUEsSet)
             centerUE = tempUEsSet(1,:);
-        else
-            return
         end
     end
 end
