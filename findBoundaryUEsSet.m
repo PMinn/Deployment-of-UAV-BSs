@@ -1,4 +1,5 @@
-function [boundaryUEsSet, UEsSetStartAngle] = findBoundaryUEsSet(UEsSet, UEsSetStartAngle)
+function [boundaryUEsSet, UEsSetStartAngle] = findBoundaryUEsSet(isCounterClockwise, UEsSet, UEsSetStartAngle)
+    % isCounterClockwise: 是否用逆時針演算(否則為順時針)
     % UEsSet: 所有UE的集合
     % UEsSetStartAngle: 做時針排序時，旋轉到的角度
     % boundaryUEsSet: 產生邊緣UE的集合
@@ -39,7 +40,11 @@ function [boundaryUEsSet, UEsSetStartAngle] = findBoundaryUEsSet(UEsSet, UEsSetS
             anglesWithOffset(i) = anglesWithOffset(i)+360;
         end
     end
-    [anglesWithOffset, index] = sort(anglesWithOffset); %, 'descend'
+    if isCounterClockwise
+        [anglesWithOffset, index] = sort(anglesWithOffset);
+    else
+        [anglesWithOffset, index] = sort(anglesWithOffset, 'descend');
+    end
     angles = angles(index,:);
     boundaryUEsSet = boundaryUEsSet(index,:);
     UEsSetStartAngle = angles(size(angles, 1),1);
