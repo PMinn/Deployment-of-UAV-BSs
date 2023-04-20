@@ -13,7 +13,6 @@ function [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwi
     % m = 1;
     centerUE = [];
 
-    % Algorithm
     % 演算法第1行(修改過)
     [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(isCounterClockwise, uncoveredUEsSet, angle); % 找出邊緣並以逆時針排序
     while ~isempty(uncoveredUEsSet)

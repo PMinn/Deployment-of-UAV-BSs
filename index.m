@@ -3,7 +3,7 @@ function index()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     ue_size = 100; % 生繩UE的數量
-    rangeOfPosition = [-100 100]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    rangeOfPosition = [0 200]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 30; % UAVBS涵蓋的範圍
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)

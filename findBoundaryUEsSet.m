@@ -11,35 +11,26 @@ function [boundaryUEsSet, UEsSetStartAngle] = findBoundaryUEsSet(isCounterClockw
     end
 
     % 1. 凸包
-    % boundaryUEsSet = convhull(UEsSet);
-    % boundaryUEsSet = UEsSet(boundaryUEsSet,:);
-    % boundaryUEsSet(1,:) = [];
-
-    % 2. 邊緣
-    xArrayFromUEsSet = UEsSet(:,1); % UE的x座標陣列
-    yArrayFromUEsSet = UEsSet(:,2); % UE的y座標陣列
-    boundaryUEsSet = boundary(xArrayFromUEsSet,yArrayFromUEsSet,0); % 邊界上的UE集合
+    boundaryUEsSet = convhull(UEsSet);
     boundaryUEsSet = UEsSet(boundaryUEsSet,:);
     boundaryUEsSet(1,:) = [];
+
+    % 2. 邊緣
+    % xArrayFromUEsSet = UEsSet(:,1); % UE的x座標陣列
+    % yArrayFromUEsSet = UEsSet(:,2); % UE的y座標陣列
+    % boundaryUEsSet = boundary(xArrayFromUEsSet,yArrayFromUEsSet,0); % 邊界上的UE集合
+    % boundaryUEsSet = UEsSet(boundaryUEsSet,:);
+    % boundaryUEsSet(1,:) = [];
 
     % 做逆時針排序
     center = [mean(UEsSet(:, 1)), mean(UEsSet(:, 2))]; % 圖形中心
     vectorInCenter = boundaryUEsSet - repelem(center,size(boundaryUEsSet, 1),1); % 圖形中心到所有UE形成的向量
-    angles = zeros(size(boundaryUEsSet, 1), 1); % 所有UE對圖形中心的角度(deg)
     % 向量轉角度
-    for i=1:size(boundaryUEsSet, 1)
-        angles(i) = atan2(vectorInCenter(i,2),vectorInCenter(i,1)) * 180 / pi;
-        if angles(i) < 0
-            angles(i) = angles(i)+360;
-        end
-    end
+    angles = atan2(vectorInCenter(:,2),vectorInCenter(:,1)) * 180 / pi; % 所有UE對圖形中心的角度(deg)
     % 對角度做位移
     anglesWithOffset = angles - UEsSetStartAngle;
-    for i=1:size(anglesWithOffset, 1)
-        if anglesWithOffset(i) < 0
-            anglesWithOffset(i) = anglesWithOffset(i)+360;
-        end
-    end
+    indexOfAngleIsNegative = find(anglesWithOffset < 0);
+    anglesWithOffset(indexOfAngleIsNegative) = anglesWithOffset(indexOfAngleIsNegative)+360;
     if isCounterClockwise
         [anglesWithOffset, index] = sort(anglesWithOffset);
     else
