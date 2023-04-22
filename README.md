@@ -3,3 +3,7 @@ Matlab安裝 : https://fengchia.sharepoint.com/sites/oit-rmc/matlab/SitePages/%E
 Add-On:
 1.  Statistics and Machine Learning Toolbox
 2.  Antenna Toolbox
+
+```
+python -m pip install matlabengine 
+```
