@@ -3,21 +3,19 @@ const velocity2 = 5; // velocity squared
 const canvas = document.getElementById('loading');
 const context = canvas.getContext('2d');
 const radius = 5;
-const boundaryX = boundaryY = 200;
+const boundaryX = 200;
+const boundaryY = 200;
 const numberOfPoints = 30;
-const circleColor = lineColor = '#2F5A91';
+const circleColor = '#2F5A91';
+const lineColor = '#2F5A91';
 var animationFrame;
 init();
 
 function init() {
     for (var i = 0; i < numberOfPoints; i++) createPoint();
-    for (var i = 0, l = points.length; i < l; i++) {
-        var point = points[i];
-        if (i == 0) {
-            points[i].buddy = points[points.length - 1];
-        } else {
-            points[i].buddy = points[i - 1];
-        }
+    for (var i = 0; i < points.length; i++) {
+        if (i == 0) points[i].buddy = points[points.length - 1];
+        else points[i].buddy = points[i - 1];
     }
 }
 
@@ -33,7 +31,6 @@ function createPoint() {
 }
 
 function resetVelocity(point, axis, dir) {
-    var vx, vy;
     if (axis == 'x') {
         point.vx = dir * Math.random();
         vx2 = Math.pow(point.vx, 2);
@@ -82,7 +79,7 @@ function draw() {
 }
 
 function animate() {
-    context.clearRect(0, 0, 200, 200);
+    context.clearRect(0, 0, boundaryX, boundaryY);
     draw();
     animationFrame = requestAnimationFrame(animate);
 }

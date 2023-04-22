@@ -16,9 +16,9 @@ def execute(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterC
     r_UAVBS *= 1.0
     startAngleOfSpiral *= 1.0
     UAVBSsSet = eng.index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
-    shutil.move("./matlab/out/barchart.png" , "./web/images/barchart.png")
+    # shutil.move("./matlab/out/barchart.png" , "./web/images/barchart.png")
     eel.executeFinished()
 
 
 eel.init('web')
-eel.start('index.html', size=(1000,1000))
+eel.start('index.html', size=(1000,2000))

@@ -64,6 +64,7 @@ function UAVBSsSet = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UA
     axis equal;
     hold off;
     set(gcf,'visible','off');
-    exportgraphics(gcf, outputDir+'/barchart.png', 'Resolution', 300);
+    % exportgraphics(gcf, outputDir+'/barchart.png', 'Resolution', 300);
+    exportgraphics(gcf, '../web/images/barchart.png', 'Resolution', 300);
     clf(gcf);
 end

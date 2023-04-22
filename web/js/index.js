@@ -1,5 +1,6 @@
 const result_image = document.getElementById('result_image');
 const loading = document.getElementById('loading');
+
 result_image.addEventListener('load', () => {
     loading.style.opacity = '0';
     result_image.style.opacity = '1';
