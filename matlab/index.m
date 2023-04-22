@@ -39,7 +39,7 @@ function UAVBSsSet = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UA
     %         text(UAVBSsRange{1,i}(j,1), UAVBSsRange{1,i}(j,2),'\leftarrow ' + string(i));
     %     end
     % end
-    
+
     % 連接線
     for i=1:size(UAVBSsSet,1)-1
         x = transpose(UAVBSsSet(i:i+1,1));
@@ -47,7 +47,7 @@ function UAVBSsSet = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UA
         line(x, y, 'color', 'r', 'linestyle', '-');
     end
 
-    
+
     % UAVBSs的範圍
     for i=1:size(UAVBSsSet,1)
         x = UAVBSsSet(i,1);
@@ -65,4 +65,5 @@ function UAVBSsSet = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UA
     hold off;
     set(gcf,'visible','off');
     exportgraphics(gcf, outputDir+'/barchart.png', 'Resolution', 300);
+    clf(gcf);
 end
