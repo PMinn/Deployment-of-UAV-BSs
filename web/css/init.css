@@ -1,0 +1,40 @@
+:root {
+    --first-color: #2F5A91;
+    --first-color-dark: #1C385A;
+    --first-color-light: #88AEDA;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #F3F5F7;
+}
+
+.block {
+    background-color: #FDFDFD;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px #00000010;
+}
+
+
+
+.btn-primary {
+    --bs-btn-bg: #2F5A91;
+    --bs-btn-border-color: #2F5A91;
+    --bs-btn-hover-bg: #24446e;
+    --bs-btn-hover-border-color: #24446e;
+    --bs-btn-active-bg: #24446e;
+    --bs-btn-active-border-color: #2F5A91;
+    --bs-btn-disabled-bg: #2F5A91;
+    --bs-btn-disabled-border-color: #2F5A91;
+}
+
+.form-check-input:checked {
+    background-color: #2F5A91;
+    border-color: #2F5A91;
+}

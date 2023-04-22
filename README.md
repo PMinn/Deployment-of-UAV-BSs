@@ -4,6 +4,8 @@ Add-On:
 1.  Statistics and Machine Learning Toolbox
 2.  Antenna Toolbox
 
+依賴套件
 ```
-python -m pip install matlabengine 
+pip install eel
+pip install matlabengine 
 ```
