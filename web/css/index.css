@@ -1,3 +1,37 @@
+.bg {
+    position: fixed;
+    border-radius: 100%;
+    z-index: -1;
+    filter: blur(1.5rem);
+}
+
+.bg-1 {
+    width: 50vh;
+    height: 50vh;
+    top: -10vh;
+    right: -5vh;
+    opacity: 0.1;
+    background-color: var(--first-color-dark);
+}
+
+.bg-2 {
+    width: 50vh;
+    height: 50vh;
+    top: -20vh;
+    right: 30vh;
+    opacity: 0.1;
+    background-color: var(--first-color);
+}
+
+.bg-3 {
+    width: 50vh;
+    height: 50vh;
+    bottom: -20vh;
+    left: -5vh;
+    opacity: 0.1;
+    background-color: var(--first-color-light);
+}
+
 .out-area {
     margin: 5vh auto;
     width: 90vw;
@@ -39,6 +73,7 @@
     right: 0;
     margin: auto;
     width: 95%;
+    height: 95%;
     object-fit: contain;
     opacity: 0;
     transition: all 0.3s;

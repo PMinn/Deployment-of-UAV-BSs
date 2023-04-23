@@ -2,6 +2,11 @@
     --first-color: #2F5A91;
     --first-color-dark: #1C385A;
     --first-color-light: #88AEDA;
+    --bgc: #F3F5F7;
+}
+
+* {
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 html,
@@ -11,7 +16,8 @@ body {
 }
 
 body {
-    background-color: #F3F5F7;
+    background-color: var(--bgc);
+    position: relative;
 }
 
 .block {
@@ -20,8 +26,6 @@ body {
     border-radius: 20px;
     box-shadow: 0 10px 30px #00000010;
 }
-
-
 
 .btn-primary {
     --bs-btn-bg: #2F5A91;

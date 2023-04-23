@@ -21,4 +21,4 @@ def execute(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterC
 
 
 eel.init('web')
-eel.start('index.html', size=(1000,2000))
+eel.start('index.html', size=(2000, 1000))

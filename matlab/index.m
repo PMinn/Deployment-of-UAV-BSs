@@ -1,4 +1,4 @@
-function UAVBSsSet = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
+function outputDir = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
     rangeOfPosition = [rangeOfPositionMin rangeOfPositionMax]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
@@ -26,7 +26,7 @@ function UAVBSsSet = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UA
 
 
     % 繪圖
-    set(gcf,'outerposition',get(0,'screensize')); % 視窗最大
+    % set(gcf,'outerposition',get(0,'screensize')); % 視窗最大
     hold on;
     boundaryUEsSet = convhull(locationOfUEs); % 凸包上的UE集合
     xArrayFromLocationOfUEs = locationOfUEs(:,1); % UE的x座標陣列
@@ -62,9 +62,17 @@ function UAVBSsSet = index(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UA
         text(x, y, string(i)+' ', 'HorizontalAlignment', 'right', 'FontSize', 14, 'FontWeight', 'bold'); % +' \rightarrow '
     end
     axis equal;
+    minPosition = min(locationOfUEs);
+    maxPosition = max(locationOfUEs);
+    axis([minPosition(1,1)-r_UAVBS maxPosition(1,1)+r_UAVBS minPosition(1,2)-r_UAVBS maxPosition(1,2)+r_UAVBS]); % axis([xmin,xmax,ymin,ymax])
     hold off;
     set(gcf,'visible','off');
     % exportgraphics(gcf, outputDir+'/barchart.png', 'Resolution', 300);
-    exportgraphics(gcf, '../web/images/barchart.png', 'Resolution', 300);
+    % deltaX = maxPosition(1,1)+r_UAVBS-minPosition(1,1)+r_UAVBS;
+    % deltaY = maxPosition(1,2)+r_UAVBS-minPosition(1,2)+r_UAVBS;
+    % output_size = [1080 1080*deltaY/deltaX];
+    % resolution = 300;
+    % set(gcf,'paperunits','inches','paperposition',[0 0 output_size/resolution]);
+    exportgraphics(gcf, '../web/images/barchart.png', 'Resolution', 90);
     clf(gcf);
 end

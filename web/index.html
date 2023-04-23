@@ -10,21 +10,27 @@
     <link rel="stylesheet" href="./css/init.css">
     <link rel="stylesheet" href="./css/index.css">
     <script type="text/javascript" src="/eel.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <div class="bg bg-1"></div>
+    <div class="bg bg-2"></div>
+    <div class="bg bg-3"></div>
     <div class="out-area">
         <div class="panel block">
             <div class="mb-3">
-                <label for="ue_size" class="form-label">地面裝置數量</label>
+                <label for="ue_size" class="form-label">生成地面裝置數量</label>
                 <input type="number" class="form-control" id="ue_size" value="100">
             </div>
             <div class="mb-3">
                 <label class="form-label">座標範圍</label>
                 <div class="input-group mb-3">
-                    <input type="number" class="form-control" placeholder="最小值" aria-label="最小值" value="0" id="rangeOfPositionMin">
+                    <input type="number" class="form-control" placeholder="最小值" aria-label="最小值" value="0"
+                        id="rangeOfPositionMin">
                     <span class="input-group-text">~</span>
-                    <input type="number" class="form-control" placeholder="最大值" aria-label="最大值" value="500" id="rangeOfPositionMax">
+                    <input type="number" class="form-control" placeholder="最大值" aria-label="最大值" value="500"
+                        id="rangeOfPositionMax">
                 </div>
             </div>
             <div class="mb-3">
@@ -46,7 +52,7 @@
 
             </div>
 
-            <div class="btn btn-primary" id="execute">執行</div>
+            <div class="btn btn-primary w-100 mt-3" id="execute">執行</div>
         </div>
         <div class="result block">
             <img id="result_image" src="./images/barchart.png">
