@@ -10,7 +10,7 @@
     height: 50vh;
     top: -10vh;
     right: -5vh;
-    opacity: 0.1;
+    opacity: 0.08;
     background-color: var(--first-color-dark);
 }
 
@@ -19,7 +19,7 @@
     height: 50vh;
     top: -20vh;
     right: 30vh;
-    opacity: 0.1;
+    opacity: 0.08;
     background-color: var(--first-color);
 }
 
@@ -28,7 +28,7 @@
     height: 50vh;
     bottom: -20vh;
     left: -5vh;
-    opacity: 0.1;
+    opacity: 0.08;
     background-color: var(--first-color-light);
 }
 
@@ -40,10 +40,16 @@
     justify-content: space-between;
 }
 
+.block {
+    background-color: #FDFDFD;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px #00000010;
+}
 
 .panel {
     width: 20%;
-    padding: 2%;
+    padding: 35px;
 }
 
 .result {
@@ -72,8 +78,8 @@
     left: 0;
     right: 0;
     margin: auto;
-    width: 95%;
-    height: 95%;
+    width: calc(100% - 70px);
+    height: calc(100% - 70px);
     object-fit: contain;
     opacity: 0;
     transition: all 0.3s;

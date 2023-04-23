@@ -3,10 +3,20 @@
     --first-color-dark: #1C385A;
     --first-color-light: #88AEDA;
     --bgc: #F3F5F7;
+    /* --bgc: #242424;
+    --color: #d6d6d6; */
+
+    /* --bs-body-bg: #323232;
+    --bs-border-color: #353535;
+    --bs-tertiary-bg: #373737;
+    --bs-primary-border-subtle: var(--bs-body-bg);
+    --bs-body-color: var(--color);
+    --bs-focus-ring-color: #35353550; */
 }
 
 * {
     font-family: 'Noto Sans TC', sans-serif;
+    color: var(--color);
 }
 
 html,
@@ -18,13 +28,6 @@ body {
 body {
     background-color: var(--bgc);
     position: relative;
-}
-
-.block {
-    background-color: #FDFDFD;
-    height: 100%;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px #00000010;
 }
 
 .btn-primary {
@@ -41,4 +44,25 @@ body {
 .form-check-input:checked {
     background-color: #2F5A91;
     border-color: #2F5A91;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+    border-color: var(--first-color);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    outline: 0 none;
 }

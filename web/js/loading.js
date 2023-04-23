@@ -6,8 +6,8 @@ const radius = 5;
 const boundaryX = 200;
 const boundaryY = 200;
 const numberOfPoints = 30;
-const circleColor = '#2F5A91';
-const lineColor = '#2F5A91';
+const circleColor = '#88AEDA';
+const lineColor = '#88AEDA';
 var animationFrame;
 init();
 
