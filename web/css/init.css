@@ -1,7 +1,7 @@
 :root {
-    --first-color: #2F5A91;
-    --first-color-dark: #1C385A;
-    --first-color-light: #88AEDA;
+    --first-color: #2F71F4;
+    --first-color-dark: #1C4AD5;
+    --first-color-light: #A5C4FA;
     --bgc: #F3F5F7;
     /* --bgc: #242424;
     --color: #d6d6d6; */
@@ -31,14 +31,14 @@ body {
 }
 
 .btn-primary {
-    --bs-btn-bg: #2F5A91;
-    --bs-btn-border-color: #2F5A91;
-    --bs-btn-hover-bg: #24446e;
-    --bs-btn-hover-border-color: #24446e;
-    --bs-btn-active-bg: #24446e;
-    --bs-btn-active-border-color: #2F5A91;
-    --bs-btn-disabled-bg: #2F5A91;
-    --bs-btn-disabled-border-color: #2F5A91;
+    --bs-btn-bg: var(--first-color);
+    --bs-btn-border-color: var(--first-color);
+    --bs-btn-hover-bg: #2963d8;
+    --bs-btn-hover-border-color: #2963d8;
+    --bs-btn-active-bg: #2963d8;
+    --bs-btn-active-border-color: var(--first-color);
+    --bs-btn-disabled-bg: var(--first-color);
+    --bs-btn-disabled-border-color: var(--first-color);
 }
 
 .form-check-input:checked {
