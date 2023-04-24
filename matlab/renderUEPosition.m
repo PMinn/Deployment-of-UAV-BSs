@@ -1,4 +1,4 @@
-function returnValue = renderUEPosition(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
+function renderUEPosition(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
     % rangeOfPosition = [rangeOfPositionMin rangeOfPositionMax]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
@@ -21,6 +21,4 @@ function returnValue = renderUEPosition(ue_size, rangeOfPosition, r_UAVBS, isCou
 
     % 繪圖
     exportUEPositionImage(locationOfUEs, r_UAVBS)
-
-    returnValue = '';
 end

@@ -2,22 +2,27 @@ const result_image = document.getElementById('result_image');
 const UEPosition_image = document.getElementById('UEPosition_image');
 const loading = document.getElementById('loading');
 
+var state = 0;
 var data = {};
 
 UEPosition_image.addEventListener('load', () => {
-    result_image.style.opacity = '0';
-    UEPosition_image.style.opacity = '1';
-    loading.style.opacity = '1';
-    eel.renderResult(data);
+    if (state == 0) {
+        result_image.style.opacity = '0';
+        UEPosition_image.style.opacity = '1';
+        loading.style.opacity = '1';
+        state = 1;
+    }
 });
 
 result_image.addEventListener('load', () => {
     result_image.style.opacity = '1';
     UEPosition_image.style.opacity = '0';
     loading.style.opacity = '0';
+    state = 2;
 });
 
 document.getElementById('execute').onclick = () => {
+    state = 0;
     result_image.style.opacity = '0';
     UEPosition_image.style.opacity = '0';
     loading.style.opacity = '1';
@@ -34,9 +39,17 @@ document.getElementById('execute').onclick = () => {
 eel.expose(renderUEFinish);
 function renderUEFinish() {
     UEPosition_image.src = '/images/UE.jpg';
+    eel.renderResult(data);
 }
 
 eel.expose(renderResultFinish);
 function renderResultFinish() {
     result_image.src = '/images/result.jpg';
+}
+
+eel.expose(executionError);
+function executionError(err) {
+    console.error(err)
+    loading.style.opacity = '0';
+    state = 0;
 }

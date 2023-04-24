@@ -1,4 +1,4 @@
-function returnValue = renderResult(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
+function renderResult(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
     % rangeOfPosition = [rangeOfPositionMin rangeOfPositionMax]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
@@ -21,9 +21,7 @@ function returnValue = renderResult(ue_size, rangeOfPosition, r_UAVBS, isCounter
 
     % 演算法
     [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
-    
+
     % 繪圖
     exportResultImage(locationOfUEs, UAVBSsSet, r_UAVBS)
-
-    returnValue = '';
 end
