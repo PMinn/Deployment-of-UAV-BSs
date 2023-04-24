@@ -11,13 +11,13 @@ document.getElementById('execute').onclick = () => {
     result_image.style.opacity = '0';
     loading.style.opacity = '1';
     animate();
-    var ue_size = document.getElementById('ue_size').value * 1.0;
-    var rangeOfPositionMin = document.getElementById('rangeOfPositionMin').value * 1.0;
-    var rangeOfPositionMax = document.getElementById('rangeOfPositionMax').value * 1.0;
-    var r_UAVBS = document.getElementById('r_UAVBS').value * 1.0;
-    var isCounterClockwise = document.getElementById('isCounterClockwise').checked;
-    var startAngleOfSpiral = document.getElementById('startAngleOfSpiral').value * 1.0;
-    eel.execute(ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, startAngleOfSpiral);
+    var ue_size = parseInt(document.getElementById('ue_size').value);
+    var rangeOfPositionMin = parseInt(document.getElementById('rangeOfPositionMin').value);
+    var rangeOfPositionMax = parseInt(document.getElementById('rangeOfPositionMax').value);
+    var r_UAVBS = parseInt(document.getElementById('r_UAVBS').value);
+    var isCounterClockwise = Boolean(document.getElementById('isCounterClockwise').checked);
+    var startAngleOfSpiral = parseInt(document.getElementById('startAngleOfSpiral').value);
+    eel.execute({ ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, startAngleOfSpiral });
 }
 
 eel.expose(executeFinished);
