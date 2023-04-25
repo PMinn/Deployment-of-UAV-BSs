@@ -1,2 +1,5 @@
 out
-images
+
+*.jpg
+*.png
+*.svg
