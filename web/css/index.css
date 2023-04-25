@@ -1,0 +1,110 @@
+.bg {
+    position: fixed;
+    border-radius: 100%;
+    z-index: -1;
+    filter: blur(1.5rem);
+    opacity: 0.1;
+}
+
+.bg-1 {
+    width: 50vh;
+    height: 50vh;
+    top: -10vh;
+    right: -5vh;
+    background-color: var(--first-color-dark);
+}
+
+.bg-2 {
+    width: 50vh;
+    height: 50vh;
+    top: -20vh;
+    right: 30vh;
+    background-color: var(--first-color);
+}
+
+.bg-3 {
+    width: 50vh;
+    height: 50vh;
+    bottom: -20vh;
+    left: -5vh;
+    background-color: var(--first-color-light);
+}
+
+.out-area {
+    margin: 5vh auto;
+    width: 90vw;
+    height: 90vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.block {
+    background-color: #FDFDFD;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px #00000010;
+}
+
+.panel {
+    width: 20%;
+    padding: 35px;
+}
+
+.result {
+    width: 78%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+#result_image,
+#UEPosition_image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: calc(100% - 70px);
+    height: calc(100% - 70px);
+    object-fit: contain;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+
+#loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    animation: loadingAnimate infinite 2s ease-in-out;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#loading path {
+    stroke: var(--first-color-light);
+}
+
+@keyframes loadingAnimate {
+    from {
+        transform: scale(1) rotateZ(0);
+    }
+
+    33% {
+        transform: scale(0.8) rotateZ(45deg);
+    }
+
+    66% {
+        transform: scale(1) rotateZ(90deg);
+    }
+
+    to {
+        transform: scale(1) rotateZ(90deg);
+    }
+}

@@ -1,0 +1,69 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment of UAV-BSs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/init.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script type="text/javascript" src="/eel.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg bg-1"></div>
+    <div class="bg bg-2"></div>
+    <div class="bg bg-3"></div>
+    <div class="out-area">
+        <div class="panel block">
+            <div class="mb-3">
+                <label for="ue_size" class="form-label">生成地面裝置數量</label>
+                <input type="number" class="form-control" id="ue_size" value="100">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">座標範圍</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" placeholder="最小值" aria-label="最小值" value="0"
+                        id="rangeOfPositionMin">
+                    <span class="input-group-text">~</span>
+                    <input type="number" class="form-control" placeholder="最大值" aria-label="最大值" value="500"
+                        id="rangeOfPositionMax">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="r_UAVBS" class="form-label">無人機服務半徑</label>
+                <input type="number" class="form-control" id="r_UAVBS" value="60">
+            </div>
+            <div class="mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="isCounterClockwise">
+                    <label class="form-check-label" for="isCounterClockwise">逆時針</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="startAngleOfSpiral" class="form-label">起始位置的角度</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" id="startAngleOfSpiral" value="90" min="0" max="359">
+                    <span class="input-group-text">deg</span>
+                </div>
+
+            </div>
+
+            <div class="btn btn-primary w-100 mt-3" id="execute">執行</div>
+        </div>
+        <div class="result block">
+            <img id="result_image">
+            <img id="UEPosition_image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" id="loading">
+                <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 10h4v4h-4zm0 0L6.5 6.5M9.96 6A3.5 3.5 0 1 0 6 9.96m8 .04l3.5-3.5m.5 3.46A3.5 3.5 0 1 0 14.04 6M14 14l3.5 3.5m-3.46.5A3.5 3.5 0 1 0 18 14.04M10 14l-3.5 3.5M6 14.04A3.5 3.5 0 1 0 9.96 18" />
+            </svg>
+        </div>
+    </div>
+    <script src="./js/index.js"></script>
+</body>
+
+</html>
