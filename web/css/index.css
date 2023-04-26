@@ -57,8 +57,7 @@
     position: relative;
 }
 
-#result_image,
-#UEPosition_image {
+#result_image {
     position: absolute;
     top: 0;
     bottom: 0;

@@ -1,5 +1,4 @@
-function returnValue = main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
-    % rangeOfPosition = [rangeOfPositionMin rangeOfPositionMax]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+function main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     % ue_size = 100; % 生成UE的數量
@@ -26,6 +25,4 @@ function returnValue = main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwis
 
     % 繪圖
     exportImage(locationOfUEs, UAVBSsSet, r_UAVBS);
-
-    returnValue = '';
 end

@@ -48,5 +48,5 @@ function exportImage(locationOfUEs, UAVBSsSet, r_UAVBS)
     maxPosition = max(locationOfUEs);
     axis([minPosition(1,1)-r_UAVBS maxPosition(1,1)+r_UAVBS minPosition(1,2)-r_UAVBS maxPosition(1,2)+r_UAVBS]); % axis([xmin,xmax,ymin,ymax])
     hold off;
-    exportgraphics(gcf, '../web/images/barchart.png', 'Resolution', 130, 'BackgroundColor', backgroundColor);
+    exportgraphics(gcf, '../web/images/barchart.jpg', 'Resolution', 130, 'BackgroundColor', backgroundColor);
 end
