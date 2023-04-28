@@ -3,8 +3,8 @@ function mobiles_location = UE_generator(ue_size, rangeOfPosition)
         lambda = ue_size/10; %intensity of initial points (centers)
         mean_children = 0.9; %mean number of children of each point
         X = zeros(10^5,2); %initialise the points
-        %N = poissrnd(lambda); %number of centers
-        N = lambda;
+        N = poissrnd(lambda); %number of centers
+        % N = lambda;
 
         X(1:N,:) = randi(rangeOfPosition,N,2); %generate the centers
         total_so_far = N; %total number of points generated
@@ -18,7 +18,6 @@ function mobiles_location = UE_generator(ue_size, rangeOfPosition)
             next = next+1;
         end
         X=X(1:total_so_far,:); %cut off unused rows
-        %plot(X(:,1),X(:,2),'.')   
 
         num_generated_ue = length(X(:,1));
         if num_generated_ue >= ue_size && num_generated_ue < ue_size+100
