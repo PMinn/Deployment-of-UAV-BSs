@@ -22,7 +22,7 @@ function test()
 
     % 演算法
     [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
-
+    UAVBSsRange
     % 繪圖
     exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
 end
