@@ -21,7 +21,8 @@ function main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleO
 
 
     % 演算法
-    [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
+    UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
+    UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
 
     % 繪圖
     exportImage('../web/images/barchart.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
