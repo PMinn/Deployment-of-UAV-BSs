@@ -1,4 +1,4 @@
-function [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, angle)
+function UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, angle)
     % isCounterClockwise: 是否用逆時針演算(否則為順時針)
     % locationOfUEs: 所有UE的位置 []
     % r_UAVBS: 無人機的涵蓋範圍半徑
@@ -9,7 +9,6 @@ function [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwi
     % Initialization(修改過)
     uncoveredUEsSet = locationOfUEs;
     UAVBSsSet = [];
-    UAVBSsRange = {};
     % m = 1;
     centerUE = [];
 
@@ -37,7 +36,6 @@ function [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwi
         % 演算法第5行(修改過)
         % 更新結果
         UAVBSsSet(size(UAVBSsSet,1)+1,:) = newPositionOfUAVBS;
-        UAVBSsRange{size(UAVBSsRange,2)+1} = newUEsSet;
         uncoveredUEsSet = setdiff(uncoveredUEsSet, newUEsSet, 'rows');
         % m = m+1;
 

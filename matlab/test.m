@@ -12,18 +12,21 @@ function test()
     
 
     % 生成UE及寫檔
-    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    locationOfUEs = locationOfUEs(:,1:2);
-    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    % locationOfUEs = locationOfUEs(:,1:2);
+    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
 
     % 演算法
-    [UAVBSsSet, UAVBSsRange] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
-    
-    signalToInterferencePlusNoiseRatio(locationOfUEs, UAVBSsRange);
+    UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
+    UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
+
+    % 效能分析
+    signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded);
+
     % 繪圖
     exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
 end
