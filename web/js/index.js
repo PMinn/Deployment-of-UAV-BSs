@@ -1,5 +1,6 @@
 const result_image = document.getElementById('result_image');
 const loading = document.getElementById('loading');
+const dataTransferRates = document.getElementById('dataTransferRates');
 
 result_image.addEventListener('load', () => {
     result_image.style.opacity = '1';
@@ -16,11 +17,24 @@ document.getElementById('execute').onclick = () => {
     var isCounterClockwise = Boolean(document.getElementById('isCounterClockwise').checked);
     var startAngleOfSpiral = parseInt(document.getElementById('startAngleOfSpiral').value);
     eel.renderResult({ ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, startAngleOfSpiral });
+    dataTransferRates.innerHTML = '';
 }
 
 eel.expose(finish);
-function finish() {
+function finish(totalDataTransferRatesOfUAVBSs) {
+    console.log(totalDataTransferRatesOfUAVBSs)
     result_image.src = '/images/barchart.jpg';
+
+    totalDataTransferRatesOfUAVBSs = totalDataTransferRatesOfUAVBSs.map(arrayOfDataTransferRate => arrayOfDataTransferRate[0]);
+    var table = '<table>';
+    totalDataTransferRatesOfUAVBSs.forEach((dataTransferRate, index) => {
+        table += '<tr>';
+        table += `<td>${index + 1}</td>`;
+        table += `<td>${parseInt(dataTransferRate)}</td>`;
+        table += '</tr>';
+    })
+    table += '</table>';
+    dataTransferRates.innerHTML = table;
 }
 
 eel.expose(executionError);

@@ -1,4 +1,4 @@
-function main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
+function totalDataTransferRatesOfUAVBSs = main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     % ue_size = 100; % 生成UE的數量
@@ -27,6 +27,12 @@ function main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleO
     % 演算法
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
+
+    % 效能分析
+    indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機
+    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, {}, indexArrayOfUEsServedByUAVBS, bandwidth, powerOfUAVBS, noise);
+    dataTransferRates = getDataTransferRate(SINR, bandwidth);
+    totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS);
 
     % 繪圖
     exportImage('../web/images/barchart.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
