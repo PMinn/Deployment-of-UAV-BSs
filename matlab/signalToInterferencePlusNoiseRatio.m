@@ -1,5 +1,5 @@
-function ratio = signalToInterferencePlusNoiseRatio(locationOfUEs, UAVBSsRange) % arrayOfAveragePathLoss
-    % ratio: signalToInterferencePlusNoiseRatio {[] []}
+function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UAVBSsRange, arrayOfAveragePathLoss) % arrayOfAveragePathLoss
+    % SINR: SINR {[] []}
     % arrayOfAveragePathLoss: 無人機j到使用者u間的平均路徑損失 {[] []}
     bandwidth = 2*10^7; % 頻寬
     powerOfUAVBS = 100; % 功率
@@ -23,8 +23,20 @@ function ratio = signalToInterferencePlusNoiseRatio(locationOfUEs, UAVBSsRange) 
         end
     end
 
-    ratio = {};
-    % for i=size(arrayOfAveragePathLoss)
-    %     ratio(i) = zeros();
-    % end
+    % SINR的分子
+    signal = arrayOfAveragePathLoss;
+    for i=1:size(signal, 2)
+        for j=1:size(signal{i},1)
+            signal{i}(j,1) = powerOfUAVBS*(10^(-1*signal{i}(j,1)/10));
+        end
+    end
+
+
+
+    % SINR的分子
+    % numeratorOfSINR 
+    % SINR的分母
+    % denominatorOfSINR = arrayOfAveragePathLoss;
+
+    SINR = {};
 end
