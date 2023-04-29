@@ -7,6 +7,10 @@ function main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleO
     % isCounterClockwise = false; % true=逆時針; false=順時針
     % startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
 
+    bandwidth = 2*10^7; % 頻寬
+    powerOfUAVBS = 100; % 功率
+    noise = 4.1843795*10^-21; % 熱雜訊功率譜密度
+    
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
     
