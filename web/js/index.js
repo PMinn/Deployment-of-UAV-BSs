@@ -15,8 +15,9 @@ document.getElementById('execute').onclick = () => {
     var rangeOfPositionMax = parseInt(document.getElementById('rangeOfPositionMax').value);
     var r_UAVBS = parseInt(document.getElementById('r_UAVBS').value);
     var isCounterClockwise = Boolean(document.getElementById('isCounterClockwise').checked);
-    var startAngleOfSpiral = parseInt(document.getElementById('startAngleOfSpiral').value);
-    eel.renderResult({ ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, startAngleOfSpiral });
+    var minDataTransferRateOfUEAcceptable = parseFloat(document.getElementById('minDataTransferRateOfUEAcceptable').value) * 1000000;
+    var maxDataTransferRateOfUAVBS = parseFloat(document.getElementById('maxDataTransferRateOfUAVBS').value) * 100000000;
+    eel.renderResult({ ue_size, rangeOfPositionMin, rangeOfPositionMax, r_UAVBS, isCounterClockwise, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS });
     dataTransferRates.innerHTML = '';
 }
 

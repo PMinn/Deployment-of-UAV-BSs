@@ -16,7 +16,7 @@ def renderResult(data):
         except ValueError:
             pass
     try:
-        totalDataTransferRatesOfUAVBSs = eng.main(data['ue_size'], matlab.double([[data['rangeOfPositionMin'], data['rangeOfPositionMax']]]), data['r_UAVBS'], data['isCounterClockwise'], data['startAngleOfSpiral'], nargout=1)
+        totalDataTransferRatesOfUAVBSs = eng.main(data['ue_size'], matlab.double([[data['rangeOfPositionMin'], data['rangeOfPositionMax']]]), data['r_UAVBS'], data['isCounterClockwise'], data['minDataTransferRateOfUEAcceptable'], data['maxDataTransferRateOfUAVBS'], nargout=1)
     except matlab.engine.MatlabExecutionError as e:
         print(e)
         eel.executionError(e.args[0])

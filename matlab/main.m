@@ -1,11 +1,13 @@
-function totalDataTransferRatesOfUAVBSs = main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, startAngleOfSpiral)
+function totalDataTransferRatesOfUAVBSs = main(ue_size, rangeOfPosition, r_UAVBS, isCounterClockwise, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS)
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     % ue_size = 100; % 生成UE的數量
     % rangeOfPosition = [0 200]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     % r_UAVBS = 30; % UAVBS涵蓋的範圍
     % isCounterClockwise = false; % true=逆時針; false=順時針
-    % startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
+    % minDataTransferRateOfUEAcceptable: 使用者可接受的最低速率
+    % maxDataTransferRateOfUAVBS: 無人機回程速率上限
+    startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
 
     bandwidth = 2*10^7; % 頻寬
     powerOfUAVBS = 100; % 功率
@@ -29,10 +31,14 @@ function totalDataTransferRatesOfUAVBSs = main(ue_size, rangeOfPosition, r_UAVBS
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
 
     % 效能分析
-    indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機
-    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, {}, indexArrayOfUEsServedByUAVBS, bandwidth, powerOfUAVBS, noise);
-    dataTransferRates = getDataTransferRate(SINR, bandwidth);
-    totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS);
+    indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
+    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, {}, indexArrayOfUEsServedByUAVBS, bandwidth, powerOfUAVBS, noise); % [SINR1; SINR2;...]
+    dataTransferRates = getDataTransferRate(SINR, bandwidth); % [dataTransferRates1; dataTransferRates2;...]
+    totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
+    % 往回檢查速率上限
+    % overflowIndex = find(totalDataTransferRatesOfUAVBSs > maxDataTransferRateOfUAVBS);
+    % totalDataTransferRatesOfUAVBSs(overflowIndex,1) = maxDataTransferRateOfUAVBS;
+
 
     % 繪圖
     exportImage('../web/images/barchart.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
