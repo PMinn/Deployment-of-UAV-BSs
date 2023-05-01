@@ -12,7 +12,7 @@ function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfU
     for i=1:size(arrayOfAveragePathLoss, 2)
         arrayOfAveragePathLoss{i} = zeros(size(arrayOfAveragePathLoss{i}, 1));
         for j=1:size(arrayOfAveragePathLoss{i}, 1)
-            arrayOfAveragePathLoss{i}(j,1) = rand()*10^-5;
+            arrayOfAveragePathLoss{i}(j,1) = rand()*10^1;
         end
     end
 
@@ -36,8 +36,9 @@ function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfU
             end
         end
     end
-
+    
     % arrayOfSignalToInterference + noise
+    % 2023/5/1 這裡有點問題 (arrayOfBandwidths(indexArrayOfUEsServedByUAVBS(i,1),1)*noise) 太小 往上乘SINR太大 速率也會很大
     for i=1:size(arrayOfSignalToInterference,1)
         arrayOfSignalToInterference(i,2) = arrayOfSignalToInterference(i,2)+(arrayOfBandwidths(indexArrayOfUEsServedByUAVBS(i,1),1)*noise);
     end

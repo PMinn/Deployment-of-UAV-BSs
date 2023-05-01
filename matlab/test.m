@@ -39,12 +39,11 @@ function test()
     end
     arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth);
     SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, {}, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
-    SINR
     
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
     totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
     % 往回檢查速率上限
-    totalDataTransferRatesOfUAVBSs
+    
     % overflowIndex = find(totalDataTransferRatesOfUAVBSs > maxDataTransferRateOfUAVBS);
     % totalDataTransferRatesOfUAVBSs(overflowIndex,1) = maxDataTransferRateOfUAVBS;
     % for i=1:size(overflowIndex,1)
