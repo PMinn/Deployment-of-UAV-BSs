@@ -30,7 +30,6 @@ function test()
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
 
     % 效能分析
-    % 2023/5/1 算出來的速率過大，都會超過無人機回程速率上限
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
     numOfUEsConnected = zeros(size(UAVBSsSet,1),1); % 每台UAVBS連線到的UE數量
@@ -39,21 +38,21 @@ function test()
     end
     arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth);
     SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, {}, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
-    
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
     totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
     % 往回檢查速率上限
-    
-    % overflowIndex = find(totalDataTransferRatesOfUAVBSs > maxDataTransferRateOfUAVBS);
-    % totalDataTransferRatesOfUAVBSs(overflowIndex,1) = maxDataTransferRateOfUAVBS;
-    % for i=1:size(overflowIndex,1)
-    %     indexOfUAVBS = overflowIndex(i,1);
-    %     indexOfUEConnected = find(indexArrayOfUEsServedByUAVBS == indexOfUAVBS); % 該超過速率的UAV所連線到的UE
-    %     numOfUE = size(indexOfUEConnected,1); % 連線到的UE數量
-    %     newDataTransferRate = maxDataTransferRateOfUAVBS/numOfUE; % 重新分配後的速率
-    %     dataTransferRates(indexOfUEConnected, 1) = newDataTransferRate;
-    % end
-    
+    overflowIndex = find(totalDataTransferRatesOfUAVBSs > maxDataTransferRateOfUAVBS);
+    totalDataTransferRatesOfUAVBSs(overflowIndex,1) = maxDataTransferRateOfUAVBS;
+    for i=1:size(overflowIndex,1)
+        indexOfUAVBS = overflowIndex(i,1);
+        indexOfUEConnected = find(indexArrayOfUEsServedByUAVBS == indexOfUAVBS); % 該超過速率的UAV所連線到的UE
+        numOfUE = size(indexOfUEConnected,1); % 連線到的UE數量
+        newDataTransferRate = maxDataTransferRateOfUAVBS/numOfUE; % 重新分配後的速率
+        dataTransferRates(indexOfUEConnected, 1) = newDataTransferRate;
+    end
+    indexOfSatisfied  = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
+    satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
+
     % 繪圖
     exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
 end
