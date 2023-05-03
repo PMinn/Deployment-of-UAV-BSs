@@ -1,0 +1,19 @@
+function [Los_P, NLos_P] = LosOFPossibility(r_UAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh)
+    % UAVBSsHigh :UAVBS無人機的高度
+    
+    % UAVBnUEsDist : UAVB and USER的歐幾里得距離
+    a = 12.8 ;% a: 環境變數
+    b = 0.11 ;% b: 環境變數
+    Los_P = UEsPositionOfUAVBSIncluded;% Los_P : Line of Sight的機率Los_P = [UAVBS位置 UE位置 ]
+    NLos_P = UEsPositionOfUAVBSIncluded;% NLos_P : Non-Line of Sight的機率
+    for UAVBSsIndex = 1:size(UAVBSsSet(:,1),1)%UAV個數
+        %for UEsIndex = 1:size(UEsPositionOfUAVBSIncluded{UAVBSsIndex},1)%UE個數
+        UAVBnUEsDist = pdist2(UAVBSsSet(UAVBSsIndex,:),UEsPositionOfUAVBSIncluded{UAVBSsIndex});
+        size(UEsPositionOfUAVBSIncluded{UAVBSsIndex},1)%UE個數
+        %UAVBnUEsDist() : 第幾個UAVBnUEsDist第幾個
+        for UAVBnUEsDist_Index = 1: size(UAVBnUEsDist,2)
+            Los_P{UAVBSsIndex}(UAVBnUEsDist_Index,3) = 1 / (1 + a * (exp(-b * (180 / pi * atan(UAVBSsHigh / UAVBnUEsDist(UAVBnUEsDist_Index)) - a))));
+            NLos_P{UAVBSsIndex}(UAVBnUEsDist_Index,3) = 1 - Los_P{UAVBSsIndex}(UAVBnUEsDist_Index,3);
+        end
+    end
+end

@@ -18,12 +18,13 @@ function test()
 
     % 讀檔讀取UE
     % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
-
+    
 
     % 演算法
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
-
+    %計算效能
+    [UEsLos_P, UEsNLos_P] = LosOFPossibility(r_UAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, 100);
     % 繪圖
     exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
 end
