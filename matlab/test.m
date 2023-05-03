@@ -19,7 +19,6 @@ function test()
     % 讀檔讀取UE
     % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
     
-
     % 演算法
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
