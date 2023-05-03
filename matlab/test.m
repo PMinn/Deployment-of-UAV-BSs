@@ -6,7 +6,7 @@ function test()
     r_UAVBS = 30; % UAVBS涵蓋的範圍
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
-    UAVBSsHigh = 400; %UAV高度
+    UAVBSsHigh = 120; %UAV高度
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
     
@@ -25,6 +25,7 @@ function test()
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
     %計算效能
     [UEsLosOfPossibility, UEsNLosOfPossibility] = LosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh);
+    UEandUAVsLos(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh, UEsLosOfPossibility, UEsNLosOfPossibility);
     % 繪圖
     exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
 end
