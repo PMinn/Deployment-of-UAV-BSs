@@ -20,7 +20,7 @@ function UEsLos = getUAVandUEsLos( UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSs
         %size(UEsLosOfPossibility{UAVBSsIndex}(:,3)
         UEsLos = UEsLosOfPossibility{UAVBSsIndex}(:,3).*(Los.') + UEsNLosOfPossibility{UAVBSsIndex}(:,3).*(NLoS.');
         UEsLos = [UEsPositionOfUAVBSIncluded{UAVBSsIndex}, UEsLos];
-        UEsLos
+        %UEsLos
     end
     
 

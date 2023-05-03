@@ -11,7 +11,7 @@ function [UEsLosOfPossibility, UEsNLosOfPossibility] = getLosOfPossibility(UAVBS
         UAVandUEsHorDist = pdist2(UAVBSsSet(UAVBSsIndex,:),UEsPositionOfUAVBSIncluded{UAVBSsIndex});
         for UAVandUEsHorDist_Index = 1: size(UAVandUEsHorDist,2)
             %算式(1)
-            UEsLosOfPossibility{UAVBSsIndex}(UAVandUEsHorDist_Index,3) = 1 / (1 + a * (exp(-b * (180 / pi * atan(UAVBSsHigh / UAVandUEsHorDist(UAVandUEsHorDist_Index)) - a))));
+            UEsLosOfPossibility{UAVBSsIndex}(UAVandUEsHorDist_Index,3) = 1 / (1 + a * exp(-b * (180 / pi * atan(UAVBSsHigh / UAVandUEsHorDist(UAVandUEsHorDist_Index)) - a)));
             UEsNLosOfPossibility{UAVBSsIndex}(UAVandUEsHorDist_Index,3) = 1 - UEsLosOfPossibility{UAVBSsIndex}(UAVandUEsHorDist_Index,3);
         end
     end
