@@ -1,7 +1,7 @@
-function [UEsLosOfPossibility, UEsNLosOfPossibility] = LosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh)
+function [UEsLosOfPossibility, UEsNLosOfPossibility] = getLosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh)
     % UAVBSsHigh : UAVBS無人機的高度
     % UAVandUEsHorDist : UAV及UE的平面歐幾里得距離
-    a = 12.8 ;% a: 環境變數
+    a = 12.08 ;% a: 環境變數
     b = 0.11 ;% b: 環境變數
     UEsLosOfPossibility = UEsPositionOfUAVBSIncluded;% UEsLosOfPossibility : UE的位置及Line of Sight的機率,向量形式[x,y,機率]
     UEsNLosOfPossibility = UEsPositionOfUAVBSIncluded;% UEsNLosOfPossibility : UE的位置及Non-Line of Sight的機率,向量形式[x,y,機率]

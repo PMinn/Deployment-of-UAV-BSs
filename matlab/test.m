@@ -24,8 +24,8 @@ function test()
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
     %計算效能
-    [UEsLosOfPossibility, UEsNLosOfPossibility] = LosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh);
-    UEandUAVsLos(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh, UEsLosOfPossibility, UEsNLosOfPossibility);
+    [UEsLosOfPossibility, UEsNLosOfPossibility] = getLosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh)
+    UEsLos = getUAVandUEsLos( UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh, UEsLosOfPossibility, UEsNLosOfPossibility)
     % 繪圖
     exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
 end

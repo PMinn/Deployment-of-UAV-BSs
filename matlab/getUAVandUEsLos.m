@@ -1,11 +1,11 @@
-function UEandUAVLos = UEandUAVsLos( UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh, UEsLosOfPossibility, UEsNLosOfPossibility)
+function UEsLos = getUAVandUEsLos( UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsHigh, UEsLosOfPossibility, UEsNLosOfPossibility)
     % UAVandUEsHorDist : UAV及UE的平面歐幾里得距離
     % UAVandUEsDist : UAV及UE的歐幾里得距離
-    %UEandUAVsLos : 
     Frequency = 2*10^9;%Frequency : 行動通訊的載波頻寬(Hz)
     Constant = 3*10^8; %constant  : 光的移動速率(m/s)
     hLos = 1.6;%HLos : Los的平均訊號損失
     hNLos = 23;%HNLos : NLos的平均訊號損失
+    
     for UAVBSsIndex = 1:size(UAVBSsSet(:,1),1)%UAV個數
         %算式(4)
         UAVandUEsHorDist = pdist2(UAVBSsSet(UAVBSsIndex,:),UEsPositionOfUAVBSIncluded{UAVBSsIndex});
@@ -16,7 +16,8 @@ function UEandUAVLos = UEandUAVsLos( UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVB
         %算式(5)
         %size(Los.')
         %size(UEsLosOfPossibility{UAVBSsIndex}(:,3)
-        UEandUAVLos = UEsLosOfPossibility{UAVBSsIndex}(:,3).*(Los.') + UEsNLosOfPossibility{UAVBSsIndex}(:,3).*(NLoS.');
+        UEsLos = UEsLosOfPossibility{UAVBSsIndex}(:,3).*(Los.') + UEsNLosOfPossibility{UAVBSsIndex}(:,3).*(NLoS.');
+        UEsLos
     end
 
 end
