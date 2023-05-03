@@ -1,0 +1,7 @@
+function UEandUAVsLos(UAVandUEsDist)
+    %UAVandUEsDist : UAV及UE的歐幾里得距離
+    Frequency = 2*10^9;%Frequency : 行動通訊的載波頻寬(Hz)
+    Constant = 3*10^8; %constant  : 光的移動速率(m/s)
+    HLos = 1.6;%hLos : Los的平均訊號損失
+    HNLos = 23;%hNLos
+end
