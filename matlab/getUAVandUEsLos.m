@@ -15,7 +15,6 @@ function UEsLos = getUAVandUEsLos( UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSs
         %算式(3)
         Los = 20 * log10(4*pi*Frequency*UAVandUEsDist/Constant) + hLos;
         NLoS = 20 * log10(4*pi*Frequency*UAVandUEsDist/Constant) + hNLos;
-        Los
         %算式(5)
         %size(Los.')
         %size(UEsLosOfPossibility{UAVBSsIndex}(:,3)
