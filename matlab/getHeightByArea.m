@@ -11,7 +11,7 @@ function height = getHeightByArea(r_UAVBS)
     differentials = zeros(maxHeight,1);
     for h=1:size(differentials,1)
         theta = atan(h/r);
-        differentials(h,1) = pi*tan(h/r)/(9*log(10))+(a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/(a*exp(-b*(180*theta/pi-a))+1)^2;
+        differentials(h,1) = pi*(h/r)/(9*log(10))+(a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/(a*exp(-b*(180*theta/pi-a))+1)^2;
     end
     [~,height] = min(abs(differentials));
 
@@ -22,7 +22,7 @@ function height = getHeightByArea(r_UAVBS)
         for i=1:11
             h = height+decimal*(i-1);
             theta = atan(h/r);
-            differentials(i,1) = pi*tan(h/r)/(9*log(10))+(a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/(a*exp(-b*(180*theta/pi-a))+1)^2;
+            differentials(i,1) = pi*(h/r)/(9*log(10))+(a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/(a*exp(-b*(180*theta/pi-a))+1)^2;
         end
         [~,index] = min(abs(differentials));
         height = height+decimal*(index-1);
