@@ -1,4 +1,4 @@
-function exportImage(file, locationOfUEs, UAVBSsSet, r_UAVBS)
+function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR)
     backgroundColor = '#FDFDFD';
     UAVBSColor = '#61Cd81';
     UEColor = '#2F71F4';
@@ -34,7 +34,7 @@ function exportImage(file, locationOfUEs, UAVBSsSet, r_UAVBS)
     for i=1:size(UAVBSsSet,1)
         x = UAVBSsSet(i,1);
         y = UAVBSsSet(i,2);
-        rectangle('Position', [x-r_UAVBS,y-r_UAVBS,2*r_UAVBS,2*r_UAVBS], 'Curvature', [1,1], 'EdgeColor', UAVBSColor, 'LineWidth', 1);
+        rectangle('Position', [x-UAVBSsR(i,1),y-UAVBSsR(i,1),2*UAVBSsR(i,1),2*UAVBSsR(i,1)], 'Curvature', [1,1], 'EdgeColor', UAVBSColor, 'LineWidth', 1);
     end
     scatter(UAVBSsSet(:,1), UAVBSsSet(:,2), 80, "filled", "square", 'MarkerFaceColor', UAVBSColor); % 所有UAVBSs的點
     scatter(xArrayFromLocationOfUEs, yArrayFromLocationOfUEs, 20, "filled", "^", 'MarkerEdgeColor', UEColor, 'MarkerFaceColor', UEColor); % 所有UEs的點
@@ -46,7 +46,8 @@ function exportImage(file, locationOfUEs, UAVBSsSet, r_UAVBS)
     axis equal;
     minPosition = min(locationOfUEs);
     maxPosition = max(locationOfUEs);
-    axis([minPosition(1,1)-r_UAVBS maxPosition(1,1)+r_UAVBS minPosition(1,2)-r_UAVBS maxPosition(1,2)+r_UAVBS]); % axis([xmin,xmax,ymin,ymax])
+    maxR = max(UAVBSsR);
+    axis([minPosition(1,1)-maxR maxPosition(1,1)+maxR minPosition(1,2)-maxR maxPosition(1,2)+maxR]); % axis([xmin,xmax,ymin,ymax])
     hold off;
     exportgraphics(gcf, file, 'Resolution', 130, 'BackgroundColor', backgroundColor);
 end
