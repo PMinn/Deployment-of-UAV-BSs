@@ -33,16 +33,16 @@ function [UAVBSsSet, UAVBSsR] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, l
                 r_UAVBS = (outerR+innerR)/2;
                 [newPositionOfUAVBS, newUEsSet] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
                 if size(newUEsSet,1) == sizeOfNewUEsSet
-                    times = times+1
+                    times = times+1;
                     if times >= 7
                         break
                     end
                 end
                 sizeOfNewUEsSet = size(newUEsSet,1);
                 if sizeOfNewUEsSet > maxNumOfUE
-                    outerR = r_UAVBS
+                    outerR = r_UAVBS;
                 elseif sizeOfNewUEsSet < maxNumOfUE
-                    innerR = r_UAVBS
+                    innerR = r_UAVBS;
                 else
                     break
                 end

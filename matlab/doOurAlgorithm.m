@@ -7,7 +7,7 @@ function doOurAlgorithm()
     
 
     bandwidth = 2*10^7; % 頻寬
-    powerOfUAVBS = 100; % 功率
+    powerOfUAVBS = 100*10^-7; % 功率(W)
     noise = 4.1843795*10^-21; % 熱雜訊功率譜密度
     minHeight = 30; % 法定最高高度
     maxHeight = 120; % 法定最高高度
