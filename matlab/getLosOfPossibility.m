@@ -11,7 +11,7 @@ function [UEsLosOfPossibility] = getLosOfPossibility(UAVBSsSet, UEsPositionOfUAV
          UAVBSsHigh = getHeightByArea(r_UAVBS);
         for j=1:size(UAVandUEsHorDist,2)
             % 算式(1)
-            UEsLosOfPossibility{i}(j,1) = 1 / (1 + a * exp(-b * (180 / pi * atan(UAVBSsHigh / UAVandUEsHorDist(j)) - a)));
+            UEsLosOfPossibility{i}(j,1) = 1 / (1 + a * exp(-1*b * (180 * atan(UAVBSsHigh / UAVandUEsHorDist(j)) / pi - a)));
             UEsLosOfPossibility{i}(j,2) = 1 - UEsLosOfPossibility{i}(j,1);
         end
     end

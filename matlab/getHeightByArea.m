@@ -13,26 +13,25 @@ function height = getHeightByArea(r_UAVBS)
     for i=1:size(differentials,1)
         h = minHeight-1+i;
         theta = atan(h/r);
-        differentials(i,1) = pi*(h/r)/(9*log(10))+(a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/(a*exp(-b*(180*theta/pi-a))+1)^2;
+        differentials(i,1) = pi*tan(theta)/(9*log(10)) + (a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/((a*exp(-b*(180*theta/pi-a))+1)^2);
     end
     [~, index] = min(abs(differentials));
     height = minHeight-1+index;
-    if (differentials(height-29,1)<0 && differentials(height-30,1)>0) || (differentials(height-29,1)>0 && differentials(height-30,1)<0)
+    if (differentials(height-minHeight+1,1)<0 && differentials(height-minHeight,1)>0) || (differentials(height-minHeight+1,1)>0 && differentials(height-minHeight,1)<0)
         height = height-1;
     end
 
     % 高度貼近小數位
     decimal = 0.1; % 當前的小數位
-    while numOfDecimalPlaces > 0
+    for k=1:numOfDecimalPlaces
         differentials = zeros(11,1);
         for i=1:11
             h = height+decimal*(i-1);
             theta = atan(h/r);
-            differentials(i,1) = pi*(h/r)/(9*log(10))+(a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/(a*exp(-b*(180*theta/pi-a))+1)^2;
+            differentials(i,1) = pi*tan(theta)/(9*log(10)) + (a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/((a*exp(-b*(180*theta/pi-a))+1)^2);
         end
         [~, index] = min(abs(differentials));
         height = height+decimal*(index-1);
         decimal = decimal/10;
-        numOfDecimalPlaces = numOfDecimalPlaces-1;
     end
 end
