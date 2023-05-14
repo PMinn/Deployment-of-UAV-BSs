@@ -30,6 +30,7 @@ function [totalDataTransferRatesOfUAVBSs, satisfiedRate] = main(ue_size, rangeOf
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
 
+
     % 效能分析
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
@@ -53,6 +54,7 @@ function [totalDataTransferRatesOfUAVBSs, satisfiedRate] = main(ue_size, rangeOf
     end
     indexOfSatisfied  = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
     satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
+
 
     % 繪圖
     exportImage('../web/images/barchart.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);

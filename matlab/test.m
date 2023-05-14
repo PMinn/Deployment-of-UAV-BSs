@@ -7,6 +7,7 @@ function test()
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
 
+
     bandwidth = 2*10^7; % 頻寬
     powerOfUAVBS = 100; % 功率
     noise = 4.1843795*10^-21; % 熱雜訊功率譜密度
@@ -14,28 +15,32 @@ function test()
     minDataTransferRateOfUEAcceptable = 10^6; % 使用者可接受的最低速率
     maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限
 
+
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
     
 
     % 生成UE及寫檔
-    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    % locationOfUEs = locationOfUEs(:,1:2);
-    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    locationOfUEs = locationOfUEs(:,1:2);
+    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
+    UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
 
     % 效能分析
-    UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
     numOfUEsConnected = zeros(size(UAVBSsSet,1),1); % 每台UAVBS連線到的UE數量
     for i=1:size(numOfUEsConnected,1)
         numOfUEsConnected(i,1) = size(find(indexArrayOfUEsServedByUAVBS == i),1);
     end
+    
+    UEsLosOfPossibility = getLosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, r_UAVBS);
+    UEsLos = getUAVandUEsLos(UAVBSsSet, UEsPositionOfUAVBSIncluded, UEsLosOfPossibility,r_UAVBS);
     arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth);
     SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, {}, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
