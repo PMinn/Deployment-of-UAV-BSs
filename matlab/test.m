@@ -6,7 +6,6 @@ function test()
     r_UAVBS = 30; % UAVBS涵蓋的範圍
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
-
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
     
@@ -18,12 +17,15 @@ function test()
 
     % 讀檔讀取UE
     % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
-
-
+    
     % 演算法
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
 
+    %計算效能
+    UEsLosOfPossibility = getLosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, r_UAVBS);
+    UEsLos = getUAVandUEsLos(UAVBSsSet, UEsPositionOfUAVBSIncluded, UEsLosOfPossibility,r_UAVBS);
+    
     % 繪圖
     exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
 end
