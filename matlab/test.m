@@ -38,11 +38,10 @@ function test()
     for i=1:size(numOfUEsConnected,1)
         numOfUEsConnected(i,1) = size(find(indexArrayOfUEsServedByUAVBS == i),1);
     end
-    
     UEsLosOfPossibility = getLosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, r_UAVBS);
-    UEsLos = getUAVandUEsLos(UAVBSsSet, UEsPositionOfUAVBSIncluded, UEsLosOfPossibility,r_UAVBS);
+    UEsLos = getUAVandUEsLos(UAVBSsSet, UEsPositionOfUAVBSIncluded, UEsLosOfPossibility,r_UAVBS); % 平均路徑損失
     arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth);
-    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, {}, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
+    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, UEsLos, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
     totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
     % 往回檢查速率上限

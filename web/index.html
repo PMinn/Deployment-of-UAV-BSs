@@ -46,7 +46,7 @@
             <div class="mb-3">
                 <label for="minDataTransferRateOfUEAcceptable" class="form-label">使用者滿意最低速率</label>
                 <div class="input-group mb-3">
-                    <input type="number" class="form-control" placeholder="bps" aria-label="bps" value="1"
+                    <input type="number" class="form-control" placeholder="bps" aria-label="bps" value="5"
                         id="minDataTransferRateOfUEAcceptable">
                     <span class="input-group-text">10^6 bps</span>
                 </div>
@@ -54,9 +54,9 @@
             <div class="mb-3">
                 <label for="maxDataTransferRateOfUAVBS" class="form-label">無人機回程速率上限</label>
                 <div class="input-group mb-3">
-                    <input type="number" class="form-control" placeholder="bps" aria-label="bps" value="1.5"
+                    <input type="number" class="form-control" placeholder="bps" aria-label="bps" value="150"
                         id="maxDataTransferRateOfUAVBS">
-                    <span class="input-group-text">10^8 bps</span>
+                    <span class="input-group-text">10^6 bps</span>
                 </div>
             </div>
 
@@ -70,9 +70,18 @@
             </svg>
         </div>
         <div class="analytics block">
+            <div class="mb-3 d-flex">
+                <label class="form-label">滿意度:</label>
+                <div id="satisfiedRate"></div>
+                <label class="form-label">%</label>
+            </div>
             <div class="mb-3">
-                <label class="form-label">資料速率</label>
+                <label class="form-label">UAV資料速率</label>
                 <div id="dataTransferRates"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">UE資料速率</label>
+                <div id="dataTransferRates_UE"></div>
             </div>
         </div>
     </div>

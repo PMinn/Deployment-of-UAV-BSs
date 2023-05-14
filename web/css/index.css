@@ -49,10 +49,6 @@
 .analytics {
     width: 20%;
     padding: 35px;
-}
-
-.analytics>div {
-    height: 100%;
     overflow-y: auto;
 }
 

@@ -16,15 +16,15 @@ def renderResult(data):
         except ValueError:
             pass
     try:
-        data = eng.main(data['ue_size'], matlab.double([[data['rangeOfPositionMin'], data['rangeOfPositionMax']]]), data['r_UAVBS'], data['isCounterClockwise'], data['minDataTransferRateOfUEAcceptable'], data['maxDataTransferRateOfUAVBS'], nargout=2)
+        data = eng.main(data['ue_size'], matlab.double([[data['rangeOfPositionMin'], data['rangeOfPositionMax']]]), data['r_UAVBS'], data['isCounterClockwise'], data['minDataTransferRateOfUEAcceptable'], data['maxDataTransferRateOfUAVBS'], nargout=3)
     except matlab.engine.MatlabExecutionError as e:
         print(e)
         eel.executionError(e.args[0])
     else:
         totalDataTransferRatesOfUAVBSs = np.asarray(data[0]).tolist() # totalDataTransferRatesOfUAVBSs <class matlab.double> to numpy array to list
         satisfiedRate = data[1]
-        print(satisfiedRate)
-        eel.finish(totalDataTransferRatesOfUAVBSs)
+        dataTransferRatesOfUEs = np.asarray(data[2]).tolist() # totalDataTransferRatesOfUAVBSs <class matlab.double> to numpy array to list
+        eel.finish(totalDataTransferRatesOfUAVBSs, satisfiedRate, dataTransferRatesOfUEs)
 
 eel.init("web")
 eel.start("index.html", size=(2000, 1000), port=50505, shutdown_delay=5)
