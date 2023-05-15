@@ -22,12 +22,12 @@ function doOurAlgorithm()
     
 
     % 生成UE及寫檔
-    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    locationOfUEs = locationOfUEs(:,1:2);
-    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    % locationOfUEs = locationOfUEs(:,1:2);
+    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
 
     % 演算法

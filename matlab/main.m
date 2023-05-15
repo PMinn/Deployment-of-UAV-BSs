@@ -8,9 +8,16 @@ function [totalDataTransferRatesOfUAVBSs, satisfiedRate, dataTransferRates] = ma
     % minDataTransferRateOfUEAcceptable: 使用者可接受的最低速率
     % maxDataTransferRateOfUAVBS: 無人機回程速率上限
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
+    
     bandwidth = 2*10^7; % 頻寬
-    powerOfUAVBS = 100; % 功率
+    powerOfUAVBS = 0.1; % 功率
     noise = 4.1843795*10^-21; % 熱雜訊功率譜密度
+    a = 12.08; % 環境變數
+    b = 0.11; % 環境變數
+    frequency = 2*10^9; % 行動通訊的載波頻寬(Hz)
+    constant = 3*10^8; % 光的移動速率(m/s)
+    etaLos = 1.6; % Los的平均訊號損失
+    etaNLos = 23; % NLos的平均訊號損失
     
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
@@ -26,6 +33,10 @@ function [totalDataTransferRatesOfUAVBSs, satisfiedRate, dataTransferRates] = ma
     % 演算法
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
+    UAVBSsR = zeros(size(UAVBSsSet,1),1);
+    for i=1:size(UAVBSsR,1)
+        UAVBSsR(i,1) = r_UAVBS;
+    end
 
     % 效能分析
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
@@ -33,10 +44,10 @@ function [totalDataTransferRatesOfUAVBSs, satisfiedRate, dataTransferRates] = ma
     for i=1:size(numOfUEsConnected,1)
         numOfUEsConnected(i,1) = size(find(indexArrayOfUEsServedByUAVBS == i),1);
     end
-    UEsLosOfPossibility = getLosOfPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, r_UAVBS);
-    UEsLos = getUAVandUEsLos(UAVBSsSet, UEsPositionOfUAVBSIncluded, UEsLosOfPossibility,r_UAVBS); % 平均路徑損失
-    arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth);
-    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, UEsLos, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
+    possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, r_UAVBS); % LoS及NLoS機率
+    averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, frequency, constant, etaLos, etaNLos, r_UAVBS); % 平均路徑損失
+    arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth); % UAV服務一台UE的頻寬
+    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
     totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
     % 往回檢查速率上限
@@ -53,5 +64,5 @@ function [totalDataTransferRatesOfUAVBSs, satisfiedRate, dataTransferRates] = ma
     satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
 
     % 繪圖
-    exportImage('../web/images/barchart.jpg', locationOfUEs, UAVBSsSet, r_UAVBS);
+    exportImage('../web/images/barchart.jpg', locationOfUEs, UAVBSsSet, UAVBSsR);
 end

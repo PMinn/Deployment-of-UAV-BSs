@@ -1,23 +1,14 @@
-function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, arrayOfAveragePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise)
+function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise)
     % SINR: 每個UE的SINR []
     % UEsPositionOfUAVBSIncluded: UAVBS涵蓋的UE座標 {[] []}
-    % arrayOfAveragePathLoss: 無人機j到使用者u間的平均路徑損失 {[] []}
+    % averagePathLoss: 無人機j到使用者u間的平均路徑損失 {[] []}
     % indexArrayOfUEsServedByUAVBS: 每位使用者連線到的無人機 [n1; n2;...]
     % arrayOfBandwidths: 無人機平均每個UE分到的頻寬
     % powerOfUAVBS: 功率
     % noise: 熱雜訊功率譜密度
 
-    % init
-    arrayOfAveragePathLoss = UEsPositionOfUAVBSIncluded;
-    for i=1:size(arrayOfAveragePathLoss, 2)
-        arrayOfAveragePathLoss{i} = zeros(size(arrayOfAveragePathLoss{i}, 1));
-        for j=1:size(arrayOfAveragePathLoss{i}, 1)
-            arrayOfAveragePathLoss{i}(j,1) = 130+rand()*20; % 2023/5/1 PathLoss大概在140左右
-        end
-    end
-
     % 計算所有signal
-    signal = arrayOfAveragePathLoss;
+    signal = averagePathLoss;
     for i=1:size(signal, 2)
         for j=1:size(signal{i},1)
             signal{i}(j,1) = powerOfUAVBS*(10^(-1*signal{i}(j,1)/10));
