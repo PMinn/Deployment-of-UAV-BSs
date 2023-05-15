@@ -13,6 +13,7 @@ function height = getHeightByArea(r_UAVBS)
     for i=1:size(differentials,1)
         h = minHeight-1+i;
         theta = atan(h/r);
+
         differentials(i,1) = pi*tan(theta)/(9*log(10)) + (a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/((a*exp(-b*(180*theta/pi-a))+1)^2);
     end
     [~, index] = min(abs(differentials));
@@ -23,6 +24,7 @@ function height = getHeightByArea(r_UAVBS)
 
     % 高度貼近小數位
     decimal = 0.1; % 當前的小數位
+
     for k=1:numOfDecimalPlaces
         differentials = zeros(11,1);
         for i=1:11

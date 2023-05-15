@@ -1,4 +1,4 @@
-function test()
+function doSpiralMBSPlacementAlgorithm()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     ue_size = 100; % 生成UE的數量
