@@ -13,7 +13,7 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR)
     boundaryUEsSet = convhull(locationOfUEs); % 凸包上的UE集合
     xArrayFromLocationOfUEs = locationOfUEs(:,1); % UE的x座標陣列
     yArrayFromLocationOfUEs = locationOfUEs(:,2); % UE的y座標陣列
-    plot(xArrayFromLocationOfUEs(boundaryUEsSet), yArrayFromLocationOfUEs(boundaryUEsSet), 'Color', boundaryColor, 'LineStyle', "--"); % 邊界線
+    % plot(xArrayFromLocationOfUEs(boundaryUEsSet), yArrayFromLocationOfUEs(boundaryUEsSet), 'Color', boundaryColor, 'LineStyle', "--"); % 邊界線
 
     % for i=1:size(UAVBSsRange,2)
     %     % UEs所屬的UAVBS
@@ -23,12 +23,11 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR)
     % end
 
     % 連接線
-    for i=1:size(UAVBSsSet,1)-1
-        x = transpose(UAVBSsSet(i:i+1,1));
-        y =  transpose(UAVBSsSet(i:i+1,2));
-        line(x, y, 'Color', connectLineColor, 'Linestyle', '-');
-    end
-
+    % for i=1:size(UAVBSsSet,1)-1
+    %     x = transpose(UAVBSsSet(i:i+1,1));
+    %     y =  transpose(UAVBSsSet(i:i+1,2));
+    %     line(x, y, 'Color', connectLineColor, 'Linestyle', '-');
+    % end
 
     % UAVBSs的範圍
     for i=1:size(UAVBSsSet,1)

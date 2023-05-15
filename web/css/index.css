@@ -31,8 +31,8 @@
 }
 
 .out-area {
-    margin: 5vh auto;
-    width: 90vw;
+    margin: 3vh auto;
+    width: 94vw;
     height: 90vh;
     display: flex;
     justify-content: space-between;
@@ -45,13 +45,23 @@
     box-shadow: 0 10px 30px #00000010;
 }
 
-.panel {
+.panel,
+.analytics {
     width: 20%;
     padding: 35px;
+    overflow-y: auto;
+}
+
+.analytics table {
+    width: 90%;
+}
+
+.analytics table td:last-child {
+    text-align: right;
 }
 
 .result {
-    width: 78%;
+    width: 58%;
     display: flex;
     justify-content: center;
     position: relative;
