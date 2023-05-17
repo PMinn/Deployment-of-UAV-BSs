@@ -1,4 +1,4 @@
-function [UAVBSsSet, UAVBSsR] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, locationOfUEs)
+function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, locationOfUEs)
     % maxHeight: 法定最高高度
     % maxNumOfUE: 無人機符合滿意度之下，能服務的最大UE數量
     % locationOfUEs: 所有UE的位置 []
@@ -13,12 +13,11 @@ function [UAVBSsSet, UAVBSsR] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, l
     UAVBSsSet = [];
     UAVBSsR = [];
     centerUE = [];
+    UEsPositionOfUAVBSIncluded = {};
 
     % 演算法第1行
     [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(false, uncoveredUEsSet, angle); % 找出邊緣並以逆時針排序
-    c=0;
     while ~isempty(uncoveredUEsSet)
-        c=c+1;
         % 演算法第2行
         uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
         centerUE = uncoveredBoundaryUEsSet(1,:);
@@ -28,7 +27,6 @@ function [UAVBSsSet, UAVBSsR] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, l
         [newPositionOfUAVBS, newUEsSet] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
         sizeOfNewUEsSet = size(newUEsSet,1);
         if sizeOfNewUEsSet <= maxNumOfUE
-            c
             [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet, minR);
         else
             innerR = minR;
@@ -63,6 +61,7 @@ function [UAVBSsSet, UAVBSsR] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, l
         UAVBSsSet(size(UAVBSsSet,1)+1,:) = newPositionOfUAVBS;
         uncoveredUEsSet = setdiff(uncoveredUEsSet, newUEsSet, 'rows');
         UAVBSsR(size(UAVBSsR,1)+1,1) = r_UAVBS;
+        UEsPositionOfUAVBSIncluded{1,size(UEsPositionOfUAVBSIncluded,2)+1} = newUEsSet;
 
         % 演算第6行
         % 以不更改排序的情況下移除未覆蓋邊緣集合裡已覆蓋的邊緣點

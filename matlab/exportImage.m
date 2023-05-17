@@ -1,4 +1,4 @@
-function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR)
+function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded)
     backgroundColor = '#FDFDFD';
     UAVBSColor = '#61Cd81';
     UEColor = '#2F71F4';
@@ -10,7 +10,7 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR)
     set(gcf,'visible', 'off');
     set(gca, 'Color', backgroundColor);
     hold on;
-    boundaryUEsSet = convhull(locationOfUEs); % 凸包上的UE集合
+    % boundaryUEsSet = convhull(locationOfUEs); % 凸包上的UE集合
     xArrayFromLocationOfUEs = locationOfUEs(:,1); % UE的x座標陣列
     yArrayFromLocationOfUEs = locationOfUEs(:,2); % UE的y座標陣列
 
@@ -18,9 +18,9 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR)
     % plot(xArrayFromLocationOfUEs(boundaryUEsSet), yArrayFromLocationOfUEs(boundaryUEsSet), 'Color', boundaryColor, 'LineStyle', "--");
 
     % UEs所屬的UAVBS
-    % for i=1:size(UAVBSsRange,2)
-    %     for j=1:size(UAVBSsRange{1,i},1)
-    %         text(UAVBSsRange{1,i}(j,1), UAVBSsRange{1,i}(j,2),'\leftarrow ' + string(i));
+    % for i=1:size(UEsPositionOfUAVBSIncluded,2)
+    %     for j=1:size(UEsPositionOfUAVBSIncluded{1,i},1)
+    %         text(UEsPositionOfUAVBSIncluded{1,i}(j,1), UEsPositionOfUAVBSIncluded{1,i}(j,2),'\leftarrow ' + string(i));
     %     end
     % end
 
@@ -32,9 +32,9 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR)
     % end
 
     % UEs編號
-    for i=1:size(locationOfUEs,1)
-        text(locationOfUEs(i,1), locationOfUEs(i,2),'\leftarrow ' + string(i));
-    end
+    % for i=1:size(locationOfUEs,1)
+    %     text(locationOfUEs(i,1), locationOfUEs(i,2),'\leftarrow ' + string(i));
+    % end
 
     % UAVBSs的涵蓋範圍
     for i=1:size(UAVBSsSet,1)

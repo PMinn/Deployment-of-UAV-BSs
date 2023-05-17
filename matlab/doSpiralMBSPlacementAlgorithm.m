@@ -23,12 +23,12 @@ function doSpiralMBSPlacementAlgorithm()
     checkOutputDir(outputDir); 
     
     % 生成UE及寫檔
-    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    locationOfUEs = locationOfUEs(:,1:2);
-    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    % locationOfUEs = locationOfUEs(:,1:2);
+    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
@@ -62,7 +62,8 @@ function doSpiralMBSPlacementAlgorithm()
     end
     indexOfSatisfied  = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
     satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
-
+    satisfiedRate
+    
     % 繪圖
     exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR);
 end
