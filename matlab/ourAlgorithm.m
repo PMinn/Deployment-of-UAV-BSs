@@ -27,22 +27,22 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(minHeig
         [newPositionOfUAVBS, newUEsSet] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
         sizeOfNewUEsSet = size(newUEsSet,1);
         if sizeOfNewUEsSet <= maxNumOfUE
-            [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet, minR);
+            [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet);
+            if r_UAVBS == 0
+                r_UAVBS = minR;
+            end
         else
             innerR = minR;
             outerR = maxR;
             times = 0;
             while 1
-                if outerR <= minR
-                    r_UAVBS = minR;
-                    break;
-                end
                 r_UAVBS = (outerR+innerR)/2;
                 [newPositionOfUAVBS, newUEsSet] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
                 if size(newUEsSet,1) == sizeOfNewUEsSet
                     times = times+1;
-                    if times >= 12
-                        break
+                    if times >= 3
+                        [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet);
+                        break;
                     end
                 end
                 sizeOfNewUEsSet = size(newUEsSet,1);
@@ -51,7 +51,8 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(minHeig
                 elseif sizeOfNewUEsSet < maxNumOfUE
                     innerR = r_UAVBS;
                 else
-                    break
+                    [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet);
+                    break;
                 end
             end
         end

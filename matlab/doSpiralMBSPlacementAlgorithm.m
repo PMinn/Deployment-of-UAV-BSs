@@ -31,8 +31,8 @@ function doSpiralMBSPlacementAlgorithm()
     locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
-    UAVBSsSet = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
-    UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
+    [UAVBSsSet, UEsPositionOfUAVBSIncluded] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
+    % UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
     UAVBSsR = zeros(size(UAVBSsSet,1),1); % UAVBSs的半徑
     for i=1:size(UAVBSsR,1)
         UAVBSsR(i,1) = r_UAVBS;
@@ -63,7 +63,7 @@ function doSpiralMBSPlacementAlgorithm()
     indexOfSatisfied  = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
     satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
     satisfiedRate
-    
+
     % 繪圖
-    exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR);
+    exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded);
 end
