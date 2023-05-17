@@ -29,13 +29,8 @@ function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfU
     end
     
     % arrayOfSignalToInterference + noise
-    size(arrayOfSignalToInterference,1)
-    size(arrayOfBandwidths,1)
     for i=1:size(arrayOfSignalToInterference,1)
-        idOfUAV = indexArrayOfUEsServedByUAVBS(i,1);
-        idOfUAV
-        bandwidth = arrayOfBandwidths(idOfUAV,1);
-        arrayOfSignalToInterference(i,2) = arrayOfSignalToInterference(i,2)+(bandwidth*noise);
+        arrayOfSignalToInterference(i,2) = arrayOfSignalToInterference(i,2)+(arrayOfBandwidths(indexArrayOfUEsServedByUAVBS(i,1),1)*noise);
     end
     
     SINR = zeros(size(arrayOfSignalToInterference,1),1);

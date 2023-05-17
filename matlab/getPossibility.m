@@ -1,11 +1,11 @@
-function possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, r_UAVBS)
+function possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR)
     % possibility: LoS及NLoS機率 {[Los,NLos;...],[Los,NLos;...],...}
     % a: 環境變數
     % b: 環境變數
-    
-    UAVBSsHigh = getHeightByArea(r_UAVBS); % UAVBS無人機的高度
 
     for i=1:size(UAVBSsSet(:,1),1)%UAV個數
+        UAVBSsHigh = getHeightByArea(UAVBSsR(i,1)); % UAVBS無人機的高度
+
         % 算式(2)
         UAVandUEsHorDist = pdist2(UAVBSsSet(i,:),UEsPositionOfUAVBSIncluded{i}); % 該UAV到UE的距離 [d1 d2 d3...;]
         for j=1:size(UAVandUEsHorDist,2)

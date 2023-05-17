@@ -1,8 +1,8 @@
 function doSpiralMBSPlacementAlgorithm()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
-    ue_size = 100; % 生成UE的數量
-    rangeOfPosition = [0 200]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    ue_size = 500; % 生成UE的數量
+    rangeOfPosition = [0 500]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 30; % UAVBS涵蓋的範圍
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
@@ -23,12 +23,12 @@ function doSpiralMBSPlacementAlgorithm()
     checkOutputDir(outputDir); 
     
     % 生成UE及寫檔
-    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    % locationOfUEs = locationOfUEs(:,1:2);
-    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    locationOfUEs = locationOfUEs(:,1:2);
+    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, UEsPositionOfUAVBSIncluded] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);
@@ -44,8 +44,8 @@ function doSpiralMBSPlacementAlgorithm()
     for i=1:size(numOfUEsConnected,1)
         numOfUEsConnected(i,1) = size(find(indexArrayOfUEsServedByUAVBS == i),1);
     end
-    possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, r_UAVBS); % LoS及NLoS機率
-    averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, frequency, constant, etaLos, etaNLos, r_UAVBS); % 平均路徑損失
+    possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR); % LoS及NLoS機率
+    averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, frequency, constant, etaLos, etaNLos, UAVBSsR); % 平均路徑損失
     arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth); % UAV服務一台UE的頻寬
     SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]

@@ -1,13 +1,14 @@
-function averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, frequency, constant, etaLos, etaNLos, r_UAVBS)
+function averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, frequency, constant, etaLos, etaNLos, UAVBSsR)
     % frequency: 行動通訊的載波頻寬(Hz)
     % constant: 光的移動速率(m/s)
     % etaLos: Los的平均訊號損失
     % etaNLos: NLos的平均訊號損失
 
-    UAVBSsHigh = getHeightByArea(r_UAVBS);
+    
     averagePathLoss = {};
 
-    for UAVBSsIndex = 1:size(UAVBSsSet(:,1),1)
+    for UAVBSsIndex = 1:size(UAVBSsSet,1)
+        UAVBSsHigh = getHeightByArea(UAVBSsR(UAVBSsIndex,1));
 
         %算式(4)
         UAVandUEsHorDist = pdist2(UAVBSsSet(UAVBSsIndex,:),UEsPositionOfUAVBSIncluded{UAVBSsIndex}); % UAV及UE的平面歐幾里得距離
