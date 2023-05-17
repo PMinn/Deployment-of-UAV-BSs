@@ -2,10 +2,9 @@ function doOurAlgorithm()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     ue_size = 500; % 生成UE的數量
-    rangeOfPosition = [0 200]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    rangeOfPosition = [0 500]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 30; % UAVBS涵蓋的範圍
     
-
     bandwidth = 2*10^7; % 頻寬
     powerOfUAVBS = 100*10^-7; % 功率(W)
     noise = 4.1843795*10^-21; % 熱雜訊功率譜密度
@@ -20,7 +19,6 @@ function doOurAlgorithm()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
     
-
     % 生成UE及寫檔
     % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
     % locationOfUEs = locationOfUEs(:,1:2);
@@ -34,5 +32,5 @@ function doOurAlgorithm()
     [UAVBSsSet, UAVBSsR] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, locationOfUEs);
 
     % 繪圖
-    exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, UAVBSsR);
+    exportImage(outputDir+'/ourAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR);
 end

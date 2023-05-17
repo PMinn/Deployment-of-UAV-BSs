@@ -16,20 +16,29 @@ function [UAVBSsSet, UAVBSsR] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, l
 
     % 演算法第1行
     [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(false, uncoveredUEsSet, angle); % 找出邊緣並以逆時針排序
+    c=0;
     while ~isempty(uncoveredUEsSet)
+        c=c+1;
         % 演算法第2行
         uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
         centerUE = uncoveredBoundaryUEsSet(1,:);
 
         % 演算法第3~4行
-        r_UAVBS = minR;
+        r_UAVBS = maxR;
         [newPositionOfUAVBS, newUEsSet] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
         sizeOfNewUEsSet = size(newUEsSet,1);
-        if sizeOfNewUEsSet < maxNumOfUE
+        if sizeOfNewUEsSet <= maxNumOfUE
+            c
+            [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet, minR);
+        else
             innerR = minR;
             outerR = maxR;
             times = 0;
             while 1
+                if outerR <= minR
+                    r_UAVBS = minR;
+                    break;
+                end
                 r_UAVBS = (outerR+innerR)/2;
                 [newPositionOfUAVBS, newUEsSet] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
                 if size(newUEsSet,1) == sizeOfNewUEsSet

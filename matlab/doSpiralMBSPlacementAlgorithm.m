@@ -64,5 +64,5 @@ function doSpiralMBSPlacementAlgorithm()
     satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
 
     % 繪圖
-    exportImage(outputDir+'/test.jpg', locationOfUEs, UAVBSsSet, UAVBSsR);
+    exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR);
 end
