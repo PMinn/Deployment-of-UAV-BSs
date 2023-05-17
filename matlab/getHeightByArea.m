@@ -10,8 +10,12 @@ function height = getHeightByArea(r_UAVBS)
     f =  pi*tan(theta)/(9*log(10)) + (a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/((a*exp(-b*(180*theta/pi-a))+1)^2);
     df = diff(f);
     tolerance = 1e-3;
-    height = r;
-    while abs(double(subs(f,h,height))) > tolerance
+    height = r; % 初始
+    while 1
+        tArea = double(subs(f,h,height));
+        if abs(tArea) < tolerance
+            break;
+        end
         height = height - double(subs(f,h,height)) / double(subs(df,h,height));
     end
 end
