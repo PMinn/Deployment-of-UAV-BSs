@@ -41,8 +41,9 @@ function doOurAlgorithm()
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
 
     % 效能分析
-    [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR, frequency, constant, etaLos, etaNLos, locationOfUEs, powerOfUAVBS, noise, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, bandwidth);
+    [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR, frequency, constant, etaLos, etaNLos, locationOfUEs, powerOfUAVBS, noise, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, bandwidth);
     satisfiedRate
+    fairness
 
     % 繪圖
     exportImage(outputDir+'/ourAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded);

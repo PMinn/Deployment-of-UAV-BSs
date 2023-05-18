@@ -2,8 +2,8 @@ function doSpiralMBSPlacementAlgorithm()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     ue_size = 500; % 生成UE的數量
-    rangeOfPosition = [0 500]; % UE座標的範圍 X介於[a b] Y介於[a b] 
-    r_UAVBS = 30; % UAVBS涵蓋的範圍
+    rangeOfPosition = [0 400]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    r_UAVBS = 80; % UAVBS涵蓋的範圍
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
     minDataTransferRateOfUEAcceptable = 5*10^6; % 使用者可接受的最低速率
@@ -41,8 +41,9 @@ function doSpiralMBSPlacementAlgorithm()
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
 
     % 效能分析
-    [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR, frequency, constant, etaLos, etaNLos, locationOfUEs, powerOfUAVBS, noise, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, bandwidth);
+    [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR, frequency, constant, etaLos, etaNLos, locationOfUEs, powerOfUAVBS, noise, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, bandwidth);
     satisfiedRate
+    fairness
 
     % 繪圖
     exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded);
