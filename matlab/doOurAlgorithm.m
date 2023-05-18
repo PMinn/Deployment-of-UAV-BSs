@@ -5,9 +5,9 @@ function doOurAlgorithm()
     rangeOfPosition = [0 500]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 30; % UAVBS涵蓋的範圍
     
-    confogKeys =   ["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos"];
-    confogValues = [2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23       ];
-    config = dictionary(confogKeys,confogValues);
+    confogKeys   = ["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight"];
+    confogValues = [2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120        ];
+    config = dictionary(confogKeys, confogValues);
     % bandwidth 頻寬
     % powerOfUAVBS 功率
     % noise 熱雜訊功率譜密度
@@ -24,8 +24,6 @@ function doOurAlgorithm()
     minDataTransferRateOfUEAcceptable = 5*10^6; % 使用者可接受的最低速率
     maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限
 
-    maxNumOfUE = config("bandwidth")/minDataTransferRateOfUEAcceptable; % 無人機符合滿意度之下，能服務的最大UE數量
-
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
     
@@ -39,7 +37,7 @@ function doOurAlgorithm()
 
 
     % 演算法
-    [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, locationOfUEs);
+    [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(locationOfUEs, minDataTransferRateOfUEAcceptable, config);
 
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
 
@@ -49,5 +47,5 @@ function doOurAlgorithm()
     fairness
 
     % 繪圖
-    exportImage(outputDir+'/ourAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded);
+    exportImage(outputDir+'/ourAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded, config);
 end

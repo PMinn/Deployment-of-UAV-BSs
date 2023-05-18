@@ -1,11 +1,13 @@
-function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(minHeight, maxHeight, maxNumOfUE, locationOfUEs)
-    % maxHeight: 法定最高高度
-    % maxNumOfUE: 無人機符合滿意度之下，能服務的最大UE數量
+function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(locationOfUEs, minDataTransferRateOfUEAcceptable, config)
+    % config.minHeight: 法定最低高度
+    % config.maxHeight: 法定最高高度
+    % config.maxNumOfUE: 無人機符合滿意度之下，能服務的最大UE數量
     % locationOfUEs: 所有UE的位置 []
     % UAVBSsSet: 所有無人機的位置 []
 
-    minR = getAreaByHeight(minHeight); % 依照法定最低高度推算最小半徑
-    maxR = getAreaByHeight(maxHeight); % 依照法定最高高度推算最大半徑
+    maxNumOfUE = config("bandwidth")/minDataTransferRateOfUEAcceptable; % 無人機符合滿意度之下，能服務的最大UE數量
+    minR = getAreaByHeight(config("minHeight")); % 依照法定最低高度推算最小半徑
+    maxR = getAreaByHeight(config("maxHeight")); % 依照法定最高高度推算最大半徑
     angle = 90; % 旋轉排序的起始角度(0~360deg)
 
     % Initialization
