@@ -1,13 +1,13 @@
 % 效能分析
-function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR, frequency, constant, etaLos, etaNLos, locationOfUEs, powerOfUAVBS, noise, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, bandwidth)
+function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config)
     numOfUEsConnected = zeros(size(UAVBSsSet,1),1); % 每台UAVBS連線到的UE數量
     for i=1:size(numOfUEsConnected,1)
         numOfUEsConnected(i,1) = size(find(indexArrayOfUEsServedByUAVBS == i),1);
     end
-    possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, a, b, UAVBSsR); % LoS及NLoS機率
-    averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, frequency, constant, etaLos, etaNLos, UAVBSsR); % 平均路徑損失
-    arrayOfBandwidths = getBandwidths(numOfUEsConnected, bandwidth); % UAV服務一台UE的頻寬
-    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise); % [SINR1; SINR2;...]
+    possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, config); % LoS及NLoS機率
+    averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, UAVBSsR, config); % 平均路徑損失
+    arrayOfBandwidths = getBandwidths(numOfUEsConnected, config); % UAV服務一台UE的頻寬
+    SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, config); % [SINR1; SINR2;...]
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
     totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
     % 往回檢查速率上限
