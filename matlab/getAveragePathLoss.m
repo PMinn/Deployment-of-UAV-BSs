@@ -1,8 +1,8 @@
-function averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, frequency, constant, etaLos, etaNLos, UAVBSsR)
-    % frequency: 行動通訊的載波頻寬(Hz)
-    % constant: 光的移動速率(m/s)
-    % etaLos: Los的平均訊號損失
-    % etaNLos: NLos的平均訊號損失
+function averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, UAVBSsR, config)
+    % config.frequency: 行動通訊的載波頻寬(Hz)
+    % config.constant: 光的移動速率(m/s)
+    % config.etaLos: Los的平均訊號損失
+    % config.etaNLos: NLos的平均訊號損失
 
     
     averagePathLoss = {};
@@ -15,8 +15,8 @@ function averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSInclu
         UAVandUEsDist = sqrt(UAVandUEsHorDist.^2 + UAVBSsHigh^2); % UAV及UE的歐幾里得距離
 
         %算式(3)
-        Los = 20 * log10(4*pi*frequency*UAVandUEsDist./constant) + etaLos;
-        NLoS = 20 * log10(4*pi*frequency*UAVandUEsDist./constant) + etaNLos;
+        Los = 20 * log10(4*pi*config("frequency")*UAVandUEsDist./config("constant")) + config("etaLos");
+        NLoS = 20 * log10(4*pi*config("frequency")*UAVandUEsDist./config("constant")) + config("etaNLos");
         
         %算式(5)
         averagePathLoss{UAVBSsIndex} = possibility{UAVBSsIndex}(:,1).*(Los.') + possibility{UAVBSsIndex}(:,2).*(NLoS.');

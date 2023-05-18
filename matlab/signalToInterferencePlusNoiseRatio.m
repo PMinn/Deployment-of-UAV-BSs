@@ -1,17 +1,17 @@
-function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, powerOfUAVBS, noise)
+function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, config)
     % SINR: 每個UE的SINR []
     % UEsPositionOfUAVBSIncluded: UAVBS涵蓋的UE座標 {[] []}
     % averagePathLoss: 無人機j到使用者u間的平均路徑損失 {[] []}
     % indexArrayOfUEsServedByUAVBS: 每位使用者連線到的無人機 [n1; n2;...]
     % arrayOfBandwidths: 無人機平均每個UE分到的頻寬 [b1 b2 ...;]
-    % powerOfUAVBS: 功率
-    % noise: 熱雜訊功率譜密度
+    % config.powerOfUAVBS: 功率
+    % config.noise: 熱雜訊功率譜密度
 
     % 計算所有signal
     signal = averagePathLoss;
     for i=1:size(signal, 2)
         for j=1:size(signal{i},1)
-            signal{i}(j,1) = powerOfUAVBS*(10^(-1*signal{i}(j,1)/10));
+            signal{i}(j,1) = config("powerOfUAVBS")*(10^(-1*signal{i}(j,1)/10));
         end
     end
 
@@ -30,7 +30,7 @@ function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfU
     
     % arrayOfSignalToInterference + noise
     for i=1:size(arrayOfSignalToInterference,1)
-        arrayOfSignalToInterference(i,2) = arrayOfSignalToInterference(i,2)+(arrayOfBandwidths(indexArrayOfUEsServedByUAVBS(i,1),1)*noise);
+        arrayOfSignalToInterference(i,2) = arrayOfSignalToInterference(i,2)+(arrayOfBandwidths(indexArrayOfUEsServedByUAVBS(i,1),1)*config("noise"));
     end
     
     SINR = zeros(size(arrayOfSignalToInterference,1),1);
