@@ -27,11 +27,16 @@ function [u, Pprio] = localCover(r_UAVBS, u, Pprio, Psec)
         [~, indexOfShortestDistances] = min(distances,[],1);
         newPprio = Pprio;
         newPprio(size(newPprio,1)+1,:) = Psec(indexOfShortestDistances,:);
-        newU = [mean(newPprio(:, 1)), mean(newPprio(:, 2))];
-        distances = pdist2(newPprio, newU);
-        [indexOfFarAway, ~] = find(distances > r_UAVBS);
-        if ~isempty(indexOfFarAway)
-            return
+        % newU = [mean(newPprio(:, 1)), mean(newPprio(:, 2))];
+        [newU, r] = getUAVPositionAndRByUEs(newPprio);
+
+        % distances = pdist2(newPprio, newU);
+        % [indexOfFarAway, ~] = find(distances > r_UAVBS);
+        % if ~isempty(indexOfFarAway)
+        %     return
+        % end
+        if r > r_UAVBS
+            return;
         end
         Pprio = newPprio;
         Psec(indexOfShortestDistances,:) = [];

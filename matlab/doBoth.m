@@ -1,14 +1,15 @@
 function doBoth()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
-    ue_size = 800; % 生成UE的數量
-    rangeOfPosition = [0 500]; % UE座標的範圍 X介於[a b] Y介於[a b] 
-    r_UAVBS = 100; % UAVBS涵蓋的範圍
+    ue_size = 500; % 生成UE的數量
+    rangeOfPosition = [0 400]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    r_UAVBS = 50; % UAVBS涵蓋的範圍
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
  
     minDataTransferRateOfUEAcceptable = 5*10^6; % 使用者可接受的最低速率
-    maxDataTransferRateOfUAVBS = 3*10^8; % 無人機回程速率上限
+    maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限
+
     confogKeys   = ["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight"];
     confogValues = [2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120        ];
     config = dictionary(confogKeys, confogValues);
@@ -33,7 +34,7 @@ function doBoth()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
  
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs_1.mat").locationOfUEs;
  
     % 演算法
     [UAVBSsSet, UEsPositionOfUAVBSIncluded] = spiralMBSPlacementAlgorithm(isCounterClockwise, locationOfUEs, r_UAVBS, startAngleOfSpiral);

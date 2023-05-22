@@ -6,8 +6,9 @@ function doSpiralMBSPlacementAlgorithm()
     r_UAVBS = 60; % UAVBS涵蓋的範圍
     isCounterClockwise = false; % true=逆時針; false=順時針
     startAngleOfSpiral = 90; % 旋轉排序的起始角度(0~360deg)
+
     minDataTransferRateOfUEAcceptable = 5*10^6; % 使用者可接受的最低速率
-    maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限
+    maxDataTransferRateOfUAVBS = 3*10^8; % 無人機回程速率上限
 
     confogKeys   = ["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight"];
     confogValues = [2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120        ];

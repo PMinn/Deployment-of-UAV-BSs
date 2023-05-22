@@ -1,7 +1,7 @@
 function doOurAlgorithm()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
-    ue_size = 500; % 生成UE的數量
+    ue_size = 300; % 生成UE的數量
     rangeOfPosition = [0 500]; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 30; % UAVBS涵蓋的範圍
     
@@ -22,7 +22,7 @@ function doOurAlgorithm()
     maxHeight = 120; % 法定最高高度
 
     minDataTransferRateOfUEAcceptable = 5*10^6; % 使用者可接受的最低速率
-    maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限
+    maxDataTransferRateOfUAVBS = 3*10^8; % 無人機回程速率上限
 
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 

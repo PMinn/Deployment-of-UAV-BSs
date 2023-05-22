@@ -28,12 +28,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(locatio
         r_UAVBS = maxR;
         [newPositionOfUAVBS, newUEsSet] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
         sizeOfNewUEsSet = size(newUEsSet,1);
-        if sizeOfNewUEsSet <= maxNumOfUE
-            [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet);
-            if r_UAVBS == 0
-                r_UAVBS = minR;
-            end
-        else
+        if sizeOfNewUEsSet > maxNumOfUE
             innerR = minR;
             outerR = maxR;
             times = 0;
@@ -43,7 +38,6 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(locatio
                 if size(newUEsSet,1) == sizeOfNewUEsSet
                     times = times+1;
                     if times >= 3
-                        % [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet);
                         break;
                     end
                 end
@@ -53,11 +47,12 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(locatio
                 elseif sizeOfNewUEsSet < maxNumOfUE
                     innerR = r_UAVBS;
                 else
-                    % [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet);
                     break;
                 end
             end
         end
+        [newPositionOfUAVBS, r_UAVBS] = getUAVPositionAndRByUEs(newUEsSet);
+        r_UAVBS = max(minR, r_UAVBS);
 
         % 演算法第5行
         % 更新結果

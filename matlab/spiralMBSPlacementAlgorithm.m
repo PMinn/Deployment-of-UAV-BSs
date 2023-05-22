@@ -18,13 +18,9 @@ function [UAVBSsSet, UEsPositionOfUAVBSIncluded] = spiralMBSPlacementAlgorithm(i
         uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
         centerUE = uncoveredBoundaryUEsSet(1,:);
 
-        % 演算法第3行
-        % 涵蓋邊緣點
-        [firstLocalCoverU, firstLocalCoverPprio] = localCover(r_UAVBS, centerUE, centerUE, setdiff(uncoveredBoundaryUEsSet, centerUE, 'rows'));
-
-        % 演算法第4行
-        % 涵蓋內點
-        [secondLocalCoverU, secondLocalCoverPprio] = localCover(r_UAVBS, firstLocalCoverU, firstLocalCoverPprio, uncoveredInnerUEsSet);
+        % 演算法第3行、演算法第4行
+        % 涵蓋邊緣點、涵蓋內點
+        [secondLocalCoverU, secondLocalCoverPprio] = cover(r_UAVBS, centerUE, uncoveredBoundaryUEsSet, uncoveredInnerUEsSet);
         
         % 演算法第5行
         % 更新結果
