@@ -1,13 +1,15 @@
 function doOurAlgorithm()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
-    ue_size = 300; % 生成UE的數量
-    rangeOfPosition = [0 500]; % UE座標的範圍 X介於[a b] Y介於[a b] 
-    r_UAVBS = 30; % UAVBS涵蓋的範圍
+    ue_size = 500; % 生成UE的數量
+    rangeOfPosition = [0 400]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    r_UAVBS = 80; % UAVBS涵蓋的範圍
     
-    confogKeys   = ["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight"];
-    confogValues = [2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120        ];
-    config = dictionary(confogKeys, confogValues);
+    minDataTransferRateOfUEAcceptable = 10^6; % 使用者可接受的最低速率
+    maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限
+
+    config = dictionary(["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight" "minR"              "maxR"              ] ...
+                       ,[2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120         getAreaByHeight(30) getAreaByHeight(120)]);
     % bandwidth 頻寬
     % powerOfUAVBS 功率
     % noise 熱雜訊功率譜密度
@@ -17,12 +19,8 @@ function doOurAlgorithm()
     % constant 光的移動速率(m/s)
     % etaLos Los的平均訊號損失
     % etaNLos NLos的平均訊號損失
-
-    minHeight = 30; % 法定最高高度
-    maxHeight = 120; % 法定最高高度
-
-    minDataTransferRateOfUEAcceptable = 5*10^6; % 使用者可接受的最低速率
-    maxDataTransferRateOfUAVBS = 3*10^8; % 無人機回程速率上限
+    % minHeight 法定最高高度
+    % maxHeight 法定最高高度
 
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
@@ -33,8 +31,7 @@ function doOurAlgorithm()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
-
+    locationOfUEs = load(outputDir+"/locationOfUEs_3.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(locationOfUEs, minDataTransferRateOfUEAcceptable, config);

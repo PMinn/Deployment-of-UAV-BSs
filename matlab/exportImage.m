@@ -60,8 +60,8 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBS
     axis equal;
     minPosition = min(locationOfUEs);
     maxPosition = max(locationOfUEs);
-    maxR = getAreaByHeight(config("maxHeight"));
+    maxR = config("maxR");
     axis([minPosition(1,1)-maxR, maxPosition(1,1)+maxR, minPosition(1,2)-maxR, maxPosition(1,2)+maxR]); % axis([xmin,xmax,ymin,ymax])
     hold off;
-    exportgraphics(gcf, file, 'Resolution', 130, 'BackgroundColor', backgroundColor);
+    exportgraphics(gcf, file, 'Resolution', 150, 'BackgroundColor', backgroundColor); % 130
 end

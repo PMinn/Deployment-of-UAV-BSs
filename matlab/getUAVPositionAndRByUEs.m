@@ -16,7 +16,7 @@ function [UAVposition, r] = getUAVPositionAndRByUEs(UEsSet)
     boundaryUEsSet = UEsSet(boundaryUEsSet,:);
     boundaryUEsSet(1,:) = [];
 
-    % 找座標及半徑
+    % 外心
     r = 1/0;
     for i=1:size(boundaryUEsSet,1)-2
         for j=i+1:size(boundaryUEsSet,1)-1
@@ -30,5 +30,13 @@ function [UAVposition, r] = getUAVPositionAndRByUEs(UEsSet)
                 end
             end
         end
+    end
+
+    % 重心
+    newUAVposition = [mean(boundaryUEsSet(:, 1)), mean(boundaryUEsSet(:, 2))];
+    newR = max(pdist2(UEsSet, newUAVposition),[],1);
+    if newR < r
+        r = newR;
+        UAVposition = newUAVposition;
     end
 end
