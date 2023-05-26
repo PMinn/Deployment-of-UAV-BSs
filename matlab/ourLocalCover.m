@@ -17,10 +17,7 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, maxNumOfUE, config)
         [~, indexOfShortestDistances] = min(distances,[],1); % 最近UE的index
         newPprio = Pprio;
         newPprio(size(newPprio,1)+1,:) = Psec(indexOfShortestDistances,:);
-        % newU = [mean(newPprio(:, 1)), mean(newPprio(:, 2))];
-        [newU, newR] = getUAVPositionAndRByUEs(newPprio);
-        % newDistances = pdist2(newPprio, newU);
-        % newR = max(newDistances,[],1);
+        [newR, newU, ~] = ExactMinBoundCircle(newPprio);
         if newR > config("maxR")
             return;
         end

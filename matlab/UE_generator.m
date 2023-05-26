@@ -6,7 +6,7 @@ function mobiles_location = UE_generator(ue_size, rangeOfPosition)
         N = poissrnd(lambda); %number of centers
         % N = lambda;
 
-        X(1:N,:) = randi(rangeOfPosition,N,2); %generate the centers
+        X(1:N,:) = rangeOfPosition(1,1)*rand(N,2); %generate the centers
         total_so_far = N; %total number of points generated
         next = 1;
         while next < total_so_far

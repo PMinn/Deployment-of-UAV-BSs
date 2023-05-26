@@ -2,7 +2,7 @@ function doBoth()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
     ue_size = 600; % 生成UE的數量
-    rangeOfPosition = [0 400]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    rangeOfPosition = 400; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 80; % UAVBS涵蓋的範圍
  
     minDataTransferRateOfUEAcceptable = 2*10^6; % 使用者可接受的最低速率

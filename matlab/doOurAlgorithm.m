@@ -1,11 +1,11 @@
 function doOurAlgorithm()
     % 參數
     outputDir = "./out"; % 輸出檔放置的資料夾
-    ue_size = 500; % 生成UE的數量
-    rangeOfPosition = [0 400]; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    ue_size = 600; % 生成UE的數量
+    rangeOfPosition = 400; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 80; % UAVBS涵蓋的範圍
-    
-    minDataTransferRateOfUEAcceptable = 10^6; % 使用者可接受的最低速率
+ 
+    minDataTransferRateOfUEAcceptable = 2*10^6; % 使用者可接受的最低速率
     maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限
 
     config = dictionary(["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight" "minR"              "maxR"              ] ...
@@ -31,17 +31,17 @@ function doOurAlgorithm()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs_3.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded] = ourAlgorithm(locationOfUEs, minDataTransferRateOfUEAcceptable, config);
 
-    indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
+    % indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
 
     % 效能分析
-    [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-    satisfiedRate
-    fairness
+    % [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+    % satisfiedRate
+    % fairness
 
     % 繪圖
     exportImage(outputDir+'/ourAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded, config);
