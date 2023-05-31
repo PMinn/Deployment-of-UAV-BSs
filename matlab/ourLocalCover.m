@@ -8,9 +8,13 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, maxNumOfUE, config)
     while ~isempty(Psec)
 
         % 從Psec移除大於2r的UE
-        distances = pdist2(Psec, u);
-        indexes = find(distances(:,1) > 2*config("maxR"));
-        Psec(indexes,:) = [];
+        % distances = pdist2(Psec, u);
+        % indexes = find(distances(:,1) > 2*config("maxR"));
+        % Psec(indexes,:) = [];
+
+        % if isempty(Psec)
+        %     return;
+        % end
 
         % 把最近且合法的UE加入範圍
         distances = pdist2(Psec, u);
