@@ -4,9 +4,9 @@ function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairnes
     for i=1:size(numOfUEsConnected,1)
         numOfUEsConnected(i,1) = size(find(indexArrayOfUEsServedByUAVBS == i),1);
     end
+    arrayOfBandwidths = getBandwidths(numOfUEsConnected, config); % UAV服務一台UE的頻寬
     possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, config); % LoS及NLoS機率
     averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, UAVBSsR, config); % 平均路徑損失
-    arrayOfBandwidths = getBandwidths(numOfUEsConnected, config); % UAV服務一台UE的頻寬
     SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, config); % [SINR1; SINR2;...]
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
     totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
