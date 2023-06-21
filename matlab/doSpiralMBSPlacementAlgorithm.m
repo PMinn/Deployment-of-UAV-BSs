@@ -33,14 +33,14 @@ function doSpiralMBSPlacementAlgorithm()
     locationOfUEs = load(outputDir+"/locationOfUEs_5.mat").locationOfUEs;
 
     % 演算法
-    [UAVBSsSet, UEsPositionOfUAVBSIncluded] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
-    % UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(r_UAVBS, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋的UE座標
+    [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
 
     UAVBSsR = zeros(size(UAVBSsSet,1),1); % UAVBSs的半徑
     for i=1:size(UAVBSsR,1)
         UAVBSsR(i,1) = r_UAVBS;
     end
-    indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
+    UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
+    indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs, UAVBSsSet); % 每位使用者連線到的無人機 [n1; n2;...]
 
     % 效能分析
     [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
@@ -48,5 +48,11 @@ function doSpiralMBSPlacementAlgorithm()
     fairness
 
     % 繪圖
-    exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded, config);
+    exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+
+    % JOSN
+    json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    fileID = fopen(outputDir+'/data.json','w');
+    fprintf(fileID, '%s', json);
+    fclose(fileID);
 end

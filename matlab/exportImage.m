@@ -1,4 +1,4 @@
-function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBSIncluded, config)
+function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config)
     backgroundColor = '#FDFDFD';
     UAVBSColor = '#61Cd81';
     UEColor = '#2F71F4';
@@ -18,9 +18,9 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, UEsPositionOfUAVBS
     % plot(xArrayFromLocationOfUEs(boundaryUEsSet), yArrayFromLocationOfUEs(boundaryUEsSet), 'Color', boundaryColor, 'LineStyle', "--");
 
     % UEs所屬的UAVBS
-    % for i=1:size(UEsPositionOfUAVBSIncluded,2)
-    %     for j=1:size(UEsPositionOfUAVBSIncluded{1,i},1)
-    %         text(UEsPositionOfUAVBSIncluded{1,i}(j,1), UEsPositionOfUAVBSIncluded{1,i}(j,2),'\leftarrow ' + string(i));
+    % for i=1:size(indexArrayOfUEsServedByUAVBS,2)
+    %     for j=1:size(indexArrayOfUEsServedByUAVBS{1,i},1)
+    %         text(indexArrayOfUEsServedByUAVBS{1,i}(j,1), indexArrayOfUEsServedByUAVBS{1,i}(j,2),'\leftarrow ' + string(i));
     %     end
     % end
 
