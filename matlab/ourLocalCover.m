@@ -16,6 +16,10 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, maxNumOfUE, config)
         %     return;
         % end
 
+        if size(Pprio,1) >= maxNumOfUE
+            return;
+        end
+
         % 把最近且合法的UE加入範圍
         distances = pdist2(Psec, u);
         [~, indexOfShortestDistances] = min(distances,[],1); % 最近UE的index
@@ -29,8 +33,5 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, maxNumOfUE, config)
         Psec(indexOfShortestDistances,:) = [];
         u = newU;
         r = newR;
-        if size(Pprio,1) >= maxNumOfUE
-            return;
-        end
     end
 end

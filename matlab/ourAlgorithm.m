@@ -6,7 +6,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
     % UAVBSsSet: 所有無人機的位置 []
     % UEsPositionOfUAVServedBy: 所有無人機連線到的UE {[;;...],[;;...],...}
 
-    maxNumOfUE = int32(config("bandwidth")/minDataTransferRateOfUEAcceptable) % 無人機符合滿意度之下，能服務的最大UE數量
+    maxNumOfUE = int32(config("bandwidth")/minDataTransferRateOfUEAcceptable); % 無人機符合滿意度之下，能服務的最大UE數量
     angle = 90; % 旋轉排序的起始角度(0~360deg)
 
     % Initialization
@@ -37,7 +37,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
         UAVBSsSet(size(UAVBSsSet,1)+1,:) = secondLocalCoverU;
         uncoveredUEsSet = setdiff(uncoveredUEsSet, secondLocalCoverPprio, 'rows');
         UAVBSsR(size(UAVBSsR,1)+1,1) = r;
-        UEsPositionOfUAVBSIncluded{1,size(UEsPositionOfUAVBSIncluded,2)+1} = secondLocalCoverPprio;
+        UEsPositionOfUAVServedBy{1,size(UEsPositionOfUAVServedBy,2)+1} = secondLocalCoverPprio;
 
         % 演算第6行
         % 以不更改排序的情況下移除未覆蓋邊緣集合裡已覆蓋的邊緣點
