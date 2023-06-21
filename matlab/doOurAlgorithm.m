@@ -46,4 +46,10 @@ function doOurAlgorithm()
 
     % 繪圖
     exportImage(outputDir+'/ourAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+
+    % JOSN
+    json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    fileID = fopen(outputDir+'/data.json','w');
+    fprintf(fileID, '%s', json);
+    fclose(fileID);
 end
