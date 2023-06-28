@@ -5,6 +5,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
     % locationOfUEs: 所有UE的位置 []
     % UAVBSsSet: 所有無人機的位置 []
     % UEsPositionOfUAVServedBy: 所有無人機連線到的UE {[;;...],[;;...],...}
+    % UAVBSsR: 所有無人機的半徑 [;;...]
 
     maxNumOfUE = int32(config("bandwidth")/minDataTransferRateOfUEAcceptable); % 無人機符合滿意度之下，能服務的最大UE數量
     angle = 90; % 旋轉排序的起始角度(0~360deg)
