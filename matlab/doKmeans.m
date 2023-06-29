@@ -5,7 +5,7 @@ function doKmeans()
     [ue_size, rangeOfPosition, ~, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
     
 
-    k = 60; % kmeans的k值 12 60
+    k = 12; % kmeans的k值 12 60
 
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
