@@ -20,7 +20,6 @@ function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairnes
         disp('計算平均路徑損失完成');
     end
     SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, config); % [SINR1; SINR2;...]
-    SINR
     if debug == true
         disp('計算SINR完成');
     end
