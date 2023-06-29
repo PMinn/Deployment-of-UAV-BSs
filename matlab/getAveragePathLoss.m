@@ -5,7 +5,7 @@ function averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSInclu
     % config.etaNLos: NLos的平均訊號損失
 
     
-    averagePathLoss = {};
+    averagePathLoss = cell(size(UAVBSsSet,1));
 
     for UAVBSsIndex = 1:size(UAVBSsSet,1)
         UAVBSsHigh = getHeightByArea(UAVBSsR(UAVBSsIndex,1));

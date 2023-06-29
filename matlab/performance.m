@@ -8,27 +8,28 @@ function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairnes
         numOfUEsConnected(i,1) = size(find(indexArrayOfUEsServedByUAVBS == i),1);
     end
     arrayOfBandwidths = getBandwidths(numOfUEsConnected, config); % UAV服務一台UE的頻寬
-    if debug
+    if debug == true
         disp('計算頻寬完成');
     end
     possibility = getPossibility(UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, config); % LoS及NLoS機率
-    if debug
+    if debug == true
         disp('計算LoS及NLoS機率完成');
     end
     averagePathLoss = getAveragePathLoss(UAVBSsSet, UEsPositionOfUAVBSIncluded, possibility, UAVBSsR, config); % 平均路徑損失
-    if debug
+    if debug == true
         disp('計算平均路徑損失完成');
     end
     SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfUAVBSIncluded, averagePathLoss, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths, config); % [SINR1; SINR2;...]
-    if debug
+    SINR
+    if debug == true
         disp('計算SINR完成');
     end
     dataTransferRates = getDataTransferRate(SINR, indexArrayOfUEsServedByUAVBS, arrayOfBandwidths); % [dataTransferRates1; dataTransferRates2;...]
-    if debug
+    if debug == true
         disp('計算速率完成');
     end
     totalDataTransferRatesOfUAVBSs = getTotalDataTransferRatesOfUAVBSs(dataTransferRates, indexArrayOfUEsServedByUAVBS); % [totalDataTransferRatesOfUAVBSs1; totalDataTransferRatesOfUAVBSs2;...]
-    if debug
+    if debug == true
         disp('計算初步效能完成');
     end
     % 往回檢查速率上限
@@ -41,13 +42,13 @@ function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairnes
         newDataTransferRate = maxDataTransferRateOfUAVBS/numOfUE; % 重新分配後的速率
         dataTransferRates(indexOfUEConnected, 1) = newDataTransferRate;
     end
-    if debug
+    if debug == true
         disp('驗證效能完成');
     end
     indexOfSatisfied  = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
     satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
     fairness = (sum(totalDataTransferRatesOfUAVBSs,1)^2)/(size(totalDataTransferRatesOfUAVBSs,1)*sum(totalDataTransferRatesOfUAVBSs.^2,1)); % 公平性
-    if debug
+    if debug == true
         disp('效能計算完成');
     end
 end

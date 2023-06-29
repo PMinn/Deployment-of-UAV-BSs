@@ -1,5 +1,5 @@
 function UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet)
-    UEsPositionOfUAVBSIncluded = {};
+    UEsPositionOfUAVBSIncluded = cell(size(UAVBSsSet,1),1);
 
     for i=1:size(UAVBSsSet,1)
         UEsPositionOfUAVBSIncluded{i} = zeros(0,2);
