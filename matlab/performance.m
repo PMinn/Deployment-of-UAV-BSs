@@ -46,7 +46,8 @@ function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairnes
     end
     indexOfSatisfied  = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
     satisfiedRate = size(indexOfSatisfied,1)/size(dataTransferRates,1); % 滿意度
-    fairness = (sum(totalDataTransferRatesOfUAVBSs,1)^2)/(size(totalDataTransferRatesOfUAVBSs,1)*sum(totalDataTransferRatesOfUAVBSs.^2,1)); % 公平性
+    fairness = (sum(numOfUEsConnected,1)^2)/(size(numOfUEsConnected,1)*sum(numOfUEsConnected.^2,1)); % 公平性
+    % fairness = (sum(totalDataTransferRatesOfUAVBSs,1)^2)/(size(totalDataTransferRatesOfUAVBSs,1)*sum(totalDataTransferRatesOfUAVBSs.^2,1)); % 公平性
     if debug == true
         disp('效能計算完成');
     end
