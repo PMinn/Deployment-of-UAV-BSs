@@ -13,7 +13,7 @@ function doSpiralMBSPlacementAlgorithm()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs_N200.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs_5.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);

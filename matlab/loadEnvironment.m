@@ -3,8 +3,8 @@ function [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, 
     rangeOfPosition = 400; % UE座標的範圍 X介於[a b] Y介於[a b] 
     r_UAVBS = 80; % UAVBS涵蓋的範圍
  
-    minDataTransferRateOfUEAcceptable = 2*10^6; % 使用者可接受的最低速率
-    maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限 150/2 人?
+    minDataTransferRateOfUEAcceptable = 3*10^6; % 使用者可接受的最低速率
+    maxDataTransferRateOfUAVBS = 10^8; % 無人機回程速率上限 UE:100/2 人
 
     config = dictionary(["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight" "minR"              "maxR"              ] ...
                        ,[2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120         getAreaByHeight(30) getAreaByHeight(120)]);

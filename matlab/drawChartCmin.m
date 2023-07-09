@@ -1,4 +1,4 @@
-function drawChart()
+function drawChartCmin()
     outputDir = "./out"; % 輸出檔放置的資料夾
     
     % 確保輸出的資料夾存在

@@ -35,7 +35,7 @@ function doCompareN()
             k1 = size(UAVBSsSet,1);
             
             % 演算法
-            [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationOfUEs, minDataTransferRateOfUEAcceptable, config);
+            [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
             indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
@@ -70,8 +70,8 @@ function doCompareN()
             satisfiedRateData(ue_size/200,4) = satisfiedRateData(ue_size/200,4)+satisfiedRate;
             fairnessData(ue_size/200,4) = fairnessData(ue_size/200,4)+fairness;
         end
-        save(outputDir+"/satisfiedRateData_100times.mat", "satisfiedRateData");
-        save(outputDir+"/fairnessData_100times.mat", "fairnessData");
+        save(outputDir+"/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
+        save(outputDir+"/fairnessData_varyingN_100times.mat", "fairnessData");
         disp(string(times)+"/100");
     end
     satisfiedRateData

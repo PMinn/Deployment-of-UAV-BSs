@@ -5,7 +5,7 @@ function doKmeans()
     [ue_size, rangeOfPosition, ~, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
     
 
-    k = 12; % kmeans的k值 12 60
+    k = 20; % kmeans的k值 9 20
 
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
@@ -16,7 +16,7 @@ function doKmeans()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs_5.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs_6.mat").locationOfUEs;
 
     % 演算法
     [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k);
@@ -36,7 +36,8 @@ function doKmeans()
     fairness
 
     % 繪圖
-    exportImage(outputDir+'/kmeans.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    % exportImage(outputDir+'/kmeans_sMBSP.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir+'/kmeans_our.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
