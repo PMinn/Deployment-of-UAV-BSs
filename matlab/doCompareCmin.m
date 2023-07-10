@@ -35,8 +35,8 @@ function doCompareCmin()
             indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs, UAVBSsSet); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            satisfiedRateData(index, 1) = satisfiedRate;
-            fairnessData(index, 1) = fairness;
+            satisfiedRateData(index, 1) = satisfiedRateData(index, 1)+satisfiedRate;
+            fairnessData(index, 1) = fairnessData(index, 1)+fairness;
             k1 = size(UAVBSsSet,1);
             
             % 演算法
@@ -45,8 +45,8 @@ function doCompareCmin()
             indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            satisfiedRateData(index, 2) = satisfiedRate;
-            fairnessData(index, 2) = fairness;
+            satisfiedRateData(index, 2) = satisfiedRateData(index, 2)+satisfiedRate;
+            fairnessData(index, 2) = fairnessData(index, 2)+fairness;
             k2 = size(UAVBSsSet,1);
 
             % 演算法
@@ -59,8 +59,8 @@ function doCompareCmin()
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            satisfiedRateData(index, 3) = satisfiedRate;
-            fairnessData(index, 3) = fairness;
+            satisfiedRateData(index, 3) = satisfiedRateData(index, 3)+satisfiedRate;
+            fairnessData(index, 3) = fairnessData(index, 3)+fairness;
 
             % 演算法
             [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k2);
@@ -72,8 +72,8 @@ function doCompareCmin()
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            satisfiedRateData(index, 4) = satisfiedRate;
-            fairnessData(index, 4) = fairness;
+            satisfiedRateData(index, 4) = satisfiedRateData(index, 4)+satisfiedRate;
+            fairnessData(index, 4) = fairnessData(index, 4)+fairness;
         end
         save(outputDir+"/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
         save(outputDir+"/fairnessData_varyingCmin_100times.mat", "fairnessData");
