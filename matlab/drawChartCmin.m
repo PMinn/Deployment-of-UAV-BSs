@@ -4,7 +4,8 @@ function drawChartCmin()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    data = load(outputDir+"/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
+    % data = load(outputDir+"/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
+    data = load(outputDir+"/satisfiedRateData_100times.mat").satisfiedRateData;
     xlabelText = "Cmin";
     ylabelText = "使用者滿意度(%)";
     outputFile = "/satisfiedRate_varyingCmin_100times.jpg";

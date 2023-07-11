@@ -11,7 +11,7 @@ function doCompareCmin()
     satisfiedRateData = zeros(6, 4);
     fairnessData = zeros(6, 4);
 
-    for times = 1:100
+    % for times = 1:100
         for index = 1:6
             disp(string(index)+"/6");
 
@@ -25,7 +25,7 @@ function doCompareCmin()
 
             minDataTransferRateOfUEAcceptable = index*10^6;
         
-            % 演算法
+            %   演算法
             [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
             UAVBSsR = zeros(size(UAVBSsSet,1),1); % UAVBSs的半徑
             for i=1:size(UAVBSsR,1)
@@ -75,9 +75,11 @@ function doCompareCmin()
             satisfiedRateData(index, 4) = satisfiedRateData(index, 4)+satisfiedRate;
             fairnessData(index, 4) = fairnessData(index, 4)+fairness;
         end
-        save(outputDir+"/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
-        save(outputDir+"/fairnessData_varyingCmin_100times.mat", "fairnessData");
+        % save(outputDir+"/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
+        % save(outputDir+"/fairnessData_varyingCmin_100times.mat", "fairnessData");
+        save(outputDir+"/satisfiedRateData_100times.mat", "satisfiedRateData");
+        save(outputDir+"/fairnessData_100times.mat", "fairnessData");
         disp(string(times)+'/100');
-    end
+    % end
     satisfiedRateData
 end
