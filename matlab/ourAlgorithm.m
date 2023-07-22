@@ -7,7 +7,9 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
     % UEsPositionOfUAVServedBy: 所有無人機連線到的UE {[;;...],[;;...],...}
     % UAVBSsR: 所有無人機的半徑 [;;...]
 
-    maxNumOfUE = int32(maxDataTransferRateOfUAVBS/minDataTransferRateOfUEAcceptable); % 無人機符合滿意度之下，能服務的最大UE數量
+    maxNumOfUE = (maxDataTransferRateOfUAVBS/minDataTransferRateOfUEAcceptable); % 無人機符合滿意度之下，能服務的最大UE數量
+    
+
     angle = 90; % 旋轉排序的起始角度(0~360deg)
 
     % Initialization
@@ -21,7 +23,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
     [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(false, uncoveredUEsSet, angle); % 找出邊緣並以逆時針排序
     while ~isempty(uncoveredBoundaryUEsSet)
         % 演算法第2行
-        uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
+        % uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
         centerUE = uncoveredBoundaryUEsSet(1,:);
 
         % 涵蓋

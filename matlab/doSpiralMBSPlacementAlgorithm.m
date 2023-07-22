@@ -2,7 +2,7 @@ function doSpiralMBSPlacementAlgorithm()
     outputDir = "./out"; % 輸出檔放置的資料夾
    
     % 載入環境參數
-    [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();    
+    [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
 
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
@@ -13,7 +13,8 @@ function doSpiralMBSPlacementAlgorithm()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs_5.mat").locationOfUEs;
+    % locationOfUEs = load(outputDir+"/APWCS/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
@@ -31,11 +32,11 @@ function doSpiralMBSPlacementAlgorithm()
     fairness
 
     % 繪圖
-    exportImage(outputDir+'/spiralMBSPlacementAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir+'/APWCS/spiralMBSPlacementAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
-    json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
-    fileID = fopen(outputDir+'/data.json','w');
-    fprintf(fileID, '%s', json);
-    fclose(fileID);
+    % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    % fileID = fopen(outputDir+'/data.json','w');
+    % fprintf(fileID, '%s', json);
+    % fclose(fileID);
 end

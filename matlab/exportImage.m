@@ -63,5 +63,6 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsSer
     maxR = config("maxR");
     axis([minPosition(1,1)-maxR, maxPosition(1,1)+maxR, minPosition(1,2)-maxR, maxPosition(1,2)+maxR]); % axis([xmin,xmax,ymin,ymax])
     hold off;
-    exportgraphics(gcf, file, 'Resolution', 150, 'BackgroundColor', backgroundColor); % 130
+    exportgraphics(gcf, file + '.jpg', 'Resolution', 150, 'BackgroundColor', backgroundColor); % 130
+    saveas(gcf, file + '.eps','epsc');
 end

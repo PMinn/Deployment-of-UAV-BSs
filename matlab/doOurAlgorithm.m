@@ -4,9 +4,8 @@ function doOurAlgorithm()
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
     
-
     % 確保輸出的資料夾存在
-    checkOutputDir(outputDir); 
+    % checkOutputDir(outputDir); 
     
     % 生成UE及寫檔
     % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
@@ -14,7 +13,8 @@ function doOurAlgorithm()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs_5.mat").locationOfUEs;
+    % locationOfUEs = load(outputDir+"/APWCS/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
@@ -28,7 +28,8 @@ function doOurAlgorithm()
     fairness
 
     % 繪圖
-    exportImage(outputDir+'/ourAlgorithm.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    % exportImage(outputDir+'/APWCS/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir+'/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

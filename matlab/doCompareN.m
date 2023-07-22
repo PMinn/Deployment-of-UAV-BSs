@@ -10,7 +10,7 @@ function doCompareN()
     satisfiedRateData = zeros(5, 4);
     fairnessData = zeros(5, 4);
 
-    for times = 1:100
+    for times = 1:10
         for ue_size = 200:200:1000
             disp(string(ue_size)+"/1000");
             % 生成UE及寫檔
@@ -70,9 +70,11 @@ function doCompareN()
             satisfiedRateData(ue_size/200,4) = satisfiedRateData(ue_size/200,4)+satisfiedRate;
             fairnessData(ue_size/200,4) = fairnessData(ue_size/200,4)+fairness;
         end
-        save(outputDir+"/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
-        save(outputDir+"/fairnessData_varyingN_100times.mat", "fairnessData");
-        disp(string(times)+"/100");
+        % save(outputDir+"/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
+        % save(outputDir+"/fairnessData_varyingN_100times.mat", "fairnessData");
+        save(outputDir+"/satisfiedRateData_varyingN_10times.mat", "satisfiedRateData");
+        save(outputDir+"/fairnessData_varyingN_10times.mat", "fairnessData");
+        disp(string(times)+"/10");
     end
     satisfiedRateData
 end

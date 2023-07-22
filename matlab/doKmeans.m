@@ -2,21 +2,22 @@ function doKmeans()
     outputDir = "./out"; % 輸出檔放置的資料夾
    
     % 載入環境參數
-    [ue_size, rangeOfPosition, ~, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
-    
-
-    k = 20; % kmeans的k值 9 20
+    [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
 
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
     
     % 生成UE及寫檔
-    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    % locationOfUEs = locationOfUEs(:,1:2);
-    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    locationOfUEs = locationOfUEs(:,1:2);
+    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/locationOfUEs_6.mat").locationOfUEs;
+    % locationOfUEs = load(outputDir+"/locationOfUEs_6.mat").locationOfUEs;
+
+    minDataTransferRateOfUEAcceptable = 6*10^6;
+    [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
+    k = size(UAVBSsSet, 1) % kmeans的k值 9 20
 
     % 演算法
     [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k);
@@ -37,7 +38,7 @@ function doKmeans()
 
     % 繪圖
     % exportImage(outputDir+'/kmeans_sMBSP.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
-    exportImage(outputDir+'/kmeans_our.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir+'/kmeans_spiral.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

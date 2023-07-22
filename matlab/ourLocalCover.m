@@ -8,25 +8,27 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, maxNumOfUE, config)
     while ~isempty(Psec)
 
         % 從Psec移除大於2r的UE
-        % distances = pdist2(Psec, u);
-        % indexes = find(distances(:,1) > 2*config("maxR"));
-        % Psec(indexes,:) = [];
-
-        % 把最近且合法的UE加入範圍
         distances = pdist2(Psec, u);
-        [~, indexOfShortestDistances] = min(distances,[],1); % 最近UE的index
-        newPprio = Pprio;
-        newPprio(size(newPprio,1)+1,:) = Psec(indexOfShortestDistances,:);
-        [newR, newU, ~] = ExactMinBoundCircle(newPprio);
-        if newR > config("maxR")
-            return;
-        end
-        Pprio = newPprio;
-        Psec(indexOfShortestDistances,:) = [];
-        u = newU;
-        r = newR;
-        if size(Pprio,1) >= maxNumOfUE
-            return;
+        indexes = find(distances(:,1) > 2*config("maxR"));
+        Psec(indexes,:) = [];
+
+        if ~isempty(Psec)
+            % 把最近且合法的UE加入範圍
+            distances = pdist2(Psec, u);
+            [~, indexOfShortestDistances] = min(distances,[],1); % 最近UE的index
+            newPprio = Pprio;
+            newPprio(size(newPprio,1)+1,:) = Psec(indexOfShortestDistances,:);
+            [newR, newU, ~] = ExactMinBoundCircle(newPprio);
+            if newR > config("maxR")
+                return;
+            end
+            Pprio = newPprio;
+            Psec(indexOfShortestDistances,:) = [];
+            u = newU;
+            r = newR;
+            if size(Pprio,1) >= maxNumOfUE
+                return;
+            end
         end
     end
 end
