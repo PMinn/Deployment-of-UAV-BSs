@@ -6,7 +6,7 @@ function doOurAlgorithm()
     
     % 確保輸出的資料夾存在
     % checkOutputDir(outputDir); 
-    
+
     % 生成UE及寫檔
     % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
     % locationOfUEs = locationOfUEs(:,1:2);
@@ -27,9 +27,11 @@ function doOurAlgorithm()
     satisfiedRate
     fairness
 
+    disp('k = ' + string(size(UAVBSsSet, 1)));
+
     % 繪圖
-    % exportImage(outputDir+'/APWCS/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
-    exportImage(outputDir+'/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir + '/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    % exportImage(outputDir+'/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

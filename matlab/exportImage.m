@@ -1,5 +1,5 @@
 function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config)
-    backgroundColor = '#FDFDFD';
+    backgroundColor = '#FFFFFF';
     UAVBSColor = '#61Cd81';
     UEColor = '#2F71F4';
     boundaryColor = '#242424';
@@ -7,7 +7,7 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsSer
     connectLineColor = '#DE5137';
     clf(gcf);
     set(gcf,'outerposition', get(0,'screensize')); % 視窗最大
-    set(gcf,'visible', 'off');
+    set(gcf,'visible', 'on'); % on/off
     set(gca, 'Color', backgroundColor);
     hold on;
     % boundaryUEsSet = convhull(locationOfUEs); % 凸包上的UE集合
@@ -64,5 +64,5 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsSer
     axis([minPosition(1,1)-maxR, maxPosition(1,1)+maxR, minPosition(1,2)-maxR, maxPosition(1,2)+maxR]); % axis([xmin,xmax,ymin,ymax])
     hold off;
     exportgraphics(gcf, file + '.jpg', 'Resolution', 150, 'BackgroundColor', backgroundColor); % 130
-    saveas(gcf, file + '.eps','epsc');
+    % saveas(gcf, file + '.eps','epsc');
 end

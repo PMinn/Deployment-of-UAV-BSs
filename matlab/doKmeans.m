@@ -8,27 +8,32 @@ function doKmeans()
     checkOutputDir(outputDir); 
     
     % 生成UE及寫檔
-    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    locationOfUEs = locationOfUEs(:,1:2);
-    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    % locationOfUEs = locationOfUEs(:,1:2);
+    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    % locationOfUEs = load(outputDir+"/locationOfUEs_6.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
-    minDataTransferRateOfUEAcceptable = 6*10^6;
-    [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
-    k = size(UAVBSsSet, 1) % kmeans的k值 9 20
+    % [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
+
+    % [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+    % k = size(UAVBSsSet, 1)
+
+    k = 11;
 
     % 演算法
     [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k);
     UAVBSsR = zeros(k, 1);
     for i = 1:k
         [indexOfUEs] = find(indexArrayOfUEsServedByUAVBS == i);
-        UAVBSsR(i,1) = max([pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));30]);
+        r = pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));
+        UAVBSsR(i,1) = max([r;config("minR")], [], "all");
+        UAVBSsR(i,1) = min([UAVBSsR(i,1);config("maxR")], [], "all");
     end
 
     % numOfUEsConnected = tabulate(indexArrayOfUEsServedByUAVBS); % 每台UAVBS連線到的UE數量
-    % numOfUEsConnected = numOfUEsConnected(:,2);   
+    % numOfUEsConnected = numOfUEsConnected(:,2);
 
     % 效能分析
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
@@ -37,8 +42,8 @@ function doKmeans()
     fairness
 
     % 繪圖
-    % exportImage(outputDir+'/kmeans_sMBSP.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
-    exportImage(outputDir+'/kmeans_spiral.jpg', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir+'/kmeans_sMBSP', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    % exportImage(outputDir+'/kmeans_our', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

@@ -7,10 +7,12 @@ function doCompareCmin()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    satisfiedRateData = zeros(6, 4);
-    fairnessData = zeros(6, 4);
+    % satisfiedRateData = zeros(6, 4);
+    % fairnessData = zeros(6, 4);
+    satisfiedRateData = load(outputDir+"/10m/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
+    fairnessData = load(outputDir+"/10m/fairnessData_varyingCmin_100times.mat").fairnessData;
 
-    for times = 1:10
+    for times = 21:100
         % 生成UE及寫檔
         locationOfUEs = UE_generator(ue_size, rangeOfPosition);
         locationOfUEs = locationOfUEs(:,1:2);
@@ -18,6 +20,7 @@ function doCompareCmin()
 
         % 讀檔讀取UE
         % locationOfUEs = load(outputDir+"/locationOfUEs_5.mat").locationOfUEs;
+
         for index = 1:6
             disp(string(index)+"/6");
 
@@ -33,6 +36,7 @@ function doCompareCmin()
             indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs, UAVBSsSet); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            
             satisfiedRateData(index, 1) = satisfiedRateData(index, 1)+satisfiedRate;
             fairnessData(index, 1) = fairnessData(index, 1)+fairness;
             k1 = size(UAVBSsSet,1);
@@ -43,40 +47,47 @@ function doCompareCmin()
             indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            
             satisfiedRateData(index, 2) = satisfiedRateData(index, 2)+satisfiedRate;
             fairnessData(index, 2) = fairnessData(index, 2)+fairness;
             k2 = size(UAVBSsSet,1);
 
-            % % 演算法
-            % [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k1);
-            % UAVBSsR = zeros(k1, 1);
-            % for i = 1:k1
-            %     [indexOfUEs] = find(indexArrayOfUEsServedByUAVBS == i);
-            %     UAVBSsR(i,1) = max([pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));30]);
-            % end
-            % % 效能分析
-            % UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
-            % [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            % satisfiedRateData(index, 3) = satisfiedRateData(index, 3)+satisfiedRate;
-            % fairnessData(index, 3) = fairnessData(index, 3)+fairness;
+            % 演算法
+            [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k1);
+            UAVBSsR = zeros(k1, 1);
+            for i = 1:k1
+                [indexOfUEs] = find(indexArrayOfUEsServedByUAVBS == i);
+                r = pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));
+                UAVBSsR(i,1) = max([r;config("minR")], [], "all");
+                UAVBSsR(i,1) = min([UAVBSsR(i,1);config("maxR")], [], "all");
+            end
+            % 效能分析
+            UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
+            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            
+            satisfiedRateData(index, 3) = satisfiedRateData(index, 3)+satisfiedRate;
+            fairnessData(index, 3) = fairnessData(index, 3)+fairness;
 
-            % % 演算法
-            % [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k2);
-            % UAVBSsR = zeros(k2, 1);
-            % for i = 1:k2
-            %     [indexOfUEs] = find(indexArrayOfUEsServedByUAVBS == i);
-            %     UAVBSsR(i,1) = max([pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));30]);
-            % end
-            % % 效能分析
-            % UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
-            % [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            % satisfiedRateData(index, 4) = satisfiedRateData(index, 4)+satisfiedRate;
-            % fairnessData(index, 4) = fairnessData(index, 4)+fairness;
+            % 演算法
+            [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k2);
+            UAVBSsR = zeros(k2, 1);
+            for i = 1:k2
+                [indexOfUEs] = find(indexArrayOfUEsServedByUAVBS == i);
+                r = pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));
+                UAVBSsR(i,1) = max([r;config("minR")], [], "all");
+                UAVBSsR(i,1) = min([UAVBSsR(i,1);config("maxR")], [], "all");
+            end
+            % 效能分析
+            UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
+            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+                        
+            satisfiedRateData(index, 4) = satisfiedRateData(index, 4)+satisfiedRate;
+            fairnessData(index, 4) = fairnessData(index, 4)+fairness;
+            
         end
-        % save(outputDir+"/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
-        % save(outputDir+"/fairnessData_varyingCmin_100times.mat", "fairnessData");
-        save(outputDir+"/satisfiedRateData_varyingCmin_10times.mat", "satisfiedRateData");
-        disp(string(times)+'/10');
+        save(outputDir+"/10m/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
+        save(outputDir+"/10m/fairnessData_varyingCmin_100times.mat", "fairnessData");
+        disp(string(times)+'/100');
     end
-    satisfiedRateData
+    % satisfiedRateData
 end

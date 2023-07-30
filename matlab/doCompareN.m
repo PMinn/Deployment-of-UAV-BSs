@@ -7,10 +7,12 @@ function doCompareN()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    satisfiedRateData = zeros(5, 4);
-    fairnessData = zeros(5, 4);
+    %  satisfiedRateData = zeros(5, 4);
+    %  fairnessData = zeros(5, 4);
+    satisfiedRateData = load(outputDir+"/10m/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
+    fairnessData = load(outputDir+"/10m/fairnessData_varyingN_100times.mat").fairnessData;
 
-    for times = 1:10
+    for times = 21:100
         for ue_size = 200:200:1000
             disp(string(ue_size)+"/1000");
             % 生成UE及寫檔
@@ -49,7 +51,9 @@ function doCompareN()
             UAVBSsR = zeros(k1, 1);
             for i = 1:k1
                 [indexOfUEs] = find(indexArrayOfUEsServedByUAVBS == i);
-                UAVBSsR(i,1) = max([pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));30]);
+                r = pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));
+                UAVBSsR(i,1) = max([r;config("minR")], [], "all");
+                UAVBSsR(i,1) = min([UAVBSsR(i,1);config("maxR")], [], "all");
             end
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
@@ -62,7 +66,9 @@ function doCompareN()
             UAVBSsR = zeros(k2, 1);
             for i = 1:k2
                 [indexOfUEs] = find(indexArrayOfUEsServedByUAVBS == i);
-                UAVBSsR(i,1) = max([pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));30]);
+                r = pdist2(locationOfUEs(indexOfUEs, :), UAVBSsSet(i, :));
+                UAVBSsR(i,1) = max([r;config("minR")], [], "all");
+                UAVBSsR(i,1) = min([UAVBSsR(i,1);config("maxR")], [], "all");
             end
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
@@ -70,11 +76,9 @@ function doCompareN()
             satisfiedRateData(ue_size/200,4) = satisfiedRateData(ue_size/200,4)+satisfiedRate;
             fairnessData(ue_size/200,4) = fairnessData(ue_size/200,4)+fairness;
         end
-        % save(outputDir+"/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
-        % save(outputDir+"/fairnessData_varyingN_100times.mat", "fairnessData");
-        save(outputDir+"/satisfiedRateData_varyingN_10times.mat", "satisfiedRateData");
-        save(outputDir+"/fairnessData_varyingN_10times.mat", "fairnessData");
-        disp(string(times)+"/10");
+        save(outputDir+"/10m/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
+        save(outputDir+"/10m/fairnessData_varyingN_100times.mat", "fairnessData");
+        disp(string(times)+"/100");
     end
     satisfiedRateData
 end
