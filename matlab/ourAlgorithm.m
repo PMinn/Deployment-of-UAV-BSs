@@ -27,7 +27,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
         centerUE = uncoveredBoundaryUEsSet(1,:);
 
         % 涵蓋
-        [newPositionOfUAVBS, newUEsSet, r] = ourLocalCover(centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'), maxNumOfUE, config);
+        [newPositionOfUAVBS, newUEsSet, r] = ourLocalCover(centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'), locationOfUEs, maxNumOfUE, config);
         r = max(r, config("minR"));
 
         % 演算法第5行
