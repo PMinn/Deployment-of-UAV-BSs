@@ -3,18 +3,18 @@ function doOurAlgorithm()
    
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
-    
+    minDataTransferRateOfUEAcceptable = 6*10^6;
     % 確保輸出的資料夾存在
     % checkOutputDir(outputDir); 
 
     % 生成UE及寫檔
-    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    % locationOfUEs = locationOfUEs(:,1:2);
-    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    locationOfUEs = locationOfUEs(:,1:2);
+    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
     % locationOfUEs = load(outputDir+"/APWCS/locationOfUEs.mat").locationOfUEs;
-    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
@@ -27,7 +27,7 @@ function doOurAlgorithm()
     satisfiedRate
     fairness
 
-    disp('k = ' + string(size(UAVBSsSet, 1)));
+    % disp('k = ' + string(size(UAVBSsSet, 1)));
 
     % 繪圖
     exportImage(outputDir + '/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
