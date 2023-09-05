@@ -3,16 +3,9 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, locationOfUEs, isUEsCover
     % Pprio: 無人機涵蓋的UE
     % Psec: 未被覆蓋的UE
     
-    maxNumOfOverlay = 10; % 最大覆蓋數量
-
-    t=0;
     r = 0;
     % 演算法第1行
     while ~isempty(Psec)
-        t=t+1;
-        if t > 15
-            return;
-        end
         % 從Psec移除大於2r的UE
         distances = pdist2(Psec, u);
         indexes = find(distances(:,1) > 2*config("maxR"));
@@ -39,7 +32,7 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, locationOfUEs, isUEsCover
 
             % 判斷是否超出覆蓋數量
             commonRows = ismember(locationOfUEs, newPprio, 'rows');
-            if sum(isUEsCovered(commonRows,1),"all") > maxNumOfOverlay
+            if sum(isUEsCovered(commonRows,1),"all") > config('maxNumOfOverlay')
                 return;
             end
             

@@ -3,7 +3,7 @@ function doOurAlgorithm()
    
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
-    minDataTransferRateOfUEAcceptable = 6*10^6;
+    % minDataTransferRateOfUEAcceptable = 6*10^6;
     % 確保輸出的資料夾存在
     % checkOutputDir(outputDir); 
 

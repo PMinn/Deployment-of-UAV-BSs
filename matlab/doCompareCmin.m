@@ -9,10 +9,10 @@ function doCompareCmin()
 
     % satisfiedRateData = zeros(6, 4);
     % fairnessData = zeros(6, 4);
-    satisfiedRateData = load(outputDir+"/10m/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
-    fairnessData = load(outputDir+"/10m/fairnessData_varyingCmin_100times.mat").fairnessData;
+    satisfiedRateData = load(outputDir+"/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
+    fairnessData = load(outputDir+"/fairnessData_varyingCmin_100times.mat").fairnessData;
 
-    for times = 21:100
+    for times = 91:100
         % 生成UE及寫檔
         locationOfUEs = UE_generator(ue_size, rangeOfPosition);
         locationOfUEs = locationOfUEs(:,1:2);
@@ -85,8 +85,8 @@ function doCompareCmin()
             fairnessData(index, 4) = fairnessData(index, 4)+fairness;
             
         end
-        save(outputDir+"/10m/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
-        save(outputDir+"/10m/fairnessData_varyingCmin_100times.mat", "fairnessData");
+        save(outputDir+"/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
+        save(outputDir+"/fairnessData_varyingCmin_100times.mat", "fairnessData");
         disp(string(times)+'/100');
     end
     % satisfiedRateData

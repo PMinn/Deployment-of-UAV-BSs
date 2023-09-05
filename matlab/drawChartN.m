@@ -4,16 +4,17 @@ function drawChartN()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    data = load(outputDir+"/10m/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
+    data = load(outputDir+"/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
+    data = data*20;
     xlabelText = "地面使用者的數量";
     ylabelText = "使用者滿意度(%)";
-    outputFile = "/10m/satisfiedRate_varyingN_100times.jpg";
-
-    % data = load(outputDir+"/10m/fairnessData_varyingN_100times.mat").fairnessData;
+    outputFile = "/satisfiedRate_varyingN_100times.jpg";
+    
+    % data = load(outputDir+"/fairnessData_varyingN_100times.mat").fairnessData;
     % data = data/100;
     % xlabelText = "地面使用者的數量";
     % ylabelText = "公平性";
-    % outputFile = "/10m/fairness_varyingN_100times.jpg";
+    % outputFile = "/fairness_varyingN_100times.jpg";
 
     x = 200:200:1000;
     figure;

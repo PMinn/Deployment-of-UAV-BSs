@@ -4,11 +4,11 @@ function [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, 
     r_UAVBS = 80; % UAVBS涵蓋的範圍
 
     % minDataTransferRateOfUEAcceptable = 10^6; % 使用者可接受的最低速率 高滿意度(APWCS)
-    minDataTransferRateOfUEAcceptable = 2*10^6; % 使用者可接受的最低速率 
+    minDataTransferRateOfUEAcceptable = 2*10^6; % 使用者可接受的最低速率 (MC2023)
     maxDataTransferRateOfUAVBS = 3*10^8; % 無人機回程速率上限 1.6~1.7
 
-    config = dictionary(["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight" "minR"              "maxR"              ] ...
-                       ,[2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120         getAreaByHeight(10) getAreaByHeight(120)]);
+    config = dictionary(["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight" "minR"              "maxR"               "maxNumOfOverlay"] ...
+                       ,[2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120         getAreaByHeight(10) getAreaByHeight(120) 10]);
     % bandwidth 頻寬
     % powerOfUAVBS 功率
     % noise 熱雜訊功率譜密度
@@ -20,4 +20,7 @@ function [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, 
     % etaNLos NLos的平均訊號損失
     % minHeight 法定最低高度
     % maxHeight 法定最高高度
+    % minR 法定最低高度換算之半徑
+    % maxR 法定最高高度換算之半徑
+    % maxNumOfOverlay 能接受重疊區域最大的UE數量
 end
