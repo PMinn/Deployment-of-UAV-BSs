@@ -2,7 +2,7 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, locationOfUEs, isUEsCover
     % u: 當前無人機位置，向量形式[x,y]
     % Pprio: 無人機涵蓋的UE
     % Psec: 未被覆蓋的UE
-    
+
     r = 0;
     % 演算法第1行
     while ~isempty(Psec)
