@@ -5,7 +5,6 @@ function drawChartN()
     checkOutputDir(outputDir); 
 
     data = load(outputDir+"/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
-    data = data*20;
     xlabelText = "地面使用者的數量";
     ylabelText = "使用者滿意度(%)";
     outputFile = "/satisfiedRate_varyingN_100times.jpg";

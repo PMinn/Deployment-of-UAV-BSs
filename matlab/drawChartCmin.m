@@ -17,7 +17,7 @@ function drawChartCmin()
     ylabelText = "公平性";
     outputFile = "/fairness_varyingCmin_100times.jpg";
 
-    x = 1:1:6;
+    x = 2:2:10;
     
     plot(x,data(:,2),'r-o',x,data(:,1),'b-square',x,data(:,3),'m-diamond',x,data(:,4),'g-^','LineWidth',2,'MarkerSize',10);
     xlabel(xlabelText,'FontName','標楷體');
