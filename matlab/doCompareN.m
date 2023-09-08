@@ -7,12 +7,12 @@ function doCompareN()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    %  satisfiedRateData = zeros(5, 4);
-    %  fairnessData = zeros(5, 4);
-    satisfiedRateData = load(outputDir+"/10m/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
-    fairnessData = load(outputDir+"/10m/fairnessData_varyingN_100times.mat").fairnessData;
+    % satisfiedRateData = zeros(5, 4);
+    % fairnessData = zeros(5, 4);
+    satisfiedRateData = load(outputDir+"/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
+    fairnessData = load(outputDir+"/fairnessData_varyingN_100times.mat").fairnessData;
 
-    for times = 21:100
+    for times = 11:100
         for ue_size = 200:200:1000
             disp(string(ue_size)+"/1000");
             % 生成UE及寫檔
@@ -76,8 +76,8 @@ function doCompareN()
             satisfiedRateData(ue_size/200,4) = satisfiedRateData(ue_size/200,4)+satisfiedRate;
             fairnessData(ue_size/200,4) = fairnessData(ue_size/200,4)+fairness;
         end
-        save(outputDir+"/10m/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
-        save(outputDir+"/10m/fairnessData_varyingN_100times.mat", "fairnessData");
+        save(outputDir+"/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
+        save(outputDir+"/fairnessData_varyingN_100times.mat", "fairnessData");
         disp(string(times)+"/100");
     end
     satisfiedRateData
