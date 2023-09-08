@@ -2,14 +2,9 @@ function [u, Pprio, r] = ourLocalCover(u, Pprio, Psec, locationOfUEs, maxNumOfUE
     % u: 當前無人機位置，向量形式[x,y]
     % Pprio: 無人機涵蓋的UE
     % Psec: 未被覆蓋的UE
-    t=0;
     r = 0;
     % 演算法第1行
     while ~isempty(Psec)
-        t=t+1;
-        if t > 15
-            return;
-        end
         % 從Psec移除大於2r的UE
         distances = pdist2(Psec, u);
         indexes = find(distances(:,1) > 2*config("maxR"));
