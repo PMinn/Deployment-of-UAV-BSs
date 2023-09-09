@@ -18,6 +18,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
     UAVBSsR = [];
     centerUE = [];
     UEsPositionOfUAVServedBy = {};
+    isUEsCovered = false(size(locationOfUEs,1), 1);
 
     % 演算法第1行
     [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(false, uncoveredUEsSet, angle); % 找出邊緣並以逆時針排序
@@ -27,8 +28,12 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
         centerUE = uncoveredBoundaryUEsSet(1,:);
 
         % 涵蓋
-        [newPositionOfUAVBS, newUEsSet, r] = ourLocalCover(centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'), locationOfUEs, maxNumOfUE, config);
+        [newPositionOfUAVBS, newUEsSet, r] = ourLocalCover(centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'), locationOfUEs, isUEsCovered, maxNumOfUE, config);
+
         r = max(r, config("minR"));
+
+        isUEsCovered = getIsUEsCovered(locationOfUEs, newUEsSet, isUEsCovered);
+        % sum(isUEsCovered,"all")
 
         % 演算法第5行
         % 更新結果

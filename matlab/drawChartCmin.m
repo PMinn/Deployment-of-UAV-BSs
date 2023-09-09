@@ -6,18 +6,18 @@ function drawChartCmin()
 
     figure;
 
-    data = load(outputDir+"/10m/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
-    xlabelText = "Cmin(Mbps)";
-    ylabelText = "使用者滿意度(%)";
-    outputFile = "/10m/satisfiedRate_varyingCmin_100times.jpg";
-
-    % data = load(outputDir+"/10m/fairnessData_varyingCmin_100times.mat").fairnessData;
-    % data = data/100;
+    % data = load(outputDir+"/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
     % xlabelText = "Cmin(Mbps)";
-    % ylabelText = "公平性";
-    % outputFile = "/10m/fairness_varyingCmin_100times.jpg";
+    % ylabelText = "使用者滿意度(%)";
+    % outputFile = "/satisfiedRate_varyingCmin_100times.jpg";
 
-    x = 1:1:6;
+    data = load(outputDir+"/fairnessData_varyingCmin_100times.mat").fairnessData;
+    data = data/100;
+    xlabelText = "Cmin(Mbps)";
+    ylabelText = "公平性";
+    outputFile = "/fairness_varyingCmin_100times.jpg";
+
+    x = 2:2:10;
     
     plot(x,data(:,2),'r-o',x,data(:,1),'b-square',x,data(:,3),'m-diamond',x,data(:,4),'g-^','LineWidth',2,'MarkerSize',10);
     xlabel(xlabelText,'FontName','標楷體');
