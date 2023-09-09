@@ -14,37 +14,17 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = randomAlgorithm(locati
     uncoveredUEsSet = locationOfUEs;
 
     while ~isempty(uncoveredUEsSet)
-        % 產生無人機位置及半徑
-        newPositionOfUAVBS = randi([0 rangeOfPosition],1,2);
-        r = rand(1,1) * (config("maxR") - config("minR")) + config("minR");
+        r = rand(1,1) * (config("maxR") - config("minR")) + config("minR"); % 產生無人機半徑
+        index = randi([1 size(uncoveredUEsSet,1)],1,1); % 隨機選擇一個UE當中心點
+        offset = rand(1,2) * (2 * r) - r; % 產生無人機位置的offset
+        newPositionOfUAVBS = uncoveredUEsSet(index,:) + offset; % 產生無人機位置
 
+        % 更新結果
         distances = pdist2(uncoveredUEsSet, newPositionOfUAVBS);
         indexes = find(distances(:,1) <= r);
-        if ~isempty(indexes)
-            UAVBSsSet(size(UAVBSsSet,1)+1,:) = newPositionOfUAVBS;
-            UAVBSsR(size(UAVBSsR,1)+1,1) = r;
-            UEsPositionOfUAVServedBy{1,size(UEsPositionOfUAVServedBy,2)+1} = uncoveredUEsSet(indexes,:);
-            uncoveredUEsSet(indexes,:) = [];
-        end
-        % commonRows = ismember(uncoveredBoundaryUEsSet, newUEsSet, 'rows');
-
-        % uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
-
-        % centerUE = uncoveredBoundaryUEsSet(1,:);
-
-        % 涵蓋
-        % [newPositionOfUAVBS, newUEsSet, r] = ourLocalCover(centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'), locationOfUEs, maxNumOfUE, config);
-
-        % 演算法第5行
-        % 更新結果
-        
-
-        % 演算第6行
-        % 以不更改排序的情況下移除未覆蓋邊緣集合裡已覆蓋的邊緣點
-        % commonRows = ismember(uncoveredBoundaryUEsSet, newUEsSet, 'rows');
-        % uncoveredBoundaryUEsSet(commonRows,:) = [];
-        % if isempty(uncoveredBoundaryUEsSet)
-        %     [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(false, uncoveredUEsSet, angle);
-        % end
+        UAVBSsSet(size(UAVBSsSet,1)+1,:) = newPositionOfUAVBS;
+        UAVBSsR(size(UAVBSsR,1)+1,1) = r;
+        UEsPositionOfUAVServedBy{1,size(UEsPositionOfUAVServedBy,2)+1} = uncoveredUEsSet(indexes,:);
+        uncoveredUEsSet(indexes,:) = [];
     end
 end
