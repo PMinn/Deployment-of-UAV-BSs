@@ -7,12 +7,12 @@ function doCompareCmin()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    % satisfiedRateData = zeros(5, 4);
-    % fairnessData = zeros(5, 4);
+    % satisfiedRateData = zeros(5, 5);
+    % fairnessData = zeros(5, 5);
     satisfiedRateData = load(outputDir+"/satisfiedRateData_varyingCmin_100times.mat").satisfiedRateData;
     fairnessData = load(outputDir+"/fairnessData_varyingCmin_100times.mat").fairnessData;
 
-    for times = 71:100
+    for times = 49:100
         % 生成UE及寫檔
         locationOfUEs = UE_generator(ue_size, rangeOfPosition);
         locationOfUEs = locationOfUEs(:,1:2);
@@ -36,7 +36,6 @@ function doCompareCmin()
             indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs, UAVBSsSet); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            
             satisfiedRateData(index/2, 1) = satisfiedRateData(index/2, 1)+satisfiedRate;
             fairnessData(index/2, 1) = fairnessData(index/2, 1)+fairness;
             k1 = size(UAVBSsSet,1);
@@ -47,7 +46,6 @@ function doCompareCmin()
             indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            
             satisfiedRateData(index/2, 2) = satisfiedRateData(index/2, 2)+satisfiedRate;
             fairnessData(index/2, 2) = fairnessData(index/2, 2)+fairness;
             k2 = size(UAVBSsSet,1);
@@ -64,7 +62,6 @@ function doCompareCmin()
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            
             satisfiedRateData(index/2, 3) = satisfiedRateData(index/2, 3)+satisfiedRate;
             fairnessData(index/2, 3) = fairnessData(index/2, 3)+fairness;
 
@@ -80,14 +77,22 @@ function doCompareCmin()
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
             [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-                        
             satisfiedRateData(index/2, 4) = satisfiedRateData(index/2, 4)+satisfiedRate;
             fairnessData(index/2, 4) = fairnessData(index/2, 4)+fairness;
+
+            % 演算法
+            [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = randomAlgorithm(locationOfUEs, rangeOfPosition, config);
+            UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
+            indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
+            % 效能分析
+            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            satisfiedRateData(index/2, 5) = satisfiedRateData(index/2, 5)+satisfiedRate;
+            fairnessData(index/2, 5) = fairnessData(index/2, 5)+fairness;
             
         end
         save(outputDir+"/satisfiedRateData_varyingCmin_100times.mat", "satisfiedRateData");
         save(outputDir+"/fairnessData_varyingCmin_100times.mat", "fairnessData");
         disp(string(times)+'/100');
     end
-    % satisfiedRateData
+    satisfiedRateData
 end

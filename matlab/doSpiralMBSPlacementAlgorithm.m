@@ -13,7 +13,7 @@ function doSpiralMBSPlacementAlgorithm()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/APWCS/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/TANET/locationOfUEs.mat").locationOfUEs;
     % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
@@ -34,7 +34,7 @@ function doSpiralMBSPlacementAlgorithm()
     disp('k = ' + string(size(UAVBSsSet, 1)));
 
     % 繪圖
-    exportImage(outputDir + '/spiralMBSPlacementAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir + '/TANET/spiralMBSPlacementAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

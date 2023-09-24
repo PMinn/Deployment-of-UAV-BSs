@@ -1,15 +1,18 @@
-function [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment()
-    ue_size = 600; % 生成UE的數量
-    rangeOfPosition = 400; % UE座標的範圍 X介於[a b] Y介於[a b]
+function [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment_withDrawStep()
+    % ue_size = 600; % 生成UE的數量
+    ue_size = 20; % del
+    % rangeOfPosition = 400; % UE座標的範圍 X介於[a b] Y介於[a b] 
+    rangeOfPosition = 40; % del
     r_UAVBS = 80; % UAVBS涵蓋的範圍
 
     minDataTransferRateOfUEAcceptable = 6*10^6; % 使用者可接受的最低速率
     % Cmin = 3*10^6; (MC2023) 
     % Cmin = 10^6; (APWCS2023) (一般)
-    maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限 1.6~1.7
+    % maxDataTransferRateOfUAVBS = 1.5*10^8; % 無人機回程速率上限 1.6~1.7
+    maxDataTransferRateOfUAVBS = 4 * minDataTransferRateOfUEAcceptable; % del
 
     config = dictionary(["bandwidth" "powerOfUAVBS" "noise"           "a"   "b"  "frequency" "constant" "etaLos" "etaNLos" "minHeight" "maxHeight" "minR"              "maxR"               "maxNumOfOverlay"] ...
-                       ,[2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120         getAreaByHeight(10) getAreaByHeight(120) 10]);
+                       ,[2*10^7      0.1            4.1843795*10^-21  12.08 0.11 2*10^9      3*10^8     1.6      23        30          120         getAreaByHeight(10) getAreaByHeight(120) 1]); % del
     % bandwidth 頻寬
     % powerOfUAVBS 功率
     % noise 熱雜訊功率譜密度
