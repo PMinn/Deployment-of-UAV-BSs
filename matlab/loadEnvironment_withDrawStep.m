@@ -1,6 +1,6 @@
 function [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment_withDrawStep()
     % ue_size = 600; % 生成UE的數量
-    ue_size = 20; % del
+    ue_size = 19; % del
     % rangeOfPosition = 400; % UE座標的範圍 X介於[a b] Y介於[a b] 
     rangeOfPosition = 40; % del
     r_UAVBS = 80; % UAVBS涵蓋的範圍

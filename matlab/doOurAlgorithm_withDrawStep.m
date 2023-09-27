@@ -56,7 +56,7 @@ function doOurAlgorithm_withDrawStep()
     scatter(UAVBSsSet(:,1), UAVBSsSet(:,2), 80, "filled", "square", 'MarkerFaceColor', UAVBSColor);
 
     % 所有UEs的點
-    scatter(xArrayFromLocationOfUEs, yArrayFromLocationOfUEs, 20, "filled", "^", 'MarkerEdgeColor', UEColor, 'MarkerFaceColor', UEColor);
+    scatter(xArrayFromLocationOfUEs, yArrayFromLocationOfUEs, 20, "filled", "^", 'MarkerFaceColor', UEColor); % , 'MarkerEdgeColor', UEColor,
 
     % UAVBSs編號
     for i=1:size(UAVBSsSet,1)
