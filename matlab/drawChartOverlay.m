@@ -21,7 +21,7 @@ function drawChartOverlay()
     plot(x,data(:,1),'b-square','LineWidth',2,'MarkerSize',10);
     xlabel(xlabelText,'FontName','標楷體');
     ylabel(ylabelText,'FontName','標楷體');
-    % h = legend({'SPARAL+(K_{N}^{SPARAL+})','逆時針螺旋(K_{N}^{SMBSP})','kmeans(K_{N}^{k-means}=K_{N}^{SMBSP})','kmeans(K_{N}^{k-means}=K_{N}^{SPARAL+})'},'Location','best');
+    % h = legend({'SPIRAL+(K_{N}^{SPIRAL+})','逆時針螺旋(K_{N}^{SMBSP})','kmeans(K_{N}^{k-means}=K_{N}^{SMBSP})','kmeans(K_{N}^{k-means}=K_{N}^{SPIRAL+})'},'Location','best');
     % set(h,'FontName','標楷體');
     grid on;
     exportgraphics(gcf, outputDir + outputFile, 'Resolution', 150, 'BackgroundColor', "#FFFFFF"); % 130
