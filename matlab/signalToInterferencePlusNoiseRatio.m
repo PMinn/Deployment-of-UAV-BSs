@@ -9,16 +9,16 @@ function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfU
 
     % 計算所有signal
     signal = averagePathLoss;
-    for i=1:size(signal, 2)
-        for j=1:size(signal{i},1)
-            signal{i}(j,1) = config("powerOfUAVBS")*(10^(-1*signal{i}(j,1)/10));
+    for i = 1:size(signal, 2)
+        for j = 1:size(signal{i}, 1)
+            signal{i}(j, 1) = config("powerOfUAVBS") * (10^(-1 * signal{i}(j, 1) / 10));
         end
     end
 
     % signalToInterference
-    arrayOfSignalToInterference = zeros(size(locationOfUEs,1),2);
-    for i=1:size(signal, 2)
-        for j=1:size(signal{i},1)
+    arrayOfSignalToInterference = zeros(size(locationOfUEs, 1), 2);
+    for i = 1:size(signal, 2)
+        for j = 1:size(signal{i}, 1)
             index_of_UE_in_locationOfUEs = find(ismember(locationOfUEs, UEsPositionOfUAVBSIncluded{i}(j,:),'rows')); % UEj在locationOfUEs的索引值
             if indexArrayOfUEsServedByUAVBS(index_of_UE_in_locationOfUEs,1) == i % UEj是連線到UAVBSi
                 arrayOfSignalToInterference(index_of_UE_in_locationOfUEs,1) = arrayOfSignalToInterference(index_of_UE_in_locationOfUEs,1)+signal{i}(j,1);
@@ -29,12 +29,12 @@ function SINR = signalToInterferencePlusNoiseRatio(locationOfUEs, UEsPositionOfU
     end
     
     % arrayOfSignalToInterference + noise
-    for i=1:size(arrayOfSignalToInterference,1)
-        arrayOfSignalToInterference(i,2) = arrayOfSignalToInterference(i,2)+(arrayOfBandwidths(indexArrayOfUEsServedByUAVBS(i,1),1)*config("noise"));
+    for i = 1:size(arrayOfSignalToInterference, 1)
+        arrayOfSignalToInterference(i,2) = arrayOfSignalToInterference(i,2) + (arrayOfBandwidths(indexArrayOfUEsServedByUAVBS(i, 1), 1) * config("noise"));
     end
     
-    SINR = zeros(size(arrayOfSignalToInterference,1),1);
-    for i=1:size(SINR,1)
-        SINR(i,1) = arrayOfSignalToInterference(i,1)/arrayOfSignalToInterference(i,2);
+    SINR = zeros(size(arrayOfSignalToInterference, 1), 1);
+    for i = 1:size(SINR, 1)
+        SINR(i, 1) = arrayOfSignalToInterference(i, 1) / arrayOfSignalToInterference(i, 2);
     end
 end
