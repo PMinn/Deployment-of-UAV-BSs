@@ -38,7 +38,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = voronoiAlgorithm(locat
             indexes = find(distances(:, 1) <= r_UAVBS);
             if size(indexes, 1) > newCoveredUEsNumber
                 newCoveredUEsNumber = size(indexes, 1);
-                newUAVBSLocation = [vx(1,i), vy(1,i)];
+                newUAVBSLocation = [vx(1, i), vy(1, i)];
                 newServeUEs = uncoveredUEsSet(indexes, :);
             end
         end

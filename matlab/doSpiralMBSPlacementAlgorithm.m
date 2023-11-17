@@ -19,9 +19,9 @@ function doSpiralMBSPlacementAlgorithm()
     % 演算法
     [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
 
-    UAVBSsR = zeros(size(UAVBSsSet,1),1); % UAVBSs的半徑
-    for i=1:size(UAVBSsR,1)
-        UAVBSsR(i,1) = r_UAVBS;
+    UAVBSsR = zeros(size(UAVBSsSet, 1), 1); % UAVBSs的半徑
+    for i = 1:size(UAVBSsR, 1)
+        UAVBSsR(i, 1) = r_UAVBS;
     end
     UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
     indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs, UAVBSsSet); % 每位使用者連線到的無人機 [n1; n2;...]

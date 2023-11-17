@@ -25,7 +25,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
     while ~isempty(uncoveredBoundaryUEsSet)
         % 演算法第2行
         % uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
-        centerUE = uncoveredBoundaryUEsSet(1,:);
+        centerUE = uncoveredBoundaryUEsSet(1, :);
 
         % 涵蓋
         [newPositionOfUAVBS, newUEsSet, r] = ourLocalCover(centerUE, centerUE, setdiff(uncoveredUEsSet, centerUE, 'rows'), locationOfUEs, isUEsCovered, maxNumOfUE, config);
@@ -37,15 +37,15 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationO
 
         % 演算法第5行
         % 更新結果
-        UAVBSsSet(size(UAVBSsSet,1)+1,:) = newPositionOfUAVBS;
+        UAVBSsSet(size(UAVBSsSet, 1) + 1,:) = newPositionOfUAVBS;
         uncoveredUEsSet = setdiff(uncoveredUEsSet, newUEsSet, 'rows');
-        UAVBSsR(size(UAVBSsR,1)+1,1) = r;
-        UEsPositionOfUAVServedBy{1,size(UEsPositionOfUAVServedBy,2)+1} = newUEsSet;
+        UAVBSsR(size(UAVBSsR, 1) + 1,1) = r;
+        UEsPositionOfUAVServedBy{1, size(UEsPositionOfUAVServedBy, 2) + 1} = newUEsSet;
 
         % 演算第6行
         % 以不更改排序的情況下移除未覆蓋邊緣集合裡已覆蓋的邊緣點
         commonRows = ismember(uncoveredBoundaryUEsSet, newUEsSet, 'rows');
-        uncoveredBoundaryUEsSet(commonRows,:) = [];
+        uncoveredBoundaryUEsSet(commonRows, :) = [];
         if isempty(uncoveredBoundaryUEsSet)
             [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(false, uncoveredUEsSet, angle);
         end

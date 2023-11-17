@@ -3,9 +3,9 @@ function indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAV
     % indexArrayOfUEsServedByUAVBS: 每位使用者連線到的無人機 [n1; n2;...]
 
     indexArrayOfUEsServedByUAVBS = zeros(size(locationOfUEs, 1), 1);
-    for i=1:size(locationOfUEs, 1)
-        for j=1:size(UEsPositionOfUAVServedBy, 2)
-            if nnz(ismember(locationOfUEs(i,:), UEsPositionOfUAVServedBy{j},'rows'))
+    for i = 1:size(locationOfUEs, 1)
+        for j = 1:size(UEsPositionOfUAVServedBy, 2)
+            if nnz(ismember(locationOfUEs(i,:), UEsPositionOfUAVServedBy{j}, 'rows'))
                 indexArrayOfUEsServedByUAVBS(i,1) = j;
                 break;
             end

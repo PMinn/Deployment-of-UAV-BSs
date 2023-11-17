@@ -11,24 +11,24 @@ function [u, Pprio, r] = ourLocalCover_withDrawStep(u, Pprio, Psec, locationOfUE
     while ~isempty(Psec)
         % 從Psec移除大於2r的UE
         distances = pdist2(Psec, u);
-        indexes = find(distances(:,1) > 2*config("maxR"));
-        Psec(indexes,:) = [];
+        indexes = find(distances(:, 1) > 2 * config("maxR"));
+        Psec(indexes, :) = [];
 
         if ~isempty(Psec)
             % 把最近且合法的UE加入範圍
             distances = pdist2(Psec, u);
-            [~, indexOfShortestDistances] = min(distances,[],1); % 最近UE的index
+            [~, indexOfShortestDistances] = min(distances, [], 1); % 最近UE的index
             newPprio = Pprio;
-            newPprio(size(newPprio,1)+1,:) = Psec(indexOfShortestDistances,:);
+            newPprio(size(newPprio, 1) + 1, :) = Psec(indexOfShortestDistances, :);
             [newR, newU, ~] = ExactMinBoundCircle(newPprio); % 計算新的半徑及中心
 
             distancesBetweenUEsAndU = pdist2(locationOfUEs, newU);
             indexOfNewPprio = find(distancesBetweenUEsAndU <= newR);
-            newPprio = union(locationOfUEs(indexOfNewPprio,:), newPprio, 'rows');
+            newPprio = union(locationOfUEs(indexOfNewPprio, :), newPprio, 'rows');
 
             % UAVBSs的涵蓋範圍
-            x = newU(1,1);
-            y = newU(1,2);
+            x = newU(1, 1);
+            y = newU(1, 2);
 
             % 判斷是否合法
             if newR > config("maxR")
@@ -39,9 +39,9 @@ function [u, Pprio, r] = ourLocalCover_withDrawStep(u, Pprio, Psec, locationOfUE
 
             % 判斷是否超出覆蓋數量
             commonRows = ismember(locationOfUEs, newPprio, 'rows');
-            if sum(isUEsCovered(commonRows,1),"all") > config('maxNumOfOverlay')
+            if sum(isUEsCovered(commonRows, 1), "all") > config('maxNumOfOverlay')
                 % 不合法的
-                rectangle('Position', [x-newR,y-newR,2*newR,2*newR], 'Curvature', [1,1], 'EdgeColor', UAVBSColor_illegal, 'LineWidth', 1);
+                rectangle('Position', [x - newR, y - newR, 2 * newR, 2 * newR], 'Curvature', [1, 1], 'EdgeColor', UAVBSColor_illegal, 'LineWidth', 1);
                 return;
             end
             
@@ -51,9 +51,9 @@ function [u, Pprio, r] = ourLocalCover_withDrawStep(u, Pprio, Psec, locationOfUE
             r = newR;
 
             % 合法的
-            rectangle('Position', [x-newR,y-newR,2*newR,2*newR], 'Curvature', [1,1], 'EdgeColor', UAVBSColor, 'LineWidth', 1);
+            rectangle('Position', [x - newR, y - newR, 2 * newR, 2 * newR], 'Curvature', [1, 1], 'EdgeColor', UAVBSColor, 'LineWidth', 1);
 
-            if size(Pprio,1) >= maxNumOfUE
+            if size(Pprio, 1) >= maxNumOfUE
                 return;
             end
         end

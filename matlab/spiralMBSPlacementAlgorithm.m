@@ -16,7 +16,7 @@ function [UAVBSsSet, UEsPositionOfUAVBSIncluded] = spiralMBSPlacementAlgorithm(l
     while ~isempty(uncoveredUEsSet)
         % 演算法第2行
         uncoveredInnerUEsSet = setdiff(uncoveredUEsSet, uncoveredBoundaryUEsSet, 'rows');
-        centerUE = uncoveredBoundaryUEsSet(1,:);
+        centerUE = uncoveredBoundaryUEsSet(1, :);
 
         % 演算法第3行
         % 涵蓋邊緣點
@@ -28,13 +28,13 @@ function [UAVBSsSet, UEsPositionOfUAVBSIncluded] = spiralMBSPlacementAlgorithm(l
         
         % 演算法第5行
         % 更新結果
-        UAVBSsSet(size(UAVBSsSet,1)+1,:) = secondLocalCoverU;
+        UAVBSsSet(size(UAVBSsSet, 1) + 1, :) = secondLocalCoverU;
         uncoveredUEsSet = setdiff(uncoveredUEsSet, secondLocalCoverPprio, 'rows');
 
         % 演算第6行
         % 以不更改排序的情況下移除未覆蓋邊緣集合裡已覆蓋的邊緣點
-        uncoveredBoundaryUEsSet(ismember(uncoveredBoundaryUEsSet, secondLocalCoverPprio, 'rows'),:) = [];
-        UEsPositionOfUAVBSIncluded{1,size(UEsPositionOfUAVBSIncluded,2)+1} = secondLocalCoverPprio;
+        uncoveredBoundaryUEsSet(ismember(uncoveredBoundaryUEsSet, secondLocalCoverPprio, 'rows'), :) = [];
+        UEsPositionOfUAVBSIncluded{1, size(UEsPositionOfUAVBSIncluded, 2) + 1} = secondLocalCoverPprio;
         if isempty(uncoveredBoundaryUEsSet)
             [uncoveredBoundaryUEsSet, angle] = findBoundaryUEsSet(true, uncoveredUEsSet, angle);
         end

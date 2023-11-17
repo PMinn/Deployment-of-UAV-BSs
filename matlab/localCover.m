@@ -10,13 +10,13 @@ function [u, Pprio] = localCover(r_UAVBS, u, Pprio, Psec)
         % 演算法第2行
         % 從Psec移除大於2r的UE
         distances = pdist2(Psec, u);
-        indexes = find(distances(:,1) > 2*r_UAVBS);
-        Psec(indexes,:) = [];
+        indexes = find(distances(:, 1) > 2 * r_UAVBS);
+        Psec(indexes, :) = [];
         % 將小於等於r的UE從Psec移到Pprio
         distances = pdist2(Psec, u);
-        indexes = find(distances(:,1) <= r_UAVBS);
-        Pprio = [Pprio;Psec(indexes,:)];
-        Psec(indexes,:) = [];
+        indexes = find(distances(:, 1) <= r_UAVBS);
+        Pprio = [Pprio; Psec(indexes, :)];
+        Psec(indexes, :) = [];
 
         % 演算法第3行
         % 把最近且合法的UE加入範圍，否則return
@@ -24,15 +24,15 @@ function [u, Pprio] = localCover(r_UAVBS, u, Pprio, Psec)
         if size(distances, 1) == 0
             return
         end
-        [~, indexOfShortestDistances] = min(distances,[],1);
+        [~, indexOfShortestDistances] = min(distances, [], 1);
         newPprio = Pprio;
-        newPprio(size(newPprio,1)+1,:) = Psec(indexOfShortestDistances,:);
+        newPprio(size(newPprio,1) + 1, :) = Psec(indexOfShortestDistances, :);
         [r, newU, ~] = ExactMinBoundCircle(newPprio);
         if r > r_UAVBS
             return;
         end
         Pprio = newPprio;
-        Psec(indexOfShortestDistances,:) = [];
+        Psec(indexOfShortestDistances, :) = [];
         u = newU;
     end
 end
