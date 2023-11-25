@@ -6,16 +6,22 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = voronoiAlgorithm(locat
 
     % Initialization
     UEsPositionOfUAVServedBy = {};
+    UAVBSsSet = [];
 
-    % 隨機選擇3個UE作為初始無人機位置
-    randomIndex = randi([1 size(locationOfUEs, 1)], 1, 3);
-    UAVBSsSet = locationOfUEs(randomIndex, :);
-
+    % 凸包上選擇最多5個UE作為初始無人機位置
+    [boundaryUEsSet, ~] = findBoundaryUEsSet(true, locationOfUEs, 0);
     uncoveredUEsSet = locationOfUEs;
-    for i = 1:3
-        distances = pdist2(uncoveredUEsSet, UAVBSsSet(i, :));
+    for i = 1:min(size(boundaryUEsSet, 1), 5)
+        newUAVBSLocation = boundaryUEsSet(i, :);
+        UAVBSsSet = [UAVBSsSet; newUAVBSLocation];
+        distances = pdist2(uncoveredUEsSet, newUAVBSLocation);
         indexes = find(distances(:, 1) <= r_UAVBS);
         UEsPositionOfUAVServedBy{1, i} = uncoveredUEsSet(indexes, :);
+        uncoveredUEsSet = setdiff(uncoveredUEsSet, UEsPositionOfUAVServedBy{1, i}, 'rows');
+        boundaryUEsSet = setdiff(boundaryUEsSet, UEsPositionOfUAVServedBy{1, i}, 'rows');
+        if i > size(boundaryUEsSet, 1)
+            break;
+        end
     end
 
     while 1
@@ -34,7 +40,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = voronoiAlgorithm(locat
 
         % 找出覆蓋最多UE的無人機
         for i = 1:size(vx, 2)
-            distances = pdist2(uncoveredUEsSet, [vx(1,i), vy(1,i)]);
+            distances = pdist2(uncoveredUEsSet, [vx(1, i), vy(1, i)]);
             indexes = find(distances(:, 1) <= r_UAVBS);
             if size(indexes, 1) > newCoveredUEsNumber
                 newCoveredUEsNumber = size(indexes, 1);

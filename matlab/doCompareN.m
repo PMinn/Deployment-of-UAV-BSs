@@ -7,17 +7,18 @@ function doCompareN()
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    % satisfiedRateData = zeros(5, 5);
-    % fairnessData = zeros(5, 5);
-    satisfiedRateData = load(outputDir+"/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
-    fairnessData = load(outputDir+"/fairnessData_varyingN_100times.mat").fairnessData;
+    satisfiedRateData = zeros(5, 6);
+    fairnessData = zeros(5, 6);
+    dataRate = zeros(5, 6);
+    % satisfiedRateData = load(outputDir+"/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
+    % fairnessData = load(outputDir+"/fairnessData_varyingN_100times.mat").fairnessData;
 
-    for times = 75:100
+    for times = 1:100
         for ue_size = 200:200:1000
             disp(string(ue_size)+"/1000");
             % 生成UE及寫檔
             locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-            locationOfUEs = locationOfUEs(:,1:2);
+            locationOfUEs = locationOfUEs(:, 1:2);
         
             % 讀檔讀取UE
             % locationOfUEs = load(outputDir+"/locationOfUEs_5.mat").locationOfUEs;
@@ -31,9 +32,10 @@ function doCompareN()
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
             indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPositionOfUAVBSIncluded, locationOfUEs, UAVBSsSet); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
-            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,1) = satisfiedRateData(ue_size/200,1)+satisfiedRate;
             fairnessData(ue_size/200,1) = fairnessData(ue_size/200,1)+fairness;
+            dataRate(ue_size/200,1) = dataRate(ue_size/200,1)+sum(totalDataTransferRatesOfUAVBSs,"all");
             k1 = size(UAVBSsSet,1);
             
             % 演算法
@@ -41,9 +43,10 @@ function doCompareN()
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
             indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
-            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,2) = satisfiedRateData(ue_size/200,2)+satisfiedRate;
             fairnessData(ue_size/200,2) = fairnessData(ue_size/200,2)+fairness;
+            dataRate(ue_size/200,2) = dataRate(ue_size/200,2)+sum(totalDataTransferRatesOfUAVBSs,"all");
             k2 = size(UAVBSsSet,1);
 
             % 演算法
@@ -57,9 +60,10 @@ function doCompareN()
             end
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
-            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,3) = satisfiedRateData(ue_size/200,3)+satisfiedRate;
             fairnessData(ue_size/200,3) = fairnessData(ue_size/200,3)+fairness;
+            dataRate(ue_size/200,3) = dataRate(ue_size/200,3)+sum(totalDataTransferRatesOfUAVBSs,"all");
 
             % 演算法
             [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k2);
@@ -72,21 +76,34 @@ function doCompareN()
             end
             % 效能分析
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet);
-            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,4) = satisfiedRateData(ue_size/200,4)+satisfiedRate;
             fairnessData(ue_size/200,4) = fairnessData(ue_size/200,4)+fairness;
+            dataRate(ue_size/200,4) = dataRate(ue_size/200,4)+sum(totalDataTransferRatesOfUAVBSs,"all");
 
             % 演算法
             [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = randomAlgorithm(locationOfUEs, rangeOfPosition, config);
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
             indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
             % 效能分析
-            [~, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
-            satisfiedRateData(ue_size/200,5) = satisfiedRateData(ue_size/200,5)+satisfiedRate;
-            fairnessData(ue_size/200,5) = fairnessData(ue_size/200,5)+fairness;
+            [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            satisfiedRateData(ue_size/200, 5) = satisfiedRateData(ue_size/200, 5)+satisfiedRate;
+            fairnessData(ue_size/200, 5) = fairnessData(ue_size/200, 5)+fairness;
+            dataRate(ue_size/200,5) = dataRate(ue_size/200,5)+sum(totalDataTransferRatesOfUAVBSs,"all");
+
+            % 演算法
+            [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = voronoiAlgorithm(locationOfUEs, r_UAVBS, config);
+            UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
+            indexArrayOfUEsServedByUAVBS = includedPositionToIndex(UEsPositionOfUAVServedBy, locationOfUEs); % 每位使用者連線到的無人機 [n1; n2;...]
+            % 效能分析
+            [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
+            satisfiedRateData(ue_size / 200, 6) = satisfiedRateData(ue_size / 200, 6) + satisfiedRate;
+            fairnessData(ue_size / 200, 6) = fairnessData(ue_size / 200, 6) + fairness;
+            dataRate(ue_size/200,6) = dataRate(ue_size/200,6)+sum(totalDataTransferRatesOfUAVBSs,"all");
         end
-        save(outputDir+"/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
-        save(outputDir+"/fairnessData_varyingN_100times.mat", "fairnessData");
+        save(outputDir+"/新增voronoi2/2mbps/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
+        save(outputDir+"/新增voronoi2/2mbps/fairnessData_varyingN_100times.mat", "fairnessData");
+        save(outputDir+"/新增voronoi2/2mbps/dataRate_varyingN_100times.mat", "dataRate");
         disp(string(times)+"/100");
     end
     satisfiedRateData

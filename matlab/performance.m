@@ -1,5 +1,5 @@
 % 效能分析
-function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config)
+function [totalDataTransferRatesOfUAVBSs, dataTransferRates, satisfiedRate,fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config)
     numOfUEsConnected = zeros(size(UAVBSsSet, 1), 1); % 每台UAVBS連線到的UE數量
     for i = 1:size(numOfUEsConnected, 1)
         numOfUEsConnected(i, 1) = size(find(indexArrayOfUEsServedByUAVBS == i), 1);
@@ -22,7 +22,7 @@ function [totalDataTransferRatesOfUAVBSs,dataTransferRates,satisfiedRate,fairnes
         dataTransferRates(indexOfUEConnected, 1) = newDataTransferRate;
     end
 
-    indexOfSatisfied  = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
+    indexOfSatisfied = find(dataTransferRates > minDataTransferRateOfUEAcceptable); % 滿意的UE
     satisfiedRate = size(indexOfSatisfied, 1) / size(dataTransferRates, 1); % 滿意度
     fairness = (sum(numOfUEsConnected, 1) ^ 2) / (size(numOfUEsConnected, 1) * sum(numOfUEsConnected.^2, 1)); % 公平性
     % fairness = (sum(totalDataTransferRatesOfUAVBSs,1)^2)/(size(totalDataTransferRatesOfUAVBSs,1)*sum(totalDataTransferRatesOfUAVBSs.^2,1)); % 公平性
