@@ -10,6 +10,8 @@ function doCompareN()
     satisfiedRateData = zeros(5, 6);
     fairnessData = zeros(5, 6);
     dataRate = zeros(5, 6);
+    numberOfUAVBS = zeros(5, 6);
+    energyEfficiency = zeros(5, 6);
     % satisfiedRateData = load(outputDir+"/satisfiedRateData_varyingN_100times.mat").satisfiedRateData;
     % fairnessData = load(outputDir+"/fairnessData_varyingN_100times.mat").fairnessData;
 
@@ -35,9 +37,12 @@ function doCompareN()
             [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,1) = satisfiedRateData(ue_size/200,1)+satisfiedRate;
             fairnessData(ue_size/200,1) = fairnessData(ue_size/200,1)+fairness;
-            dataRate(ue_size/200,1) = dataRate(ue_size/200,1)+sum(totalDataTransferRatesOfUAVBSs,"all");
+            tempDataRate = sum(totalDataTransferRatesOfUAVBSs, "all");
+            dataRate(ue_size/200,1) = dataRate(ue_size/200,1)+tempDataRate;
             k1 = size(UAVBSsSet,1);
-            
+            numberOfUAVBS(ue_size/200,1) = numberOfUAVBS(ue_size/200,1) + k1;
+            energyEfficiency(ue_size/200,1) = energyEfficiency(ue_size/200,1) + (tempDataRate / k1);
+
             % 演算法
             [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = ourAlgorithm(locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             UEsPositionOfUAVBSIncluded = getUEsPositionOfUAVBSIncluded(UAVBSsR, locationOfUEs, UAVBSsSet); % 該UAVBS涵蓋住的所有UE座標(包含連線與未連線)
@@ -46,8 +51,11 @@ function doCompareN()
             [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,2) = satisfiedRateData(ue_size/200,2)+satisfiedRate;
             fairnessData(ue_size/200,2) = fairnessData(ue_size/200,2)+fairness;
-            dataRate(ue_size/200,2) = dataRate(ue_size/200,2)+sum(totalDataTransferRatesOfUAVBSs,"all");
+            tempDataRate = sum(totalDataTransferRatesOfUAVBSs, "all");
+            dataRate(ue_size/200,2) = dataRate(ue_size/200,2)+tempDataRate;
             k2 = size(UAVBSsSet,1);
+            numberOfUAVBS(ue_size/200,2) = numberOfUAVBS(ue_size/200,2) + k2;
+            energyEfficiency(ue_size/200,2) = energyEfficiency(ue_size/200,2) + (tempDataRate / k2);
 
             % 演算法
             [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k1);
@@ -63,7 +71,10 @@ function doCompareN()
             [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,3) = satisfiedRateData(ue_size/200,3)+satisfiedRate;
             fairnessData(ue_size/200,3) = fairnessData(ue_size/200,3)+fairness;
-            dataRate(ue_size/200,3) = dataRate(ue_size/200,3)+sum(totalDataTransferRatesOfUAVBSs,"all");
+            tempDataRate = sum(totalDataTransferRatesOfUAVBSs, "all");
+            dataRate(ue_size/200,3) = dataRate(ue_size/200,3)+tempDataRate;
+            numberOfUAVBS(ue_size/200,3) = numberOfUAVBS(ue_size/200,3) + k1;
+            energyEfficiency(ue_size/200,3) = energyEfficiency(ue_size/200,3) + (tempDataRate / k1);
 
             % 演算法
             [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k2);
@@ -79,7 +90,10 @@ function doCompareN()
             [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200,4) = satisfiedRateData(ue_size/200,4)+satisfiedRate;
             fairnessData(ue_size/200,4) = fairnessData(ue_size/200,4)+fairness;
-            dataRate(ue_size/200,4) = dataRate(ue_size/200,4)+sum(totalDataTransferRatesOfUAVBSs,"all");
+            tempDataRate = sum(totalDataTransferRatesOfUAVBSs, "all");
+            dataRate(ue_size/200,4) = dataRate(ue_size/200,4)+tempDataRate;
+            numberOfUAVBS(ue_size/200,4) = numberOfUAVBS(ue_size/200,4) + k2;
+            energyEfficiency(ue_size/200,4) = energyEfficiency(ue_size/200,4) + (tempDataRate / k2);
 
             % 演算法
             [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = randomAlgorithm(locationOfUEs, rangeOfPosition, config);
@@ -89,7 +103,11 @@ function doCompareN()
             [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size/200, 5) = satisfiedRateData(ue_size/200, 5)+satisfiedRate;
             fairnessData(ue_size/200, 5) = fairnessData(ue_size/200, 5)+fairness;
-            dataRate(ue_size/200,5) = dataRate(ue_size/200,5)+sum(totalDataTransferRatesOfUAVBSs,"all");
+            tempDataRate = sum(totalDataTransferRatesOfUAVBSs, "all");
+            dataRate(ue_size/200,5) = dataRate(ue_size/200,5)+tempDataRate;
+            tempNumberOfUAVBS = size(UAVBSsSet,1);
+            numberOfUAVBS(ue_size/200,5) = numberOfUAVBS(ue_size/200,5) + tempNumberOfUAVBS;
+            energyEfficiency(ue_size/200,5) = energyEfficiency(ue_size/200,5) + (tempDataRate / tempNumberOfUAVBS);
 
             % 演算法
             [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = voronoiAlgorithm(locationOfUEs, r_UAVBS, config);
@@ -99,11 +117,13 @@ function doCompareN()
             [totalDataTransferRatesOfUAVBSs, ~, satisfiedRate, fairness] = performance(indexArrayOfUEsServedByUAVBS, UAVBSsSet, UEsPositionOfUAVBSIncluded, UAVBSsR, locationOfUEs, maxDataTransferRateOfUAVBS, minDataTransferRateOfUEAcceptable, config);
             satisfiedRateData(ue_size / 200, 6) = satisfiedRateData(ue_size / 200, 6) + satisfiedRate;
             fairnessData(ue_size / 200, 6) = fairnessData(ue_size / 200, 6) + fairness;
-            dataRate(ue_size/200,6) = dataRate(ue_size/200,6)+sum(totalDataTransferRatesOfUAVBSs,"all");
+            tempDataRate = sum(totalDataTransferRatesOfUAVBSs, "all");
+            dataRate(ue_size / 200, 6) = dataRate(ue_size / 200, 6)+tempDataRate;
+            tempNumberOfUAVBS = size(UAVBSsSet,1);
+            numberOfUAVBS(ue_size / 200, 6) = numberOfUAVBS(ue_size / 200, 6) + tempNumberOfUAVBS;
+            energyEfficiency(ue_size / 200, 6) = energyEfficiency(ue_size / 200, 6) + (tempDataRate / tempNumberOfUAVBS);
         end
-        save(outputDir+"/新增voronoi2/2mbps/satisfiedRateData_varyingN_100times.mat", "satisfiedRateData");
-        save(outputDir+"/新增voronoi2/2mbps/fairnessData_varyingN_100times.mat", "fairnessData");
-        save(outputDir+"/新增voronoi2/2mbps/dataRate_varyingN_100times.mat", "dataRate");
+        save(outputDir+"/專題成果/6mbps/varyingN_100times.mat", "satisfiedRateData", "fairnessData", "dataRate", "numberOfUAVBS", "energyEfficiency", "times");
         disp(string(times)+"/100");
     end
     satisfiedRateData

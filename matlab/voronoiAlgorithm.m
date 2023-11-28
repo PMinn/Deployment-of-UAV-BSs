@@ -12,7 +12,7 @@ function [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = voronoiAlgorithm(locat
     [boundaryUEsSet, ~] = findBoundaryUEsSet(true, locationOfUEs, 0);
     uncoveredUEsSet = locationOfUEs;
     for i = 1:min(size(boundaryUEsSet, 1), 5)
-        newUAVBSLocation = boundaryUEsSet(i, :);
+        newUAVBSLocation = boundaryUEsSet(randi(size(boundaryUEsSet, 1)), :);
         UAVBSsSet = [UAVBSsSet; newUAVBSLocation];
         distances = pdist2(uncoveredUEsSet, newUAVBSLocation);
         indexes = find(distances(:, 1) <= r_UAVBS);
