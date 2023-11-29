@@ -1,5 +1,5 @@
 function doKmeans()
-    outputDir = "./out"; % 輸出檔放置的資料夾
+    outputDir = "./out/專題成果/模擬圖"; % 輸出檔放置的資料夾
    
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
@@ -13,7 +13,7 @@ function doKmeans()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/TANET/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
 
@@ -21,7 +21,7 @@ function doKmeans()
     % k = size(UAVBSsSet, 1)
 
     % k = 36; % our
-    k = 14; % spiral
+    k = 16; % spiral
 
     % 演算法
     [indexArrayOfUEsServedByUAVBS, UAVBSsSet] = kmeans(locationOfUEs ,k);
@@ -43,8 +43,8 @@ function doKmeans()
     fairness
 
     % 繪圖
-    % exportImage(outputDir+'/TANET/kmeans_our', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
-    exportImage(outputDir+'/TANET/kmeans_sMBSP', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    % exportImage(outputDir+'/kmeans_our', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir+'/kmeans_sMBSP', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

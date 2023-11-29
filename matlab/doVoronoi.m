@@ -1,5 +1,5 @@
 function doVoronoi()
-    outputDir = "./out"; % 輸出檔放置的資料夾
+    outputDir = "./out/專題成果/模擬圖"; % 輸出檔放置的資料夾
    
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
@@ -13,8 +13,7 @@ function doVoronoi()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/TANET/locationOfUEs.mat").locationOfUEs;
-    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = voronoiAlgorithm(locationOfUEs, r_UAVBS, config);
@@ -30,7 +29,6 @@ function doVoronoi()
 
     % 繪圖
     exportImage(outputDir + '/voronoi', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
-    % exportImage(outputDir+'/TANET/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

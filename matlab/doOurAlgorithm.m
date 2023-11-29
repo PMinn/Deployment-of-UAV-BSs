@@ -1,5 +1,5 @@
 function doOurAlgorithm()
-    outputDir = "./out"; % 輸出檔放置的資料夾
+    outputDir = "./out/專題成果/模擬圖"; % 輸出檔放置的資料夾
    
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
@@ -8,12 +8,11 @@ function doOurAlgorithm()
     % checkOutputDir(outputDir); 
 
     % 生成UE及寫檔
-    % locationOfUEs = UE_generator(ue_size, rangeOfPosition);
-    % locationOfUEs = locationOfUEs(:,1:2);
-    % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
+    locationOfUEs = UE_generator(ue_size, rangeOfPosition);
+    locationOfUEs = locationOfUEs(:,1:2);
+    save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/TANET/locationOfUEs.mat").locationOfUEs;
     % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
@@ -31,7 +30,6 @@ function doOurAlgorithm()
 
     % 繪圖
     exportImage(outputDir + '/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
-    % exportImage(outputDir+'/TANET/ourAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

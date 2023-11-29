@@ -1,5 +1,5 @@
 function doSpiralMBSPlacementAlgorithm()
-    outputDir = "./out"; % 輸出檔放置的資料夾
+    outputDir = "./out/專題成果/模擬圖"; % 輸出檔放置的資料夾
    
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
@@ -13,8 +13,7 @@ function doSpiralMBSPlacementAlgorithm()
     % save(outputDir+"/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/TANET/locationOfUEs.mat").locationOfUEs;
-    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, ~] = spiralMBSPlacementAlgorithm(locationOfUEs, r_UAVBS);
@@ -34,7 +33,7 @@ function doSpiralMBSPlacementAlgorithm()
     disp('k = ' + string(size(UAVBSsSet, 1)));
 
     % 繪圖
-    exportImage(outputDir + '/TANET/spiralMBSPlacementAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir + '/spiralMBSPlacementAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);

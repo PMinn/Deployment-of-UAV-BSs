@@ -1,5 +1,5 @@
 function doRandomAlgorithm()
-    outputDir = "./out"; % 輸出檔放置的資料夾
+    outputDir = "./out/專題成果/模擬圖"; % 輸出檔放置的資料夾
    
     % 載入環境參數
     [ue_size, rangeOfPosition, r_UAVBS, minDataTransferRateOfUEAcceptable, maxDataTransferRateOfUAVBS, config] = loadEnvironment();
@@ -12,8 +12,7 @@ function doRandomAlgorithm()
     % save(outputDir+"/TANET/locationOfUEs.mat", "locationOfUEs");
 
     % 讀檔讀取UE
-    locationOfUEs = load(outputDir+"/TANET/locationOfUEs.mat").locationOfUEs;
-    % locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
+    locationOfUEs = load(outputDir+"/locationOfUEs.mat").locationOfUEs;
 
     % 演算法
     [UAVBSsSet, UAVBSsR, UEsPositionOfUAVServedBy] = randomAlgorithm(locationOfUEs, rangeOfPosition, config);
@@ -29,7 +28,7 @@ function doRandomAlgorithm()
     % disp('k = ' + string(size(UAVBSsSet, 1)));
 
     % 繪圖
-    exportImage(outputDir + '/TANET/randomAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
+    exportImage(outputDir + '/randomAlgorithm', locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
 
     % JOSN
     % json = exportJSON(locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsServedByUAVBS, config);
