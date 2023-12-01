@@ -1,40 +1,37 @@
 function drawChartN()
     outputDir = "./out/專題成果/2mbps"; % 輸出檔放置的資料夾
     figure;
+    xlabelText = "地面使用者的數量";
 
     % 確保輸出的資料夾存在
     checkOutputDir(outputDir); 
 
-    data = load(outputDir+"/varyingN_100times.mat").satisfiedRateData;
-    xlabelText = "地面使用者的數量";
-    ylabelText = "使用者滿意度(%)";
-    outputFile = "/satisfiedRate_varyingN_100times.jpg";
-    maxlim = 100;
+    
+    % data = load(outputDir+"/varyingN_100times.mat").satisfiedRateData;
+    % ylabelText = "使用者滿意度(%)";
+    % outputFile = "/satisfiedRate_varyingN_100times.jpg";
+    % maxlim = 100;
 
     % data = load(outputDir+"/varyingN_100times.mat").fairnessData;
     % data = data / 100;
-    % xlabelText = "地面使用者的數量";
     % ylabelText = "公平性";
     % outputFile = "/fairness_varyingN_100times.jpg";
     % maxlim = 1;
 
-    % data = load(outputDir+"/varyingN_100times.mat").dataRate;
-    % data = data / (10 ^ 6);
-    % xlabelText = "地面使用者的數量";
-    % ylabelText = "系統資料速率(Mbps)";
-    % outputFile = "/dataRate_varyingN_100times.jpg";
-    % maxlim = -1;
+    data = load(outputDir+"/varyingN_100times.mat").dataRate;
+    data = data / (10 ^ 6);
+    ylabelText = "系統資料速率(Mbps)";
+    outputFile = "/dataRate_varyingN_100times.jpg";
+    maxlim = -1;
 
     % data = load(outputDir+"/varyingN_100times.mat").numberOfUAVBS;
     % data = data / 100;
-    % xlabelText = "地面使用者的數量";
     % ylabelText = "通訊無人機的數量";
     % outputFile = "/numberOfUAVBS_varyingN_100times.jpg";
     % maxlim = -1;
 
     % data = load(outputDir+"/varyingN_100times.mat").energyEfficiency;
     % data = data / 100;
-    % xlabelText = "地面使用者的數量";
     % ylabelText = "能源效率";
     % outputFile = "/energyEfficiency_varyingN_100times.jpg";
     % maxlim = -1;

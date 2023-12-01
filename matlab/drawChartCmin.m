@@ -5,40 +5,36 @@ function drawChartCmin()
     checkOutputDir(outputDir); 
 
     figure;
+    xlabelText = "Cmin(Mbps)";
 
     % data = load(outputDir+"/專題成果/varyingCmin_100times.mat").satisfiedRateData;
-    % xlabelText = "Cmin(Mbps)";
     % ylabelText = "使用者滿意度(%)";
     % outputFile = "/satisfiedRate_varyingCmin_100times.jpg";
     % maxlim = 100;
 
     % data = load(outputDir+"/專題成果/varyingCmin_100times.mat").fairnessData;
     % data = data / 100;
-    % xlabelText = "Cmin(Mbps)";
     % ylabelText = "公平性";
     % outputFile = "/fairness_varyingCmin_100times.jpg";
     % maxlim = 1;
 
     % data = load(outputDir+"/專題成果/varyingCmin_100times.mat").dataRate;
     % data = data / (10 ^ 6);
-    % xlabelText = "地面使用者的數量";
     % ylabelText = "系統資料速率(Mbps)";
     % outputFile = "/dataRate_varyingCmin_100times.jpg";
     % maxlim = -1;
 
-    % data = load(outputDir+"/專題成果/varyingCmin_100times.mat").numberOfUAVBS;
-    % data = data / 100;
-    % xlabelText = "地面使用者的數量";
-    % ylabelText = "通訊無人機的數量";
-    % outputFile = "/numberOfUAVBS_varyingCmin_100times.jpg";
-    % maxlim = -1;
-
-    data = load(outputDir+"/專題成果/varyingCmin_100times.mat").energyEfficiency;
+    data = load(outputDir+"/專題成果/varyingCmin_100times.mat").numberOfUAVBS;
     data = data / 100;
-    xlabelText = "地面使用者的數量";
-    ylabelText = "能源效率";
-    outputFile = "/energyEfficiency_varyingCmin_100times.jpg";
+    ylabelText = "通訊無人機的數量";
+    outputFile = "/numberOfUAVBS_varyingCmin_100times.jpg";
     maxlim = -1;
+
+    % data = load(outputDir+"/專題成果/varyingCmin_100times.mat").energyEfficiency;
+    % data = data / 100;
+    % ylabelText = "能源效率";
+    % outputFile = "/energyEfficiency_varyingCmin_100times.jpg";
+    % maxlim = -1;
 
     x = 2:2:10;
     plot(x, data(:, 2), 'r-o', x, data(:, 1), 'b-square', x, data(:, 3), 'm-diamond', x, data(:, 4), 'g-^', x, data(:, 5), 'k-+', x, data(:, 6), 'c-x', 'LineWidth', 2, 'MarkerSize', 10);
