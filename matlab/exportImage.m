@@ -7,7 +7,7 @@ function exportImage(file, locationOfUEs, UAVBSsSet, UAVBSsR, indexArrayOfUEsSer
     connectLineColor = '#DE5137';
     clf(gcf);
     set(gcf,'outerposition', get(0,'screensize')); % 視窗最大
-    set(gcf,'visible', 'on'); % on/off
+    set(gcf,'visible', 'off'); % on/off
     set(gca, 'Color', backgroundColor);
     hold on;
     % boundaryUEsSet = convhull(locationOfUEs); % 凸包上的UE集合
