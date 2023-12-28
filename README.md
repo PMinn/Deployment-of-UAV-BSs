@@ -48,18 +48,46 @@
     npm install
     ```
 
-4. 啟動後端
+4. 將`emulator.py`裡，解除CORS相關的註解
+    ```python
+    import matlab.engine
+    import os
+    import json
+    from flask import Flask, request, jsonify, send_from_directory
+    # from flask_cors import CORS
+
+    app = Flask(__name__, static_url_path="/static")
+    eng = matlab.engine.start_matlab()
+    eng.cd(os.path.abspath("./matlab"), nargout=0)
+    port = 8088
+    # CORS(app)
+    ```
+    ```python
+    import matlab.engine
+    import os
+    import json
+    from flask import Flask, request, jsonify, send_from_directory
+    from flask_cors import CORS
+
+    app = Flask(__name__, static_url_path="/static")
+    eng = matlab.engine.start_matlab()
+    eng.cd(os.path.abspath("./matlab"), nargout=0)
+    port = 8088
+    CORS(app)
+    ```
+
+6. 啟動後端
    ```
    python ./emulator.py
    ```
 
-5. 啟動前端
+7. 啟動前端
    ```
    cd ./emulator/
    npm run dev
    ```
 
-6. 啟動瀏覽器 [localhost:3000](localhost:3000)
+8. 啟動瀏覽器 [localhost:3000](localhost:3000)
 
 
 ## 模擬器
