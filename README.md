@@ -33,7 +33,7 @@
     node --version
     python --version
     ```
-    > [!NOTE]
+    > **Note**:
     > Next.js 14 要求 Node.js 版本要高於 18.17
 
 2. Python 安裝依賴套件
