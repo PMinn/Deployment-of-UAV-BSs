@@ -22,7 +22,7 @@
    python ./emulator.py
    ```
 
-5. 啟動瀏覽器 [localhost:8088](localhost:8088)
+5. 啟動瀏覽器 [http://localhost:8088](http://localhost:8088)
 
 ## 模擬平台開發模式
 
@@ -87,7 +87,7 @@
    npm run dev
    ```
 
-8. 啟動瀏覽器 [localhost:3000](localhost:3000)
+8. 啟動瀏覽器 [http://localhost:3000](http://localhost:3000)
 
 
 ## 模擬器
