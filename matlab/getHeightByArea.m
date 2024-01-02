@@ -1,10 +1,10 @@
-function height = getHeightByArea(r_UAVBS)
+function height = getHeightByArea(r_UAVBS, config)
     syms h
     r = r_UAVBS;
-    a = 12.08;
-    b = 0.11;
-    etaLoS = 1.6;
-    etaNLoS = 23;
+    a = config("a");
+    b = config("b");
+    etaLoS = config("etaLos");
+    etaNLoS = config("etaNLoS");
     
     theta = atan(h/r);
     f =  pi*tan(theta)/(9*log(10)) + (a*b*(etaLoS-etaNLoS)*exp(-b*(180*theta/pi-a)))/((a*exp(-b*(180*theta/pi-a))+1)^2);

@@ -18,7 +18,6 @@ function indexArrayOfUEsServedByUAVBS = getIndexArrayOfUEsServedByUAVBS(UEsPosit
     for i=1:size(locationOfUEs, 1)
         distances = pdist2(UAVBSsSet(UAVIndexArrayOfUECoveredBy{i,1},:), locationOfUEs(i,:));
         [~, index] = min(distances,[],1);
-        a = UAVIndexArrayOfUECoveredBy{i,1}(1,index);
-        indexArrayOfUEsServedByUAVBS(i,1) = a;
+        indexArrayOfUEsServedByUAVBS(i,1) = UAVIndexArrayOfUECoveredBy{i,1}(1,index);
     end
 end
